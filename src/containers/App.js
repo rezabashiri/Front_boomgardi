@@ -16,6 +16,8 @@ import register from 'Routes/layouts/register'
 import error from 'Routes/layouts/error'
 import forgotPassword from 'Routes/layouts/forgot-password'
 
+import Home from "../home";
+
 import MultipageHome from "Routes/landing-pages/multipage-home";
 import SinglepageHome from "Routes/landing-pages/singlepage-home";
 import About from "Routes/landing-pages/about";
@@ -57,7 +59,7 @@ class App extends Component {
 	render() {
 		const { location, match, user, locale } = this.props;
 		const currentAppLocale = AppLocale[locale];
-		if (location.pathname === '/'  || location.pathname==='/app'|| location.pathname==='/app/') {
+		if ( location.pathname==='/app'|| location.pathname==='/app/') {
 			return (<Redirect to={defaultStartPath} />);
 		}
 		return (
@@ -75,7 +77,8 @@ class App extends Component {
 							authUser={user}
 							component={MainRoute}
 						/>
-        					<Route path={`/multipage-home`} component={MultipageHome} />
+							<Route path={`/`} component={Home} />
+							<Route path={`/multipage-home`} component={MultipageHome} />
         					<Route path={`/singlepage-home`} component={SinglepageHome} />
         					<Route path={`/about`} component={About} />
         					<Route path={`/auth-login`} component={AuthLogin} />
