@@ -77,6 +77,7 @@ class App extends Component {
 							authUser={user}
 							component={MainRoute}
 						/>
+							<Route exact path={`/`} component={Home} />
 							<Route path={`/multipage-home`} component={MultipageHome} />
         					<Route path={`/singlepage-home`} component={SinglepageHome} />
         					<Route path={`/about`} component={About} />
@@ -94,12 +95,10 @@ class App extends Component {
         					<Route path={`/videos`} component={Videos} />
         					<Route path={`/video-detail`} component={VideoDetail} />
         					<Route path={`/docs-details`} component={DocsDetails} />
-
 							<Route path={`/login`} component={login} />
 							<Route path={`/register`} component={register} />
 							<Route path={`/forgot-password`} component={forgotPassword} />
 							<Route path={`/error`} component={error} />
-							<Route path={`/`} component={Home} />
 							<Redirect to="/error" />
 						</Switch>
 						<ColorSwitcher />
