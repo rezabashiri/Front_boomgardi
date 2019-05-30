@@ -8,18 +8,40 @@ import { Colxx } from "Components/CustomBootstrap";
 import { connect } from "react-redux";
 import { loginUser } from "Redux/actions";
 
+import userService from "../../services/userService.jsx";
+import registerModel from "../../models/registerModel.jsx";
+import userModel from "../../models/userModel.jsx";
+import { getJwt } from "../../helpers/Jwt.js";
+
 class LoginLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com",
-      password: "gogo123"
+      email: "",
+      password: ""
     };
   }
+  /*
   onUserLogin() {
     if (this.state.email !== "" && this.state.password !== "") {
       this.props.loginUser(this.state, this.props.history);
     }
+  }
+  */
+
+  async onUserLogin(event) {
+    event.preventDefault();
+    var srv = new userService();
+
+    var user = new userModel();
+    const data = new FormData(event.target);
+    data.forEach((value, key) => {
+      user[key] = value;
+    });
+
+    var t = await srv.getToken(user);
+
+    if (getJwt() !== null) this.props.history.push("app");
   }
 
   componentDidMount() {
@@ -38,15 +60,8 @@ class LoginLayout extends Component {
               <Colxx xxs="12" md="10" className="mx-auto my-auto">
                 <Card className="auth-card">
                   <div className="position-relative image-side ">
-                    <p className="text-white h2">جادو در جرئیات</p>
                     <p className="white mb-0">
-                      لطفا وارد حساب کاربری خود شوید
-                      <br />
-                      اگر عضو نیستید، لطفا{" "}
-                      <NavLink to={`/register`} className="white">
-                        ثبت نام
-                      </NavLink>
-                       کنید.
+                      برای استفاده از امکانات پرسیس وارد شوید
                     </p>
                   </div>
                   <div className="form-side">
@@ -56,13 +71,13 @@ class LoginLayout extends Component {
                     <CardTitle className="mb-4">
                       <IntlMessages id="user.login-title" />
                     </CardTitle>
-                    <Form>
+                    <Form onSubmit={e => this.onUserLogin(e)}>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} />
+                        <Input name="userName" type="email" />
                         <IntlMessages id="user.email" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" />
+                        <Input name="password" type="password" />
                         <IntlMessages
                           id="user.password"
                           defaultValue={this.state.password}
@@ -76,10 +91,15 @@ class LoginLayout extends Component {
                           color="primary"
                           className="btn-shadow"
                           size="lg"
-                          onClick={() => this.onUserLogin()}
+                          type="submit"
                         >
                           <IntlMessages id="user.login-button" />
                         </Button>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <NavLink to={`/register`}>
+                          <IntlMessages id="user.register" />
+                        </NavLink>
                       </div>
                     </Form>
                   </div>
