@@ -1,4 +1,4 @@
-﻿import authConfig from "../constants/authConst";
+﻿import authConfig from "../constants/defaultValues";
 
 let userName = Symbol("userName");
 let password = Symbol("password");

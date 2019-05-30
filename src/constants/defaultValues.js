@@ -18,11 +18,13 @@ export const firebaseConfig = {
   messagingSenderId: "216495999563"
 };
 
-export const authConfig = {
+const authConfig = {
   serverUrl: "http://auth.moroorgaran.com/",
   loginUrl: "jwtlogin",
   registerUrl: "api/registers",
   appKey: "5ED239940DBB2201427DF98038A1B56F1EC9D72DD62B8ACE6286F569C9280A4D"
 };
+
+export default authConfig;
 
 export const searchPath = "/app/layouts/search";

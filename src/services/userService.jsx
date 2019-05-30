@@ -1,4 +1,4 @@
-﻿import authConfig from "../constants/authConst";
+﻿import authConfig from "../constants/defaultValues";
 import axios from "axios";
 import qs from "qs";
 import { setJwt } from "../helpers/Jwt.js";

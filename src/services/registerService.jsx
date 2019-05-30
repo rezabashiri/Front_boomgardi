@@ -1,6 +1,6 @@
 ﻿import axios from "axios";
 import registerModel from "../models/registerModel.jsx";
-import auth from "../constants/authConst";
+import auth from "../constants/defaultValues";
 
 export default class registerService {
   async registerUser(model) {
