@@ -8,6 +8,9 @@ import { Colxx } from "Components/CustomBootstrap";
 import { connect } from "react-redux";
 import { registerUser } from "Redux/actions";
 
+import serviceModel from "../../Services/registerService.jsx";
+import registerModel from "../../models/registerModel.jsx";
+
 class RegisterLayout extends Component {
   constructor(props) {
     super(props);
@@ -17,11 +20,25 @@ class RegisterLayout extends Component {
       name: "Sarah Kortney"
     };
   }
+  /*
   onUserRegister() {
     if (this.state.email !== "" && this.state.password !== "") {
       // this.props.registerUser(this.state, this.props.history);
       this.props.history.push("/");
     }
+  }
+  */
+  async submitRegister(event) {
+    event.preventDefault();
+    let form = new FormData(event.target);
+    let model = new registerModel();
+    let service = new serviceModel();
+    form.forEach((value, key) => (model[key] = value));
+    model["roles"] = "ادمین";
+    //model["confirmPassword"] = model["password"];
+    //model["mobile"] = "09363385010";
+    console.log(model.getData());
+    service.registerUser(model);
   }
 
   componentDidMount() {
@@ -40,14 +57,8 @@ class RegisterLayout extends Component {
               <Colxx xxs="12" md="10" className="mx-auto my-auto">
                 <Card className="auth-card">
                   <div className="position-relative image-side ">
-                    <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
                     <p className="white mb-0">
-                      Please use this form to register. <br />
-                      If you are a member, please{" "}
-                      <NavLink to={`/login`} className="white">
-                        login
-                      </NavLink>
-                      .
+                      برای استفاده از امکانات پرسیس ثبت نام کنید
                     </p>
                   </div>
                   <div className="form-side">
@@ -57,28 +68,28 @@ class RegisterLayout extends Component {
                     <CardTitle className="mb-4">
                       <IntlMessages id="user.register" />
                     </CardTitle>
-                    <Form>
+                    <Form onSubmit={e => this.submitRegister(e)}>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="name" defaultValue={this.state.name} />
-                        <IntlMessages id="user.fullname" />
-                      </Label>
-                      <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} />
+                        <Input name="userName" type="email" />
                         <IntlMessages id="user.email" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" />
+                        <Input type="password" name="password" />
                         <IntlMessages
                           id="user.password"
                           defaultValue={this.state.password}
                         />
+                      </Label>
+                      <Label className="form-group has-float-label mb-4">
+                        <Input type="password" name="confirmPassword" />
+                        <IntlMessages id="user.password-confirm" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">
                         <Button
                           color="primary"
                           className="btn-shadow"
                           size="lg"
-                          onClick={() => this.onUserRegister()}
+                          type="submit"
                         >
                           <IntlMessages id="user.register-button" />
                         </Button>
