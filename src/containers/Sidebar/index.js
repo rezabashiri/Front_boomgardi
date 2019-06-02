@@ -268,14 +268,14 @@ class Sidebar extends Component {
                 <NavItem
                   className={classnames({
                     active:
-                      (this.state.selectedParentMenu == "layouts" &&
+                      (this.state.selectedParentMenu == "users" &&
                         this.state.viewingParentMenu == "") ||
-                      this.state.viewingParentMenu == "layouts"
+                      this.state.viewingParentMenu == "users"
                   })}
                 >
                   <NavLink
-                    to="/app/layouts"
-                    onClick={e => this.openSubMenu(e, "layouts")}
+                    to="/app/users"
+                    onClick={e => this.openSubMenu(e, "users")}
                   >
                     <i className="iconsmind-User" />{" "}
                     <IntlMessages id="menu.users" />
@@ -316,14 +316,14 @@ class Sidebar extends Component {
                 <NavItem
                   className={classnames({
                     active:
-                      (this.state.selectedParentMenu == "applications" &&
+                      (this.state.selectedParentMenu == "layouts" &&
                         this.state.viewingParentMenu == "") ||
-                      this.state.viewingParentMenu == "applications"
+                      this.state.viewingParentMenu == "layouts"
                   })}
                 >
                   <NavLink
-                    to="/app/applications"
-                    onClick={e => this.openSubMenu(e, "applications")}
+                    to="/app/layouts"
+                    onClick={e => this.openSubMenu(e, "layouts")}
                   >
                     <i className="simple-icon-plane" />{" "}
                     <IntlMessages id="menu.company" />
@@ -403,6 +403,42 @@ class Sidebar extends Component {
                     <i className="simple-icon-action-undo" />{" "}
                     <IntlMessages id="menu.cancel" />
                   </NavLink>
+                </NavItem>
+              </Nav>
+              <Nav
+                className={classnames({
+                  "d-block":
+                    (this.state.selectedParentMenu == "users" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "users"
+                })}
+                data-parent="users"
+              >
+                <NavItem>
+                  <NavLink to="/app/users/data-list">
+                    <i className="simple-icon-list" />{" "}
+                    <IntlMessages id="menu.data-list" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/register">
+                    <i className="simple-icon-user-follow" />{" "}
+                    <IntlMessages id="menu.user.add" />
+                  </NavLink>
+                  {/* <a href="/register" target="_blank">
+                    <i className="simple-icon-user-follow" />{" "}
+                    <IntlMessages id="menu.register" />
+                  </a> */}
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/forgot-password">
+                    <i className="simple-icon-user-unfollow" />{" "}
+                    <IntlMessages id="menu.forgot-password" />
+                  </NavLink>
+                  {/* <a href="/forgot-password" target="_blank">
+                    <i className="simple-icon-user-unfollow" />{" "}
+                    <IntlMessages id="menu.forgot-password" />
+                  </a> */}
                 </NavItem>
               </Nav>
               <Nav
