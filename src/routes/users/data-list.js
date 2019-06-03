@@ -221,16 +221,17 @@ class DataListLayout extends Component {
     document.activeElement.blur();
     return false;
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.dataListRender();
   }
 
-  dataListRender() {
+  async dataListRender() {
     let srv = new userService();
-    let users = srv.getUsers();
+    let users = await srv.getUsers();
 
     this.setState({
       totalPage: 1,
+      /*
       items: [
         {
           id: 18,
@@ -352,8 +353,8 @@ class DataListLayout extends Component {
           stock: 41,
           date: "15 اسفند 1397"
         }
-      ],
-      //items: users,
+      ],*/
+      items: users,
       selectedItems: [],
       totalItemCount: 8,
       isLoading: true
@@ -418,6 +419,10 @@ class DataListLayout extends Component {
                     <ModalBody>
                       <Label>
                         <IntlMessages id="user.username" />
+                      </Label>
+                      <Input />
+                      <Label>
+                        <IntlMessages id="user.password" />
                       </Label>
                       <Input />
                       <Label className="mt-4">
@@ -655,7 +660,49 @@ class DataListLayout extends Component {
             </Colxx>
           </Row>
           <Row>
-            {this.state.items.map(product => {
+            {this.state.items.map(user => {
+              return (
+                <Colxx xxs="12" key={user.id} className="mb-3">
+                  <ContextMenuTrigger
+                    id="menu_id"
+                    data={user.id}
+                    collect={collect}
+                  >
+                    <Card
+                      onClick={event => this.handleCheckChange(event, user.id)}
+                      className={classnames("d-flex flex-row", {
+                        active: this.state.selectedItems.includes(user.id)
+                      })}
+                    >
+                      <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+                        <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                          <NavLink
+                            to={`?p=${user.id}`}
+                            className="w-40 w-sm-100"
+                          >
+                            <p className="list-item-heading mb-1 truncate">
+                              {user.userName}
+                            </p>
+                          </NavLink>
+                        </div>
+                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                            <NavLink
+                              to={`?p=${user.id}`}
+                              className="w-40 w-sm-100"
+                            >
+                              <p className="list-item-heading mb-1 truncate">
+                                {user.systemProfile}
+                              </p>
+                            </NavLink>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </ContextMenuTrigger>
+                </Colxx>
+              );
+              /*
               if (this.state.displayMode === "imagelist") {
                 return (
                   <Colxx sm="6" lg="4" xl="3" className="mb-3" key={product.id}>
@@ -834,7 +881,7 @@ class DataListLayout extends Component {
                     </ContextMenuTrigger>
                   </Colxx>
                 );
-              }
+              }*/
             })}
             <Pagination
               currentPage={this.state.currentPage}
