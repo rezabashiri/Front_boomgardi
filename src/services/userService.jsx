@@ -16,4 +16,13 @@ export default class userService {
       setJwt(response.data.access_token);
     } catch (e) {}
   }
+  async getUsers() {
+    try {
+      let response = await axios
+        .create()
+        .get(authConfig.serverUrl + authConfig.userUrl + authConfig.appKey);
+      console.log(response.data);
+      return response.data;
+    } catch (e) {}
+  }
 }

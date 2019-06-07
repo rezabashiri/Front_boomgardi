@@ -52,7 +52,7 @@ class DataListLayout extends Component {
     super(props);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
     this.toggleSplit = this.toggleSplit.bind(this);
-    this.dataListRender = this.dataListRender.bind(this);
+    this.userListRender = this.userListRender.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.onContextMenuClick = this.onContextMenuClick.bind(this);
@@ -74,7 +74,7 @@ class DataListLayout extends Component {
         { column: "leader", label: "لیدر" },
         { column: "users", label: "کاربران" }
       ],
-      selectedOrderOption: { column: "host", label: "اقامتگاه" },
+      selectedOrderOption: { column: "user", label: "همه کاربران" },
       dropdownSplitOpen: false,
       modalOpen: false,
       currentPage: 1,
@@ -119,7 +119,7 @@ class DataListLayout extends Component {
           x => x.column === column
         )
       },
-      () => this.dataListRender()
+      () => this.userListRender()
     );
   }
   changePageSize(size) {
@@ -128,7 +128,7 @@ class DataListLayout extends Component {
         selectedPageSize: size,
         currentPage: 1
       },
-      () => this.dataListRender()
+      () => this.userListRender()
     );
   }
   changeDisplayMode(mode) {
@@ -142,7 +142,7 @@ class DataListLayout extends Component {
       {
         currentPage: page
       },
-      () => this.dataListRender()
+      () => this.userListRender()
     );
   }
 
@@ -152,7 +152,7 @@ class DataListLayout extends Component {
         {
           search: e.target.value.toLowerCase()
         },
-        () => this.dataListRender()
+        () => this.userListRender()
       );
     }
   }
@@ -222,141 +222,18 @@ class DataListLayout extends Component {
     return false;
   }
   async componentDidMount() {
-    this.dataListRender();
+    this.userListRender();
   }
 
-  async dataListRender() {
+  async userListRender() {
     let srv = new userService();
     let users = await srv.getUsers();
 
     this.setState({
       totalPage: 1,
-      /*
-      items: [
-        {
-          id: 18,
-          title: "کیک شکلاتی",
-          img: "/assets/img/bebinca-thumb.jpg",
-          category: "دسر",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 574,
-          stock: 16,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 8,
-          title: "چیز کیک",
-          img: "/assets/img/cheesecake-thumb.jpg",
-          category: "کیک",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 887,
-          stock: 21,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 3,
-          title: "دسر شکلاتی",
-          img: "/assets/img/chocolate-cake-thumb.jpg",
-          category: "کیک ها",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 1080,
-          stock: 57,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 19,
-          title: "ژله پرتقالی",
-          img: "/assets/img/cremeschnitte-thumb.jpg",
-          category: "دسر ها",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 562,
-          stock: 18,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 2,
-          title: "پای سیب",
-          img: "/assets/img/fat-rascal-thumb.jpg",
-          category: "کیک فنجونی",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 1240,
-          stock: 48,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 9,
-          title: "شیرینی خامه ای",
-          img: "/assets/img/financier-thumb.jpg",
-          category: "کیک ها",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 865,
-          stock: 53,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 17,
-          title: "کیک میوه ای",
-          img: "/assets/img/fruitcake-thumb.jpg",
-          category: "کیک ها",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 585,
-          stock: 19,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 10,
-          title: "کیک پرتقالی",
-          img: "/assets/img/genoise-thumb.jpg",
-          category: "کیک فنجونی",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 824,
-          stock: 55,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 11,
-          title: "چیز کیک",
-          img: "/assets/img/gingerbread-thumb.jpg",
-          category: "کیک ها",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 714,
-          stock: 12,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 4,
-          title: "کیک قهوه",
-          img: "/assets/img/goose-breast-thumb.jpg",
-          category: "کیک ها",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 1014,
-          stock: 41,
-          date: "15 اسفند 1397"
-        }
-      ],*/
       items: users,
       selectedItems: [],
-      totalItemCount: 8,
+      totalItemCount: users.length,
       isLoading: true
     });
   }
