@@ -21,8 +21,13 @@ import {
   CardImg,
   Label,
   CardText,
-  Badge
+  Badge,
+  Table,
+  Col
 } from "reactstrap";
+import "../../assets/css/material.css";
+import MaterialTable from "material-table";
+
 import { NavLink } from "react-router-dom";
 import Select from "react-select";
 import CustomSelectInput from "Components/CustomSelectInput";
@@ -34,7 +39,6 @@ import { BreadcrumbItems } from "Components/BreadcrumbContainer";
 
 import Pagination from "Components/List/Pagination";
 import mouseTrap from "react-mousetrap";
-import axios from "axios";
 
 import userService from "../../services/userService.jsx";
 import registerModel from "../../models/registerModel.jsx";
@@ -45,7 +49,6 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 function collect(props) {
   return { data: props.data };
 }
-const apiUrl = "http://api.crealeaf.com/cakes/paging";
 
 class DataListLayout extends Component {
   constructor(props) {
@@ -87,6 +90,7 @@ class DataListLayout extends Component {
       isLoading: false
     };
   }
+
   componentWillMount() {
     this.props.bindShortcut(["ctrl+a", "command+a"], () =>
       this.handleChangeSelectAll(false)
@@ -262,6 +266,7 @@ class DataListLayout extends Component {
       (this.state.currentPage - 1) * this.state.selectedPageSize;
     const endIndex = this.state.currentPage * this.state.selectedPageSize;
     const { messages } = this.props.intl;
+
     return !this.state.isLoading ? (
       <div className="loading" />
     ) : (
@@ -536,7 +541,7 @@ class DataListLayout extends Component {
               <Separator className="mb-5" />
             </Colxx>
           </Row>
-          <Row>
+          <Row hidden>
             {this.state.items.map(user => {
               return (
                 <Colxx xxs="12" key={user.id} className="mb-3">
@@ -579,186 +584,6 @@ class DataListLayout extends Component {
                   </ContextMenuTrigger>
                 </Colxx>
               );
-              /*
-              if (this.state.displayMode === "imagelist") {
-                return (
-                  <Colxx sm="6" lg="4" xl="3" className="mb-3" key={product.id}>
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={product.id}
-                      collect={collect}
-                    >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, product.id)
-                        }
-                        className={classnames({
-                          active: this.state.selectedItems.includes(product.id)
-                        })}
-                      >
-                        <div className="position-relative">
-                          <NavLink
-                            to={`?p=${product.id}`}
-                            className="w-40 w-sm-100"
-                          >
-                            <CardImg
-                              top
-                              alt={product.title}
-                              src={product.img}
-                            />
-                          </NavLink>
-                          <Badge
-                            color={product.statusColor}
-                            pill
-                            className="position-absolute badge-top-right"
-                          >
-                            {product.status}
-                          </Badge>
-                        </div>
-                        <CardBody>
-                          <Row>
-                            <Colxx xxs="2">
-                              <CustomInput
-                                className="itemCheck mb-0"
-                                type="checkbox"
-                                id={`check_${product.id}`}
-                                checked={this.state.selectedItems.includes(
-                                  product.id
-                                )}
-                                onChange={() => {}}
-                                label=""
-                              />
-                            </Colxx>
-                            <Colxx xxs="10" className="mb-3">
-                              <CardSubtitle>{product.title}</CardSubtitle>
-                              <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {product.date}
-                              </CardText>
-                            </Colxx>
-                          </Row>
-                        </CardBody>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              } else if (this.state.displayMode === "thumblist") {
-                return (
-                  <Colxx xxs="12" key={product.id} className="mb-3">
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={product.id}
-                      collect={collect}
-                    >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, product.id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(product.id)
-                        })}
-                      >
-                        <NavLink to={`?p=${product.id}`} className="d-flex">
-                          <img
-                            alt={product.title}
-                            src={product.img}
-                            className="list-thumbnail responsive border-0"
-                          />
-                        </NavLink>
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?p=${product.id}`}
-                              className="w-40 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {product.title}
-                              </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.category}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.date}
-                            </p>
-                            <div className="w-15 w-sm-100">
-                              <Badge color={product.statusColor} pill>
-                                {product.status}
-                              </Badge>
-                            </div>
-                          </div>
-                          <div className="custom-control custom-checkbox pr-1 align-self-center pl-4">
-                            <CustomInput
-                              className="itemCheck mb-0"
-                              type="checkbox"
-                              id={`check_${product.id}`}
-                              checked={this.state.selectedItems.includes(
-                                product.id
-                              )}
-                              onChange={() => {}}
-                              label=""
-                            />
-                          </div>
-                        </div>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              } else {
-                return (
-                  <Colxx xxs="12" key={product.id} className="mb-3">
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={product.id}
-                      collect={collect}
-                    >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, product.id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(product.id)
-                        })}
-                      >
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?p=${product.id}`}
-                              className="w-40 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {product.title}
-                              </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.category}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.date}
-                            </p>
-                            <div className="w-15 w-sm-100">
-                              <Badge color={product.statusColor} pill>
-                                {product.status}
-                              </Badge>
-                            </div>
-                          </div>
-                          <div className="custom-control custom-checkbox pr-1 align-self-center pl-4">
-                            <CustomInput
-                              className="itemCheck mb-0"
-                              type="checkbox"
-                              id={`check_${product.id}`}
-                              checked={this.state.selectedItems.includes(
-                                product.id
-                              )}
-                              onChange={() => {}}
-                              label=""
-                            />
-                          </div>
-                        </div>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              }*/
             })}
             <Pagination
               currentPage={this.state.currentPage}
@@ -766,6 +591,99 @@ class DataListLayout extends Component {
               onChangePage={i => this.onChangePage(i)}
             />
           </Row>
+          <Row hidden>
+            <Col>
+              <Table hover bordered responsive size="sm">
+                <thead>
+                  <tr>
+                    <th>نام کاربری</th>
+                    <th>زمان</th>
+                    <th>نقش کاربری</th>
+                    <th>موبایل</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.items.map(user => {
+                    return (
+                      <tr>
+                        <td>{user.userName}</td>
+                        <td>{user.creationDate}</td>
+                        <td>ادمین</td>
+                        <td>{user.systemProfile}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+          <MaterialTable
+            title=" "
+            columns={[
+              { title: "نام کاربری", field: "name" },
+              { title: "موبایل", field: "surname" },
+              { title: "زمان", field: "birthYear", type: "numeric" },
+              {
+                title: "نوع کاربری",
+                field: "birthCity",
+                lookup: { 34: "مدیر", 63: "اقامتگاه" }
+              }
+            ]}
+            data={[
+              {
+                name: "فرشاد",
+                surname: "عباسی",
+                birthYear: 1987,
+                birthCity: 63
+              },
+              {
+                name: "تست",
+                surname: "تست",
+                birthYear: 2017,
+                birthCity: 34
+              }
+            ]}
+            editable={{
+              onRowAdd: newData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    const data = [...state.data];
+                    data.push(newData);
+                    setState({ ...state, data });
+                  }, 600);
+                }),
+              onRowUpdate: (newData, oldData) =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    const data = [...state.data];
+                    data[data.indexOf(oldData)] = newData;
+                    setState({ ...state, data });
+                  }, 600);
+                }),
+              onRowDelete: oldData =>
+                new Promise(resolve => {
+                  setTimeout(() => {
+                    resolve();
+                    const data = [...state.data];
+                    data.splice(data.indexOf(oldData), 1);
+                    setState({ ...state, data });
+                  }, 600);
+                })
+            }}
+            options={{
+              headerStyle: {
+                direction: "rtl"
+              },
+              searchFieldStyle: {
+                direction: "ltr"
+              },
+              rowStyle: {
+                textAlign: "right"
+              }
+            }}
+          />
         </div>
 
         <ContextMenu
