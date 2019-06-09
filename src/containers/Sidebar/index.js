@@ -284,14 +284,14 @@ class Sidebar extends Component {
                 <NavItem
                   className={classnames({
                     active:
-                      (this.state.selectedParentMenu == "applications" &&
+                      (this.state.selectedParentMenu == "hosts" &&
                         this.state.viewingParentMenu == "") ||
-                      this.state.viewingParentMenu == "applications"
+                      this.state.viewingParentMenu == "hosts"
                   })}
                 >
                   <NavLink
-                    to="/app/applications"
-                    onClick={e => this.openSubMenu(e, "applications")}
+                    to="/app/hosts"
+                    onClick={e => this.openSubMenu(e, "hosts")}
                   >
                     <i className="iconsmind-Home-5" />{" "}
                     <IntlMessages id="menu.hosts" />
@@ -538,6 +538,40 @@ class Sidebar extends Component {
                 </NavItem>
                 <NavItem>
                   <NavLink to="/app/applications/todo">
+                    <i className="simple-icon-list" />{" "}
+                    <IntlMessages id="menu.hostslist" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/app/applications/chat">
+                    <i className="simple-icon-bubbles" />{" "}
+                    <IntlMessages id="menu.requests" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/app/applications/chat">
+                    <i className="simple-icon-settings" />{" "}
+                    <IntlMessages id="menu.setting" />
+                  </NavLink>
+                </NavItem>
+              </Nav>
+              <Nav
+                className={classnames({
+                  "d-block":
+                    (this.state.selectedParentMenu == "hosts" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "hosts"
+                })}
+                data-parent="hosts"
+              >
+                <NavItem>
+                  <NavLink to="/app/hosts/add">
+                    <i className="simple-icon-check" />{" "}
+                    <IntlMessages id="menu.addhost" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/app/hosts/list">
                     <i className="simple-icon-list" />{" "}
                     <IntlMessages id="menu.hostslist" />
                   </NavLink>

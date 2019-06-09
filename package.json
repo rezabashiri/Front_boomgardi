@@ -1,6 +1,6 @@
 {
   "name": "PersisTour",
-  "version": "1.0",
+  "version": "2.0.2",
   "description": "Persis tour",
   "scripts": {
     "start": "webpack-dev-server --mode development --hot --progress --open",
