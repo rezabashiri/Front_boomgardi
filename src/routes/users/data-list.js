@@ -81,7 +81,9 @@ class DataListLayout extends Component {
             title=" "
             columns={[
               { title: "نام کاربری", field: "userName" },
-              { title: "موبایل", field: "systemProfile" }
+              { title: "موبایل", field: "systemProfile" },
+              { title: "ایمیل", field: "eMail" },
+              { title: "نقش کاربری", field: "roles" }
             ]}
             data={this.state.items}
             editable={{
