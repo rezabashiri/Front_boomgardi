@@ -381,7 +381,7 @@ class DataListLayout extends Component {
               <Colxx xxs="12">
                 <div className="mb-2">
                   <h1>
-                    <IntlMessages id="menu.data-list" />
+                    <IntlMessages id="menu.host-list" />
                   </h1>
 
                   <div className="float-sm-left">

@@ -76,6 +76,7 @@ module.exports = {
   "menu.user.add": "ثبت کابر جدید",
   "menu.data-list": "لیست کاربران",
   "menu.user-list": "لیست کاربران",
+  "menu.host-list": "لیست اقامتگاه‌ها",
   "menu.thumb-list": "لیست بند انگشتی",
   "menu.image-list": "لیست تصویر",
   "menu.details": "جزئیات",

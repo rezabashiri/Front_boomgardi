@@ -571,7 +571,7 @@ class Sidebar extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to="/app/hosts/list">
+                  <NavLink to="/app/hosts/host-list">
                     <i className="simple-icon-list" />{" "}
                     <IntlMessages id="menu.hostslist" />
                   </NavLink>
