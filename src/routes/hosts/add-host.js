@@ -37,12 +37,9 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
 const selectData = [
-  { label: "Chocolate", value: "chocolate", key: 0 },
-  { label: "Vanilla", value: "vanilla", key: 1 },
-  { label: "Strawberry", value: "strawberry", key: 2 },
-  { label: "Caramel", value: "caramel", key: 3 },
-  { label: "Cookies and Cream", value: "cookiescream", key: 4 },
-  { label: "Peppermint", value: "peppermint", key: 5 }
+  { label: "تهران", value: "tehran", key: 0 },
+  { label: "اصفهان", value: "isfahan", key: 1 },
+  { label: "شیراز", value: "shiraz", key: 2 }
 ];
 
 class FormsUi extends Component {
@@ -110,389 +107,19 @@ class FormsUi extends Component {
         <Row>
           <Colxx xxs="12">
             <BreadcrumbContainer
-              heading={<IntlMessages id="menu.forms" />}
+              heading={<IntlMessages id="menu.add-host" />}
               match={this.props.match}
             />
             <Separator className="mb-5" />
           </Colxx>
         </Row>
-
         <Row className="mb-4">
           <Colxx xxs="12">
             <Card>
               <CardBody>
                 <CardTitle>
-                  <IntlMessages id="forms.basic" />
+                  <IntlMessages id="menu.add-hostowner" />
                 </CardTitle>
-                <Form>
-                  <FormGroup>
-                    <Label for="exampleEmail">
-                      <IntlMessages id="forms.email" />
-                    </Label>
-                    <Input
-                      type="email"
-                      name="email"
-                      id="exampleEmail"
-                      placeholder={messages["forms.email"]}
-                    />
-                    <FormText color="muted">
-                      <IntlMessages id="forms.email-muted" />
-                    </FormText>
-                  </FormGroup>
-
-                  <FormGroup>
-                    <Label for="passwordBasic">
-                      <IntlMessages id="forms.password" />
-                    </Label>
-                    <Input
-                      type="password"
-                      name="passwordBasic"
-                      id="passwordBasic"
-                      placeholder={messages["forms.password"]}
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
-                    <CustomInput
-                      type="checkbox"
-                      id="exampleCustomCheckbox"
-                      label="این چک باکس را علامت بزنید"
-                    />
-                  </FormGroup>
-
-                  <Button color="primary" className="mt-4">
-                    <IntlMessages id="forms.submit" />
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-
-        <Row className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="forms.horizontal" />
-                </CardTitle>
-                <Form>
-                  <FormGroup row>
-                    <Label for="emailHorizontal" sm={2}>
-                      <IntlMessages id="forms.email" />
-                    </Label>
-                    <Colxx sm={10}>
-                      <Input
-                        type="email"
-                        name="email"
-                        id="emailHorizontal"
-                        placeholder={messages["forms.email"]}
-                      />
-                    </Colxx>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="passwordHorizontal" sm={2}>
-                      <IntlMessages id="forms.password" />
-                    </Label>
-                    <Colxx sm={10}>
-                      <Input
-                        type="password"
-                        name="password"
-                        id="passwordHorizontal"
-                        placeholder={messages["forms.password"]}
-                      />
-                    </Colxx>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label sm={2} className="pt-0">
-                      <IntlMessages id="forms.radios" />
-                    </Label>
-                    <Colxx sm={10}>
-                      <FormGroup check>
-                        <Label check>
-                          <Input type="radio" name="radio1" />
-                          <IntlMessages id="forms.first-radio" />
-                        </Label>
-                      </FormGroup>
-                      <FormGroup check>
-                        <Label check>
-                          <Input type="radio" name="radio1" />
-                          <IntlMessages id="forms.second-radio" />
-                        </Label>
-                      </FormGroup>
-                      <FormGroup check disabled>
-                        <Label check>
-                          <Input type="radio" name="radio1" disabled />
-                          <IntlMessages id="forms.third-radio-disabled" />
-                        </Label>
-                      </FormGroup>
-                    </Colxx>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label sm={2} className="pt-0">
-                      <IntlMessages id="forms.checkbox" />
-                    </Label>
-                    <Colxx sm={10}>
-                      <FormGroup check>
-                        <Label check>
-                          <Input type="checkbox" name="check1" /> Example
-                          <IntlMessages id="forms.checkbox" />
-                        </Label>
-                      </FormGroup>
-                    </Colxx>
-                  </FormGroup>
-
-                  <Button color="primary">
-                    <IntlMessages id="forms.signin" />
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-
-        <Row className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="forms.top-labels-over-line" />
-                </CardTitle>
-
-                <Form>
-                  <Label className="form-group has-float-label">
-                    <Input type="email" />
-                    <IntlMessages id="forms.email" />
-                  </Label>
-                  <Label className="form-group has-float-label">
-                    <Input type="password" />
-                    <IntlMessages id="forms.password" />
-                  </Label>
-                  <div className="form-group has-float-label">
-                    <TagsInput
-                      value={this.state.tagsLabelOver}
-                      onChange={this.handleTagChangeLabelOver}
-                      inputProps={{ placeholder: messages["forms.tags"] }}
-                    />
-                    <IntlMessages id="forms.tags" />
-                  </div>
-                  <div className="form-group has-float-label">
-                    <DatePicker
-                      selected={this.state.startDateLabelOver}
-                      onChange={this.handleChangeDateLabelOver}
-                    />
-                    <IntlMessages id="forms.date" />
-                  </div>
-
-                  <div className="form-group has-float-label">
-                    <Select
-                      components={{ Input: CustomSelectInput }}
-                      className="react-select"
-                      classNamePrefix="react-select"
-                      name="form-field-name"
-                      value={this.state.selectedOptionLabelOver}
-                      onChange={this.handleChangeLabelOver}
-                      options={selectData}
-                    />
-                    <IntlMessages id="forms.state" />
-                  </div>
-
-                  <Button color="primary">
-                    <IntlMessages id="forms.submit" />
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-
-        <Row className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="forms.top-labels-in-input" />
-                </CardTitle>
-
-                <Form>
-                  <Label className="form-group has-top-label">
-                    <Input type="email" />
-                    <IntlMessages id="forms.email-u" />
-                  </Label>
-                  <Label className="form-group has-top-label">
-                    <Input type="password" />
-                    <IntlMessages id="forms.password-u" />
-                  </Label>
-                  <div className="form-group has-top-label">
-                    <TagsInput
-                      value={this.state.tagsLabelTop}
-                      onChange={this.handleTagChangeLabelTop}
-                      inputProps={{ placeholder: messages["forms.tags"] }}
-                    />
-                    <IntlMessages id="forms.tags-u" />
-                  </div>
-                  <div className="form-group has-top-label">
-                    <DatePicker
-                      shouldCloseOnSelect={true}
-                      selected={this.state.startDateLabelTop}
-                      onChange={this.handleChangeDateLabelTop}
-                    />
-                    <IntlMessages id="forms.date-u" />
-                  </div>
-
-                  <div className="form-group has-top-label">
-                    <Select
-                      components={{ Input: CustomSelectInput }}
-                      className="react-select"
-                      classNamePrefix="react-select"
-                      name="form-field-name"
-                      value={this.state.selectedOptionLabelTop}
-                      onChange={this.handleChangeLabelTop}
-                      options={selectData}
-                    />
-                    <IntlMessages id="forms.state-u" />
-                  </div>
-
-                  <Button color="primary">
-                    <IntlMessages id="forms.submit" />
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-
-        <Row className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="forms.grid" />
-                </CardTitle>
-                <Form>
-                  <FormGroup row>
-                    <Colxx sm={6}>
-                      <FormGroup>
-                        <Label for="exampleEmailGrid">
-                          <IntlMessages id="forms.email" />
-                        </Label>
-                        <Input
-                          type="email"
-                          name="exampleEmailGrid"
-                          id="exampleEmailGrid"
-                          placeholder={messages["forms.email"]}
-                        />
-                      </FormGroup>
-                    </Colxx>
-
-                    <Colxx sm={6}>
-                      <FormGroup>
-                        <Label for="examplePasswordGrid">
-                          <IntlMessages id="forms.password" />
-                        </Label>
-                        <Input
-                          type="password"
-                          name="examplePasswordGrid"
-                          id="examplePasswordGrid"
-                          placeholder={messages["forms.password"]}
-                        />
-                      </FormGroup>
-                    </Colxx>
-
-                    <Colxx sm={12}>
-                      <FormGroup>
-                        <Label for="exampleAddressGrid">
-                          <IntlMessages id="forms.address" />
-                        </Label>
-                        <Input
-                          type="text"
-                          name="exampleAddressGrid"
-                          id="exampleAddressGrid"
-                          placeholder={messages["forms.address"]}
-                        />
-                      </FormGroup>
-                    </Colxx>
-
-                    <Colxx sm={12}>
-                      <FormGroup>
-                        <Label for="exampleAddress2Grid">
-                          <IntlMessages id="forms.address2" />
-                        </Label>
-                        <Input
-                          type="text"
-                          name="exampleAddress2Grid"
-                          id="exampleAddress2Grid"
-                          placeholder={messages["forms.address"]}
-                        />
-                      </FormGroup>
-                    </Colxx>
-
-                    <Colxx sm={6}>
-                      <FormGroup>
-                        <Label for="exampleEmailGrid">
-                          <IntlMessages id="forms.city" />
-                        </Label>
-                        <Input
-                          type="text"
-                          name="exampleTextGrid"
-                          id="exampleTextGrid"
-                          placeholder={messages["forms.city"]}
-                        />
-                      </FormGroup>
-                    </Colxx>
-
-                    <Colxx sm={4}>
-                      <FormGroup>
-                        <Label>
-                          <IntlMessages id="forms.state" />
-                        </Label>
-                        <Input type="select">
-                          <option>گزینه 1</option>
-                          <option>گزینه 2</option>
-                          <option>گزینه 3</option>
-                          <option>گزینه 4</option>
-                          <option>گزینه 5</option>
-                        </Input>
-                      </FormGroup>
-                    </Colxx>
-
-                    <Colxx sm={2}>
-                      <FormGroup>
-                        <Label for="exampleZipGrid">
-                          <IntlMessages id="forms.zip" />
-                        </Label>
-                        <Input
-                          type="text"
-                          name="exampleZipGrid"
-                          id="exampleZipGrid"
-                          placeholder={messages["forms.zip"]}
-                        />
-                      </FormGroup>
-                    </Colxx>
-                  </FormGroup>
-
-                  <Button color="primary">
-                    <IntlMessages id="forms.signup" />
-                  </Button>
-                </Form>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-
-        <Row className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="forms.validation" />
-                </CardTitle>
-                <CardSubtitle>
-                  <IntlMessages id="forms.default" />
-                </CardSubtitle>
 
                 <AvForm className="mb-5 row">
                   <Colxx sm={6}>
@@ -528,105 +155,124 @@ class FormsUi extends Component {
                   <Colxx sm={6}>
                     <AvGroup>
                       <Label className="av-label" for="avexampleCity">
-                        <IntlMessages id="forms.city" />
+                        <IntlMessages id="forms.mobile" />
                       </Label>
-                      <AvInput name="rank" id="avexampleCity" required />
+                      <AvInput name="rank" id="avexampleMobile" required />
                       <AvFeedback>
-                        <IntlMessages id="forms.city-message" />
+                        <IntlMessages id="forms.mobile-message" />
                       </AvFeedback>
                     </AvGroup>
                   </Colxx>
-
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="avexampleState">
-                        <IntlMessages id="forms.state" />
-                      </Label>
-                      <AvInput name="rank" id="avexampleState" required />
-                      <AvFeedback>
-                        <IntlMessages id="forms.state-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={12}>
-                    <FormGroup>
-                      <Button outline color="primary">
-                        <IntlMessages id="forms.submit" />
-                      </Button>
-                    </FormGroup>
-                  </Colxx>
-                </AvForm>
-
-                <CardSubtitle>Tooltip</CardSubtitle>
-
-                <AvForm className="av-tooltip mb-5 row">
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="avexampleNameTooltip">
-                        <IntlMessages id="forms.firstname" />
-                      </Label>
-                      <AvInput name="rank" id="avexampleNameTooltip" required />
-                      <AvFeedback>
-                        <IntlMessages id="forms.firstname-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label
-                        className="av-label"
-                        for="avexampleLastNameTooltip"
-                      >
-                        <IntlMessages id="forms.lastname" />
+                      <Label className="av-label" for="avexampleEmail">
+                        <IntlMessages id="forms.email" />
                       </Label>
                       <AvInput
-                        name="rank"
-                        id="avexampleLastNameTooltip"
-                        required
-                      />
-                      <AvFeedback>
-                        <IntlMessages id="forms.lastname-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="avexampleCityTooltip">
-                        <IntlMessages id="forms.city" />
-                      </Label>
-                      <AvInput name="rank" id="avexampleCityTooltip" required />
-                      <AvFeedback>
-                        <IntlMessages id="forms.city-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="avexampleState">
-                        <IntlMessages id="forms.state" />
-                      </Label>
-                      <AvInput
-                        name="rank"
+                        name="email"
                         id="avexampleStateTooltip"
+                        placeholder={messages["forms.email"]}
                         required
                       />
                       <AvFeedback>
-                        <IntlMessages id="forms.state-message" />
+                        <IntlMessages id="forms.email" />
                       </AvFeedback>
                     </AvGroup>
                   </Colxx>
+
                   <Colxx sm={12}>
                     <FormGroup>
-                      <Button outline color="primary">
-                        <IntlMessages id="forms.submit" />
+                      <Button color="primary">
+                        <IntlMessages id="layouts.submit" />
                       </Button>
                     </FormGroup>
                   </Colxx>
                 </AvForm>
+              </CardBody>
+            </Card>
+          </Colxx>
+        </Row>
+        <Row className="mb-4">
+          <Colxx xxs="12">
+            <Card>
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="menu.add-hostdata" />
+                </CardTitle>
+                <Form>
+                  <FormGroup row>
+                    <Colxx sm={6}>
+                      <FormGroup>
+                        <Label for="hostName">
+                          <IntlMessages id="forms.host-name" />
+                        </Label>
+                        <Input name="hostName" id="hostName" />
+                      </FormGroup>
+                    </Colxx>
+
+                    <Colxx sm={6}>
+                      <FormGroup>
+                        <Label for="hostCity">
+                          <IntlMessages id="forms.city" />
+                        </Label>
+                        <Input
+                          type="password"
+                          name="hostCity"
+                          id="hostCity"
+                          placeholder={messages["forms.city"]}
+                        />
+                      </FormGroup>
+                    </Colxx>
+
+                    <Colxx sm={12}>
+                      <FormGroup>
+                        <Label for="exampleAddressGrid">
+                          <IntlMessages id="forms.address" />
+                        </Label>
+                        <Input
+                          type="text"
+                          name="exampleAddressGrid"
+                          id="exampleAddressGrid"
+                          placeholder={messages["forms.address"]}
+                        />
+                      </FormGroup>
+                    </Colxx>
+
+                    <Colxx sm={12}>
+                      <FormGroup>
+                        <Label for="hostDetail">
+                          <IntlMessages id="forms.host-detail" />
+                        </Label>
+                        <Input type="text" name="hostDetail" id="hostDetail" />
+                      </FormGroup>
+                    </Colxx>
+
+                    <Colxx sm={4}>
+                      <FormGroup>
+                        <Label>
+                          <IntlMessages id="forms.state" />
+                        </Label>
+                        <Select options={selectData} />
+                      </FormGroup>
+                    </Colxx>
+                    <Colxx sm={8}>
+                      <FormGroup>
+                        <Label for="hostDetail">
+                          <IntlMessages id="forms.tags" />
+                        </Label>
+                        <TagsInput
+                          value={this.state.tagsLabelOver}
+                          onChange={this.handleTagChangeLabelOver}
+                          inputProps={{ placeholder: messages["forms.tags"] }}
+                        />
+                      </FormGroup>
+                    </Colxx>
+                  </FormGroup>
+
+                  <Button color="primary">
+                    <IntlMessages id="layouts.submit" />
+                  </Button>
+                </Form>
               </CardBody>
             </Card>
           </Colxx>

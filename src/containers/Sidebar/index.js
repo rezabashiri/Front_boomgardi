@@ -533,7 +533,7 @@ class Sidebar extends Component {
                 <NavItem>
                   <NavLink to="/app/applications/survey">
                     <i className="simple-icon-check" />{" "}
-                    <IntlMessages id="menu.addhost" />
+                    <IntlMessages id="menu.add-host" />
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -567,7 +567,7 @@ class Sidebar extends Component {
                 <NavItem>
                   <NavLink to="/app/hosts/add-host">
                     <i className="simple-icon-check" />{" "}
-                    <IntlMessages id="menu.addhost" />
+                    <IntlMessages id="menu.add-host" />
                   </NavLink>
                 </NavItem>
                 <NavItem>
