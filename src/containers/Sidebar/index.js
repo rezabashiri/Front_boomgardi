@@ -565,7 +565,7 @@ class Sidebar extends Component {
                 data-parent="hosts"
               >
                 <NavItem>
-                  <NavLink to="/app/hosts/add">
+                  <NavLink to="/app/hosts/add-host">
                     <i className="simple-icon-check" />{" "}
                     <IntlMessages id="menu.addhost" />
                   </NavLink>
@@ -574,18 +574,6 @@ class Sidebar extends Component {
                   <NavLink to="/app/hosts/host-list">
                     <i className="simple-icon-list" />{" "}
                     <IntlMessages id="menu.hostslist" />
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink to="/app/applications/chat">
-                    <i className="simple-icon-bubbles" />{" "}
-                    <IntlMessages id="menu.requests" />
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink to="/app/applications/chat">
-                    <i className="simple-icon-settings" />{" "}
-                    <IntlMessages id="menu.setting" />
                   </NavLink>
                 </NavItem>
               </Nav>
