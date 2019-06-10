@@ -35,7 +35,7 @@ import Prices from "Routes/landing-pages/prices";
 import Videos from "Routes/landing-pages/videos";
 import VideoDetail from "Routes/landing-pages/video-detail";
 import DocsDetails from "Routes/landing-pages/docs-details";
-
+import { getJwt } from "../helpers/Jwt";
 
 import 'Assets/css/vendor/bootstrap.min.css'
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -45,7 +45,7 @@ const InitialPath = ({ component: Component, ...rest, authUser }) =>
 	<Route
 		{...rest}
 		render={props =>
-			authUser
+			getJwt()
 				? <Component {...props} />
 				: <Redirect
 					to={{
