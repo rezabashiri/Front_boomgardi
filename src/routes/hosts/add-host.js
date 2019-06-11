@@ -124,13 +124,13 @@ class FormsUi extends Component {
                 <AvForm className="mb-5 row">
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="avexampleName">
+                      <Label className="av-label" for="firstName">
                         <IntlMessages id="forms.firstname" />
                       </Label>
                       <AvInput
                         className="form-control"
-                        name="rank"
-                        id="avexampleName"
+                        name="firstName"
+                        id="firstName"
                         required
                       />
                       <AvFeedback>
@@ -141,11 +141,11 @@ class FormsUi extends Component {
 
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="avexampleLastName">
+                      <Label className="av-label" for="lastName">
                         <IntlMessages id="forms.lastname" />
                       </Label>
 
-                      <AvInput name="testit" id="avexampleLastName" required />
+                      <AvInput name="lastName" id="lastName" required />
                       <AvFeedback>
                         <IntlMessages id="forms.lastname-message" />
                       </AvFeedback>
@@ -165,17 +165,12 @@ class FormsUi extends Component {
                   </Colxx>
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="avexampleEmail">
+                      <Label className="av-label" for="email">
                         <IntlMessages id="forms.email" />
                       </Label>
-                      <AvInput
-                        name="email"
-                        id="avexampleStateTooltip"
-                        placeholder={messages["forms.email"]}
-                        required
-                      />
+                      <AvInput name="email" id="email" required />
                       <AvFeedback>
-                        <IntlMessages id="forms.email" />
+                        <IntlMessages id="forms.email-message" />
                       </AvFeedback>
                     </AvGroup>
                   </Colxx>
@@ -199,65 +194,82 @@ class FormsUi extends Component {
                 <CardTitle>
                   <IntlMessages id="menu.add-hostdata" />
                 </CardTitle>
-                <Form>
-                  <FormGroup row>
+                <AvForm>
+                  <AvGroup row>
                     <Colxx sm={6}>
-                      <FormGroup>
-                        <Label for="hostName">
+                      <AvGroup>
+                        <Label className="av-label" for="hostName">
                           <IntlMessages id="forms.host-name" />
                         </Label>
-                        <Input name="hostName" id="hostName" />
-                      </FormGroup>
+                        <AvInput name="hostName" id="hostName" required />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hostname-message" />
+                        </AvFeedback>
+                      </AvGroup>
                     </Colxx>
 
                     <Colxx sm={6}>
-                      <FormGroup>
-                        <Label for="hostCity">
+                      <AvGroup>
+                        <Label className="av-label" for="hostCity">
                           <IntlMessages id="forms.city" />
                         </Label>
-                        <Input
+                        <AvInput
                           type="password"
                           name="hostCity"
                           id="hostCity"
-                          placeholder={messages["forms.city"]}
+                          required
                         />
-                      </FormGroup>
+                        <AvFeedback>
+                          <IntlMessages id="forms.hostcity-message" />
+                        </AvFeedback>
+                      </AvGroup>
                     </Colxx>
 
                     <Colxx sm={12}>
-                      <FormGroup>
-                        <Label for="exampleAddressGrid">
+                      <AvGroup>
+                        <Label className="av-label" for="hostAddress">
                           <IntlMessages id="forms.address" />
                         </Label>
-                        <Input
+                        <AvInput
                           type="text"
                           name="exampleAddressGrid"
-                          id="exampleAddressGrid"
-                          placeholder={messages["forms.address"]}
+                          id="hostAddress"
+                          required
                         />
-                      </FormGroup>
+                        <AvFeedback>
+                          <IntlMessages id="forms.hostaddress-message" />
+                        </AvFeedback>
+                      </AvGroup>
                     </Colxx>
 
                     <Colxx sm={12}>
-                      <FormGroup>
-                        <Label for="hostDetail">
+                      <AvGroup>
+                        <Label className="av-label" for="hostDetail">
                           <IntlMessages id="forms.host-detail" />
                         </Label>
-                        <Input type="text" name="hostDetail" id="hostDetail" />
-                      </FormGroup>
+                        <AvInput
+                          type="text"
+                          name="hostDetail"
+                          id="hostDetail"
+                          required
+                        />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hostdetail-message" />
+                        </AvFeedback>
+                      </AvGroup>
                     </Colxx>
 
                     <Colxx sm={4}>
-                      <FormGroup>
-                        <Label>
+                      <AvGroup>
+                        <Label className="av-label">
                           <IntlMessages id="forms.state" />
                         </Label>
                         <Select options={selectData} />
-                      </FormGroup>
+                      </AvGroup>
                     </Colxx>
                     <Colxx sm={8}>
                       <FormGroup>
-                        <Label for="hostDetail">
+                        <Label for="hostTags" className="av-label">
                           <IntlMessages id="forms.tags" />
                         </Label>
                         <TagsInput
@@ -267,12 +279,12 @@ class FormsUi extends Component {
                         />
                       </FormGroup>
                     </Colxx>
-                  </FormGroup>
+                  </AvGroup>
 
                   <Button color="primary">
                     <IntlMessages id="layouts.submit" />
                   </Button>
-                </Form>
+                </AvForm>
               </CardBody>
             </Card>
           </Colxx>

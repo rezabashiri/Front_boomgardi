@@ -448,6 +448,11 @@ module.exports = {
   "forms.default": "پیش فرض",
   "forms.firstname": "نام",
   "forms.firstname-message": "لطفا نام خود را وارد کنید!",
+  "forms.email-message": "لطفا پست الکترونیک خود را وارد کنید",
+  "forms.hostname-message": "لطفا نام اقامتگاه را وارد کنید",
+  "forms.hostaddress-message": "لطفا آدرس اقامتگاه راوارد کنید",
+  "forms.hostdetail-message": "لطفا توضیحات موبوط به اقامتگاه را وارد کنید",
+  "forms.hostcity-message": "لطفا شهر اقامتگاه را وارد کنید",
   "forms.lastname": "نام خانوادگی",
   "forms.lastname-message": "لطفا نام خانوادگی خود را وارد کنید!",
 
