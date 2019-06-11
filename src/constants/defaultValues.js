@@ -19,7 +19,7 @@ export const firebaseConfig = {
 };
 
 export const serverConfig ={
-  url :"http://localhost:40679/"
+  url :"http://192.168.1.5:40679/"
 }
 
 const authConfig = {
