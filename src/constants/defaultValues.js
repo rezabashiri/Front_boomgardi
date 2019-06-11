@@ -18,6 +18,10 @@ export const firebaseConfig = {
   messagingSenderId: "216495999563"
 };
 
+export const serverConfig ={
+  url :"http://localhost:40679/"
+}
+
 const authConfig = {
   serverUrl: "http://auth.moroorgaran.com/",
   loginUrl: "jwtlogin",
