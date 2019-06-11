@@ -3,6 +3,8 @@ import { injectIntl } from "react-intl";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import BreadcrumbContainer from "Components/BreadcrumbContainer";
 import IntlMessages from "Util/IntlMessages";
+import AddHostWizard from "./addHostWizard";
+//import StepperExample from "./hostWizard";
 import {
   Row,
   Card,
@@ -289,6 +291,7 @@ class FormsUi extends Component {
             </Card>
           </Colxx>
         </Row>
+        <AddHostWizard />
       </Fragment>
     );
   }
