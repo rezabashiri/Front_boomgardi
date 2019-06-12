@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import addressService from "../../services/addressService.jsx";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import {
@@ -30,13 +31,112 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
-const selectData = [
-  { label: "تهران", value: "tehran", key: 0 },
-  { label: "اصفهان", value: "isfahan", key: 1 },
-  { label: "شیراز", value: "shiraz", key: 2 }
-];
-
 class HostForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ostan: [
+        { label: "تهران", value: "tehran", key: 0 },
+        { label: "اصفهان", value: "isfahan", key: 1 },
+        { label: "شیراز", value: "shiraz", key: 2 }
+      ],
+      shahr: [],
+      selectedOstan: null,
+      selectedShahr: null,
+      selectedDehestan: null,
+      selectedRoosta: null,
+      bakhsh: [],
+      dehestan: [],
+      roosta: []
+    };
+
+    this.getOstanList = this.getOstanList.bind(this);
+    this.getShahrestanList = this.getShahrestanList.bind(this);
+    this.getBakhshList = this.getBakhshList.bind(this);
+    this.getDehestanList = this.getDehestanList.bind(this);
+  }
+  async componentDidMount() {
+    this.getOstanList();
+    //this.getShahrestanList();
+    //this.getBakhshList();
+  }
+
+  async getOstanList() {
+    let addrService = new addressService();
+    let ostanList = await addrService.getOstan();
+    let newOstan = ostanList.map(c => {
+      return { label: c.sharh, value: c.id };
+    });
+    console.log(newOstan);
+    this.setState({
+      ostan: newOstan
+    });
+  }
+  async getShahrestanList(codeostan) {
+    let addrService = new addressService();
+    let shahrestanList = await addrService.getShahrestan(codeostan);
+    let newShahrestan = shahrestanList.map(c => {
+      return { label: c.sharh, value: c.id };
+    });
+    console.log(newShahrestan);
+    this.setState({
+      shahr: newShahrestan
+    });
+  }
+  async getBakhshList(idShahrestan) {
+    let addrService = new addressService();
+    let bakhshList = await addrService.getBakhsh(idShahrestan);
+    let newBakhsh = bakhshList.map(c => {
+      return { label: c.sharh, value: c.id };
+    });
+    console.log(newBakhsh);
+    this.setState({
+      bakhsh: newBakhsh
+    });
+  }
+  async getDehestanList(idBakhsh) {
+    let addrService = new addressService();
+    let dehestanList = await addrService.getDehestan(idBakhsh);
+    let newDehestan = dehestanList.map(c => {
+      return { label: c.sharh, value: c.id };
+    });
+    console.log(newDehestan);
+    this.setState({
+      dehestan: newDehestan
+    });
+  }
+  async getRoostaList(idDehestan) {
+    let addrService = new addressService();
+    let roostaList = await addrService.getRoosta(idDehestan);
+    let newRoosta = roostaList.map(c => {
+      return { label: c.sharh, value: c.id };
+    });
+    console.log(newRoosta);
+    this.setState({
+      roosta: newRoosta
+    });
+  }
+  handleOstanChange = selectedOstan => {
+    this.setState({ selectedOstan });
+    console.log(`ostan selected:`, selectedOstan.value);
+    this.getShahrestanList(selectedOstan.value);
+  };
+  handleShahrChange = selectedShahr => {
+    this.setState({ selectedShahr });
+    console.log(`shahr selected:`, selectedShahr.value);
+    this.getBakhshList(selectedShahr.value);
+  };
+  handleBakhshChange = selectedBakhsh => {
+    this.setState({ selectedBakhsh });
+    console.log(`bakhsh selected:`, selectedBakhsh.value);
+    this.getDehestanList(selectedBakhsh.value);
+  };
+  handleDehestanChange = selectedDehestan => {
+    this.setState({ selectedDehestan });
+    console.log(`dehestan selected:`, selectedDehestan.value);
+    this.getRoostaList(selectedDehestan.value);
+  };
+
   render() {
     return (
       <Fragment>
@@ -62,23 +162,6 @@ class HostForm extends Component {
                     </Colxx>
 
                     <Colxx sm={6}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostCity">
-                          <IntlMessages id="forms.city" />
-                        </Label>
-                        <AvInput
-                          type="password"
-                          name="hostCity"
-                          id="hostCity"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostcity-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
-                    <Colxx sm={12}>
                       <AvGroup>
                         <Label className="av-label" for="hostAddress">
                           <IntlMessages id="forms.address" />
@@ -117,12 +200,56 @@ class HostForm extends Component {
                         <Label className="av-label">
                           <IntlMessages id="forms.state" />
                         </Label>
-                        <Select options={selectData} />
+                        <Select
+                          onChange={this.handleOstanChange}
+                          options={this.state.ostan}
+                        />
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label">
+                          <IntlMessages id="forms.city" />
+                        </Label>
+                        <Select
+                          onChange={this.handleShahrChange}
+                          options={this.state.shahr}
+                        />
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label">
+                          <IntlMessages id="forms.region" />
+                        </Label>
+                        <Select
+                          onChange={this.handleBakhshChange}
+                          options={this.state.bakhsh}
+                        />
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label">
+                          <IntlMessages id="forms.dehestan" />
+                        </Label>
+                        <Select
+                          onChange={this.handleDehestanChange}
+                          options={this.state.dehestan}
+                        />
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label">
+                          <IntlMessages id="forms.roosta" />
+                        </Label>
+                        <Select options={this.state.roosta} />
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
 
-                  <Button color="primary">
+                  <Button color="primary" onClick={() => this.getOstanList()}>
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>

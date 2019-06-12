@@ -39,12 +39,6 @@ import "react-fine-uploader/gallery/gallery.css";
 import OwnerForm from "./ownerForm";
 import HostForm from "./hostForm";
 
-const selectData = [
-  { label: "تهران", value: "tehran", key: 0 },
-  { label: "اصفهان", value: "isfahan", key: 1 },
-  { label: "شیراز", value: "shiraz", key: 2 }
-];
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: "90%"

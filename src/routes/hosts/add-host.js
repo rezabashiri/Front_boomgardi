@@ -115,7 +115,7 @@ class FormsUi extends Component {
             <Separator className="mb-5" />
           </Colxx>
         </Row>
-        <Row className="mb-4">
+        <Row hidden className="mb-4">
           <Colxx xxs="12">
             <Card>
               <CardBody>
@@ -189,7 +189,7 @@ class FormsUi extends Component {
             </Card>
           </Colxx>
         </Row>
-        <Row className="mb-4">
+        <Row hidden className="mb-4">
           <Colxx xxs="12">
             <Card>
               <CardBody>

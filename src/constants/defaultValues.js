@@ -18,9 +18,14 @@ export const firebaseConfig = {
   messagingSenderId: "216495999563"
 };
 
-export const serverConfig ={
-  url :"http://localhost:40679/"
-}
+export const serverConfig = {
+  baseUrl: "http://192.168.1.5:40679/api/",
+  ostanUrl: "ostan",
+  shahrestanUrl: "Shahrestan?codeostan=",
+  bakhshUrl: "bakhsh?idShahrestan=",
+  dehestanUrl: "Dehestan?IdBakhsh=",
+  roostaUrl: "roosta?IdDehestan="
+};
 
 const authConfig = {
   serverUrl: "http://auth.moroorgaran.com/",
