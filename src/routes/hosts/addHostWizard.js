@@ -38,6 +38,7 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import OwnerForm from "./ownerForm";
 import HostForm from "./hostForm";
+import UploadForm from "./uploadForm";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -66,7 +67,7 @@ function getStepContent(step) {
     case 1:
       return <HostForm />;
     case 2:
-      return "Upload picture component";
+      return <UploadForm />;
     default:
       return "Unknown step";
   }

@@ -30,16 +30,29 @@ import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
+import CedarMaps from "@cedarstudios/react-cedarmaps";
+const {
+  RotationControl,
+  ZoomControl,
+  ScaleControl,
+  Marker,
+  Feature,
+  Layer
+} = CedarMaps.getReactMapboxGl();
+
+const POSITION_CIRCLE_PAINT = {
+  "circle-stroke-width": 4,
+  "circle-radius": 10,
+  "circle-blur": 0.15,
+  "circle-color": "#3770C6",
+  "circle-stroke-color": "white"
+};
 
 class HostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ostan: [
-        { label: "تهران", value: "tehran", key: 0 },
-        { label: "اصفهان", value: "isfahan", key: 1 },
-        { label: "شیراز", value: "shiraz", key: 2 }
-      ],
+      ostan: [],
       shahr: [],
       selectedOstan: null,
       selectedShahr: null,
@@ -47,7 +60,10 @@ class HostForm extends Component {
       selectedRoosta: null,
       bakhsh: [],
       dehestan: [],
-      roosta: []
+      roosta: [],
+      styleKey: "",
+      postion: [51.68440411028229, 32.64206332406948],
+      centerPosition: [51.68440411028229, 32.64206332406948]
     };
 
     this.getOstanList = this.getOstanList.bind(this);
@@ -57,8 +73,6 @@ class HostForm extends Component {
   }
   async componentDidMount() {
     this.getOstanList();
-    //this.getShahrestanList();
-    //this.getBakhshList();
   }
 
   async getOstanList() {
@@ -136,7 +150,14 @@ class HostForm extends Component {
     console.log(`dehestan selected:`, selectedDehestan.value);
     this.getRoostaList(selectedDehestan.value);
   };
-
+  handleEndDrag(e) {
+    console.log(e.lngLat.lng);
+    console.log(e.lngLat.lat);
+    this.setState({
+      centerPosition: [e.lngLat.lng, e.lngLat.lat],
+      postion: [e.lngLat.lng, e.lngLat.lat]
+    });
+  }
   render() {
     return (
       <Fragment>
@@ -249,13 +270,39 @@ class HostForm extends Component {
                     </Colxx>
                   </AvGroup>
 
-                  <Button color="primary" onClick={() => this.getOstanList()}>
+                  <Button color="primary">
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>
               </CardBody>
             </Card>
           </Colxx>
+        </Row>
+        <Row className="mb-4">
+          <CedarMaps
+            containerStyle={{
+              height: "70vh",
+              width: "70%"
+            }}
+            token="59f0a6f3693d7fb3900b914cbcbce5b6775048bd"
+            preserveDrawingBuffer={false}
+            center={this.state.centerPosition}
+          >
+            <ZoomControl />
+            <ScaleControl />
+            <Layer
+              type="circle"
+              id="position-marker"
+              paint={POSITION_CIRCLE_PAINT}
+            >
+              <Feature
+                key={1}
+                coordinates={this.state.centerPosition}
+                draggable={true}
+                onDragEnd={evt => this.handleEndDrag(evt)}
+              />
+            </Layer>
+          </CedarMaps>
         </Row>
       </Fragment>
     );

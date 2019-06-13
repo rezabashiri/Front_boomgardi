@@ -86,12 +86,12 @@ class OwnerForm extends Component {
                   </Colxx>
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="email">
-                        <IntlMessages id="forms.email" />
+                      <Label className="av-label" for="codemeli">
+                        <IntlMessages id="forms.codemeli" />
                       </Label>
-                      <AvInput name="email" id="email" required />
+                      <AvInput name="codemeli" id="codemeli" required />
                       <AvFeedback>
-                        <IntlMessages id="forms.email-message" />
+                        <IntlMessages id="forms.codemeli-message" />
                       </AvFeedback>
                     </AvGroup>
                   </Colxx>
