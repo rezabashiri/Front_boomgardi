@@ -45,12 +45,12 @@
     "webpack": "^4.27.1",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.7.1"
   },
   "dependencies": {
     "@date-io/moment": "0.0.2",
     "availity-reactstrap-validation": "^2.0.4",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "chart.js": "^2.7.2",
     "chartjs-plugin-datalabels": "^0.3.0",
     "classnames": "2.2.6",
@@ -62,7 +62,7 @@
     "material-ui-persian-date-picker-utils": "^0.1.2",
     "material-ui-pickers": "^2.0.4",
     "moment": "^2.22.2",
-    "npm": "^6.5.0",
+    "npm": "^6.9.0",
     "rc-slider": "^8.6.1",
     "rc-switch": "^1.6.0",
     "react": "^16.4.1",
@@ -94,6 +94,7 @@
     "redux": "4.0.0",
     "redux-saga": "^0.16.0",
     "sortablejs": "^1.6.1",
-    "video.js": "^7.3.0"
+    "video.js": "^7.3.0",
+    "zubair-react-form-builder": "^1.1.1"
   }
 }
