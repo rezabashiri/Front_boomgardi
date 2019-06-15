@@ -24,7 +24,21 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
-const uploader = new FineUploaderTraditional({
+const hostUploader = new FineUploaderTraditional({
+  options: {
+    chunking: {
+      enabled: false
+    },
+    deleteFile: {
+      enabled: true,
+      endpoint: "/uploads"
+    },
+    request: {
+      endpoint: "/uploads"
+    }
+  }
+});
+const licenseUploader = new FineUploaderTraditional({
   options: {
     chunking: {
       enabled: false
@@ -52,7 +66,26 @@ class UploadForm extends Component {
                 </CardTitle>
                 <Gallery
                   animationsDisabled={true}
-                  uploader={uploader}
+                  uploader={hostUploader}
+                  deleteButton-children={<span>Delete</span>}
+                  fileInput-children={<span />}
+                >
+                  <span className="react-fine-uploader-gallery-dropzone-content">
+                    <IntlMessages id="form-components.drop-files-here" />
+                  </span>
+                </Gallery>
+              </CardBody>
+            </Card>
+          </Colxx>
+          <Colxx xxs="12">
+            <Card>
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="form-components.upload-licensepic" />
+                </CardTitle>
+                <Gallery
+                  animationsDisabled={true}
+                  uploader={licenseUploader}
                   deleteButton-children={<span>Delete</span>}
                   fileInput-children={<span />}
                 >

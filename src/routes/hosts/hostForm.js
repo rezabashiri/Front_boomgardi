@@ -14,7 +14,11 @@ import {
   Button,
   FormText,
   Form,
-  CardSubtitle
+  CardSubtitle,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 import Select from "react-select";
 
@@ -52,6 +56,7 @@ class HostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      addressModal: false,
       ostan: [],
       shahr: [],
       selectedOstan: null,
@@ -62,24 +67,30 @@ class HostForm extends Component {
       dehestan: [],
       roosta: [],
       styleKey: "",
-      postion: [51.68440411028229, 32.64206332406948],
-      centerPosition: [51.68440411028229, 32.64206332406948]
+      postion: [],
+      centerPosition: [51.67462, 32.65246]
     };
 
     this.getOstanList = this.getOstanList.bind(this);
     this.getShahrestanList = this.getShahrestanList.bind(this);
     this.getBakhshList = this.getBakhshList.bind(this);
     this.getDehestanList = this.getDehestanList.bind(this);
+    this.toggleAddressModal = this.toggleAddressModal.bind(this);
   }
   async componentDidMount() {
     this.getOstanList();
+  }
+  toggleAddressModal() {
+    this.setState({
+      addressModal: !this.state.addressModal
+    });
   }
 
   async getOstanList() {
     let addrService = new addressService();
     let ostanList = await addrService.getOstan();
     let newOstan = ostanList.map(c => {
-      return { label: c.sharh, value: c.id };
+      return { label: c.name, value: c.id, lat: c.lat, lng: c.lng };
     });
     console.log(newOstan);
     this.setState({
@@ -90,7 +101,7 @@ class HostForm extends Component {
     let addrService = new addressService();
     let shahrestanList = await addrService.getShahrestan(codeostan);
     let newShahrestan = shahrestanList.map(c => {
-      return { label: c.sharh, value: c.id };
+      return { label: c.name, value: c.id };
     });
     console.log(newShahrestan);
     this.setState({
@@ -101,7 +112,7 @@ class HostForm extends Component {
     let addrService = new addressService();
     let bakhshList = await addrService.getBakhsh(idShahrestan);
     let newBakhsh = bakhshList.map(c => {
-      return { label: c.sharh, value: c.id };
+      return { label: c.name, value: c.id };
     });
     console.log(newBakhsh);
     this.setState({
@@ -112,7 +123,7 @@ class HostForm extends Component {
     let addrService = new addressService();
     let dehestanList = await addrService.getDehestan(idBakhsh);
     let newDehestan = dehestanList.map(c => {
-      return { label: c.sharh, value: c.id };
+      return { label: c.name, value: c.id };
     });
     console.log(newDehestan);
     this.setState({
@@ -123,7 +134,7 @@ class HostForm extends Component {
     let addrService = new addressService();
     let roostaList = await addrService.getRoosta(idDehestan);
     let newRoosta = roostaList.map(c => {
-      return { label: c.sharh, value: c.id };
+      return { label: c.name, value: c.id };
     });
     console.log(newRoosta);
     this.setState({
@@ -132,21 +143,40 @@ class HostForm extends Component {
   }
   handleOstanChange = selectedOstan => {
     this.setState({ selectedOstan });
+    this.setState({
+      selectedBakhsh: null,
+      selectedShahr: null,
+      selectedDehestan: null,
+      selectedRoosta: null,
+      centerPosition: [selectedOstan.lng, selectedOstan.lat]
+    });
     console.log(`ostan selected:`, selectedOstan.value);
     this.getShahrestanList(selectedOstan.value);
   };
   handleShahrChange = selectedShahr => {
     this.setState({ selectedShahr });
+    this.setState({
+      selectedBakhsh: null,
+      selectedDehestan: null,
+      selectedRoosta: null
+    });
     console.log(`shahr selected:`, selectedShahr.value);
     this.getBakhshList(selectedShahr.value);
   };
   handleBakhshChange = selectedBakhsh => {
     this.setState({ selectedBakhsh });
+    this.setState({
+      selectedDehestan: null,
+      selectedRoosta: null
+    });
     console.log(`bakhsh selected:`, selectedBakhsh.value);
     this.getDehestanList(selectedBakhsh.value);
   };
   handleDehestanChange = selectedDehestan => {
     this.setState({ selectedDehestan });
+    this.setState({
+      selectedRoosta: null
+    });
     console.log(`dehestan selected:`, selectedDehestan.value);
     this.getRoostaList(selectedDehestan.value);
   };
@@ -170,7 +200,7 @@ class HostForm extends Component {
                 </CardTitle>
                 <AvForm>
                   <AvGroup row>
-                    <Colxx sm={6}>
+                    <Colxx sm={4}>
                       <AvGroup>
                         <Label className="av-label" for="hostName">
                           <IntlMessages id="forms.host-name" />
@@ -181,41 +211,6 @@ class HostForm extends Component {
                         </AvFeedback>
                       </AvGroup>
                     </Colxx>
-
-                    <Colxx sm={6}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostAddress">
-                          <IntlMessages id="forms.address" />
-                        </Label>
-                        <AvInput
-                          type="text"
-                          name="exampleAddressGrid"
-                          id="hostAddress"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostaddress-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
-                    <Colxx sm={12}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostDetail">
-                          <IntlMessages id="forms.host-detail" />
-                        </Label>
-                        <AvInput
-                          type="text"
-                          name="hostDetail"
-                          id="hostDetail"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostdetail-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
                     <Colxx sm={4}>
                       <AvGroup>
                         <Label className="av-label">
@@ -235,6 +230,7 @@ class HostForm extends Component {
                         <Select
                           onChange={this.handleShahrChange}
                           options={this.state.shahr}
+                          value={this.state.selectedShahr}
                         />
                       </AvGroup>
                     </Colxx>
@@ -246,6 +242,7 @@ class HostForm extends Component {
                         <Select
                           onChange={this.handleBakhshChange}
                           options={this.state.bakhsh}
+                          value={this.state.selectedBakhsh}
                         />
                       </AvGroup>
                     </Colxx>
@@ -257,6 +254,7 @@ class HostForm extends Component {
                         <Select
                           onChange={this.handleDehestanChange}
                           options={this.state.dehestan}
+                          value={this.state.selectedDehestan}
                         />
                       </AvGroup>
                     </Colxx>
@@ -265,7 +263,88 @@ class HostForm extends Component {
                         <Label className="av-label">
                           <IntlMessages id="forms.roosta" />
                         </Label>
-                        <Select options={this.state.roosta} />
+                        <Select
+                          options={this.state.roosta}
+                          value={this.state.selectedRoosta}
+                        />
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label" for="hostAddress">
+                          <IntlMessages id="forms.addressOnMap" />
+                        </Label>
+                        <AvInput
+                          type="text"
+                          name="exampleAddressGrid"
+                          id="hostAddress"
+                          value={this.state.postion}
+                          onClick={this.toggleAddressModal}
+                        />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hostaddress-message" />
+                        </AvFeedback>
+                      </AvGroup>
+                      <Modal
+                        isOpen={this.state.addressModal}
+                        toggle={this.toggleAddressModal}
+                        size="lg"
+                      >
+                        <ModalHeader toggle={this.toggleAddressModal}>
+                          <IntlMessages id="modal.modal-title" />
+                        </ModalHeader>
+                        <ModalBody>
+                          <Row className="mb-4">
+                            <CedarMaps
+                              containerStyle={{
+                                height: "50vh",
+                                width: "100%"
+                              }}
+                              token="59f0a6f3693d7fb3900b914cbcbce5b6775048bd"
+                              preserveDrawingBuffer={false}
+                              center={this.state.centerPosition}
+                            >
+                              <ZoomControl />
+                              <ScaleControl />
+                              <Layer
+                                type="circle"
+                                id="position-marker"
+                                paint={POSITION_CIRCLE_PAINT}
+                              >
+                                <Feature
+                                  key={1}
+                                  coordinates={this.state.centerPosition}
+                                  draggable={true}
+                                  onDragEnd={evt => this.handleEndDrag(evt)}
+                                />
+                              </Layer>
+                            </CedarMaps>
+                          </Row>
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            color="primary"
+                            onClick={this.toggleAddressModal}
+                          >
+                            ثبت
+                          </Button>
+                        </ModalFooter>
+                      </Modal>
+                    </Colxx>
+
+                    <Colxx sm={8}>
+                      <AvGroup>
+                        <Label className="av-label" for="hostDetail">
+                          <IntlMessages id="forms.host-detail" />
+                        </Label>
+                        <AvInput
+                          type="text"
+                          name="hostDetail"
+                          id="hostDetail"
+                        />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hostdetail-message" />
+                        </AvFeedback>
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
@@ -277,32 +356,6 @@ class HostForm extends Component {
               </CardBody>
             </Card>
           </Colxx>
-        </Row>
-        <Row className="mb-4">
-          <CedarMaps
-            containerStyle={{
-              height: "70vh",
-              width: "70%"
-            }}
-            token="59f0a6f3693d7fb3900b914cbcbce5b6775048bd"
-            preserveDrawingBuffer={false}
-            center={this.state.centerPosition}
-          >
-            <ZoomControl />
-            <ScaleControl />
-            <Layer
-              type="circle"
-              id="position-marker"
-              paint={POSITION_CIRCLE_PAINT}
-            >
-              <Feature
-                key={1}
-                coordinates={this.state.centerPosition}
-                draggable={true}
-                onDragEnd={evt => this.handleEndDrag(evt)}
-              />
-            </Layer>
-          </CedarMaps>
         </Row>
       </Fragment>
     );
