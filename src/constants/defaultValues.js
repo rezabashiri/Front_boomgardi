@@ -24,7 +24,8 @@ export const serverConfig = {
   shahrestanUrl: "Shahrestan?codeostan=",
   bakhshUrl: "bakhsh?idShahrestan=",
   dehestanUrl: "Dehestan?IdBakhsh=",
-  roostaUrl: "roosta?IdDehestan="
+  roostaUrl: "roosta?IdDehestan=",
+  hostTypeUrl: "residency/residencytype"
 };
 
 const authConfig = {

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import addressService from "../../services/addressService.jsx";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
+import hostService from "../../services/hostService.jsx";
 import {
   Row,
   Card,
@@ -57,6 +58,8 @@ class HostForm extends Component {
     super(props);
     this.state = {
       addressModal: false,
+      hostName: null,
+      hostTypes: [],
       ostan: [],
       shahr: [],
       selectedOstan: null,
@@ -79,10 +82,22 @@ class HostForm extends Component {
   }
   async componentDidMount() {
     this.getOstanList();
+    this.getHostType();
   }
   toggleAddressModal() {
     this.setState({
       addressModal: !this.state.addressModal
+    });
+  }
+  async getHostType() {
+    var typeService = new hostService();
+    let hostType = await typeService.getHostType();
+    let newHostType = hostType.map(c => {
+      return { label: c.name, value: c.id };
+    });
+    console.log(newHostType);
+    this.setState({
+      hostTypes: newHostType
     });
   }
 
@@ -180,6 +195,10 @@ class HostForm extends Component {
     console.log(`dehestan selected:`, selectedDehestan.value);
     this.getRoostaList(selectedDehestan.value);
   };
+  handleRoostaChange = selectedRoosta => {
+    this.setState({ selectedRoosta });
+    console.log(`roosta selected:`, selectedRoosta.value);
+  };
   handleEndDrag(e) {
     console.log(e.lngLat.lng);
     console.log(e.lngLat.lat);
@@ -208,6 +227,28 @@ class HostForm extends Component {
                         <AvInput name="hostName" id="hostName" required />
                         <AvFeedback>
                           <IntlMessages id="forms.hostname-message" />
+                        </AvFeedback>
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label">
+                          <IntlMessages id="forms.phone" />
+                        </Label>
+                        <AvInput name="phone" id="phone" required />
+                      </AvGroup>
+                      <AvFeedback>
+                        <IntlMessages id="message.hosttype-message" />
+                      </AvFeedback>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label" for="hostType">
+                          <IntlMessages id="forms.host-type" />
+                        </Label>
+                        <Select id="hostType" options={this.state.hostTypes} />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hosttype-message" />
                         </AvFeedback>
                       </AvGroup>
                     </Colxx>
@@ -266,6 +307,7 @@ class HostForm extends Component {
                         <Select
                           options={this.state.roosta}
                           value={this.state.selectedRoosta}
+                          onChange={this.handleRoostaChange}
                         />
                       </AvGroup>
                     </Colxx>
