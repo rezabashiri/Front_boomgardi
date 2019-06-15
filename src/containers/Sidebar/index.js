@@ -29,7 +29,7 @@ class Sidebar extends Component {
 
     this.state = {
       selectedParentMenu: "",
-      viewingParentMenu:"", 
+      viewingParentMenu: ""
     };
   }
 
@@ -70,16 +70,13 @@ class Sidebar extends Component {
     ) {
       isMenuClick = true;
     }
-    if (
-      (container.contains(e.target) || container === e.target) ||
-      isMenuClick
-    ) {
+    if (container.contains(e.target) || container === e.target || isMenuClick) {
       return;
     }
     this.toggle(e);
     this.setState({
-      viewingParentMenu:""
-    })
+      viewingParentMenu: ""
+    });
   }
 
   getMenuClassesForResize(classes) {
@@ -157,21 +154,20 @@ class Sidebar extends Component {
           "data-parent"
         )
       });
-    }else{
-      var selectedParentNoSubItem = document.querySelector(".main-menu  li a.active");
-      if(selectedParentNoSubItem!=null){
+    } else {
+      var selectedParentNoSubItem = document.querySelector(
+        ".main-menu  li a.active"
+      );
+      if (selectedParentNoSubItem != null) {
         this.setState({
-          selectedParentMenu: selectedParentNoSubItem.getAttribute(
-            "data-flag"
-          )
+          selectedParentMenu: selectedParentNoSubItem.getAttribute("data-flag")
         });
-      }else if (this.state.selectedParentMenu == "") {
+      } else if (this.state.selectedParentMenu == "") {
         this.setState({
           selectedParentMenu: "dashboards"
         });
       }
-
-    } 
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -233,15 +229,15 @@ class Sidebar extends Component {
       );
     }
     this.setState({
-      viewingParentMenu : selectedParent 
+      viewingParentMenu: selectedParent
     });
   }
-  changeViewingParentMenu(menu){
+  changeViewingParentMenu(menu) {
     this.toggle();
 
     this.setState({
-      viewingParentMenu:menu
-    })
+      viewingParentMenu: menu
+    });
   }
 
   render() {
@@ -255,7 +251,10 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "dashboards" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="dashboards")
+                    active:
+                      (this.state.selectedParentMenu == "dashboards" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "dashboards"
                   })}
                 >
                   <NavLink
@@ -266,72 +265,100 @@ class Sidebar extends Component {
                     <IntlMessages id="menu.dashboards" />
                   </NavLink>
                 </NavItem>
-
-
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "layouts" && this.state.viewingParentMenu=="" ) || this.state.viewingParentMenu=="layouts")
+                    active:
+                      (this.state.selectedParentMenu == "users" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "users"
                   })}
                 >
                   <NavLink
-                    to="/app/layouts"
-                    onClick={e => this.openSubMenu(e, "layouts")}
+                    to="/app/users"
+                    onClick={e => this.openSubMenu(e, "users")}
                   >
-                    <i className="iconsmind-Digital-Drawing" />{" "}
-                    <IntlMessages id="menu.layouts" />
+                    <i className="iconsmind-User" />{" "}
+                    <IntlMessages id="menu.users" />
                   </NavLink>
                 </NavItem>
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "applications" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="applications")
+                    active:
+                      (this.state.selectedParentMenu == "hosts" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "hosts"
                   })}
                 >
                   <NavLink
-                    to="/app/applications"
-                    onClick={e => this.openSubMenu(e, "applications")}
+                    to="/app/hosts"
+                    onClick={e => this.openSubMenu(e, "hosts")}
                   >
-                    <i className="iconsmind-Air-Balloon" />{" "}
-                    <IntlMessages id="menu.applications" />
+                    <i className="iconsmind-Home-5" />{" "}
+                    <IntlMessages id="menu.hosts" />
                   </NavLink>
                 </NavItem>
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "ui" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="ui")
+                    active:
+                      (this.state.selectedParentMenu == "applications" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "applications"
                   })}
                 >
                   <NavLink
                     to="/app/ui"
                     onClick={e => this.openSubMenu(e, "ui")}
                   >
-                    <i className="iconsmind-Pantone" />{" "}
-                    <IntlMessages id="menu.ui" />
+                    <i className="iconsmind-Jeep-2" />{" "}
+                    <IntlMessages id="menu.leaders" />
                   </NavLink>
                 </NavItem>
                 <NavItem
                   className={classnames({
-                    active: ((this.state.selectedParentMenu == "landingpage" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="landingpage")
+                    active:
+                      (this.state.selectedParentMenu == "layouts" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "layouts"
+                  })}
+                >
+                  <NavLink
+                    to="/app/layouts"
+                    onClick={e => this.openSubMenu(e, "layouts")}
+                  >
+                    <i className="simple-icon-plane" />{" "}
+                    <IntlMessages id="menu.company" />
+                  </NavLink>
+                </NavItem>
+                <NavItem
+                  className={classnames({
+                    active:
+                      (this.state.selectedParentMenu == "ui" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "ui"
+                  })}
+                >
+                  <NavLink
+                    to="/app/dashboards/default"
+                    onClick={e => this.openSubMenu(e, "dashboards")}
+                  >
+                    <i className="iconsmind-Data-Financial" />{" "}
+                    <IntlMessages id="menu.finance" />
+                  </NavLink>
+                </NavItem>
+                <NavItem
+                  className={classnames({
+                    active:
+                      (this.state.selectedParentMenu == "landingpage" &&
+                        this.state.viewingParentMenu == "") ||
+                      this.state.viewingParentMenu == "landingpage"
                   })}
                 >
                   <NavLink
                     to="/landingpage"
                     onClick={e => this.openSubMenu(e, "landingpage")}
                   >
-                    <i className="iconsmind-Space-Needle" />{" "}
-                    <IntlMessages id="menu.landingpage" />
-                  </NavLink>
-                </NavItem>
-
-                <NavItem
-                  className={classnames({
-                    active: ((this.state.selectedParentMenu == "menu" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="menu")
-                  })}
-                >
-                  <NavLink
-                    to="/app/menu"
-                    onClick={e => this.openSubMenu(e, "menu")}
-                  >
-                    <i className="iconsmind-Three-ArrowFork" />{" "}
-                    <IntlMessages id="menu.menu" />
+                    <i className="iconsmind-Bus" />{" "}
+                    <IntlMessages id="menu.tours" />
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -346,7 +373,10 @@ class Sidebar extends Component {
             >
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "dashboards" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="dashboards")
+                  "d-block":
+                    (this.state.selectedParentMenu == "dashboards" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "dashboards"
                 })}
                 data-parent="dashboards"
               >
@@ -359,25 +389,64 @@ class Sidebar extends Component {
                 <NavItem>
                   <NavLink to="/app/dashboards/analytics">
                     <i className="simple-icon-pie-chart" />{" "}
-                    <IntlMessages id="menu.analytics" />
+                    <IntlMessages id="menu.reports" />
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to="/app/dashboards/ecommerce">
                     <i className="simple-icon-basket-loaded" />{" "}
-                    <IntlMessages id="menu.ecommerce" />
+                    <IntlMessages id="menu.reserves" />
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to="/app/dashboards/content">
-                    <i className="simple-icon-doc" />{" "}
-                    <IntlMessages id="menu.content" />
+                    <i className="simple-icon-action-undo" />{" "}
+                    <IntlMessages id="menu.cancel" />
                   </NavLink>
                 </NavItem>
               </Nav>
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "layouts" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="layouts")
+                  "d-block":
+                    (this.state.selectedParentMenu == "users" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "users"
+                })}
+                data-parent="users"
+              >
+                <NavItem>
+                  <NavLink to="/app/users/data-list">
+                    <i className="simple-icon-list" />{" "}
+                    <IntlMessages id="menu.data-list" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/register">
+                    <i className="simple-icon-user-follow" />{" "}
+                    <IntlMessages id="menu.user.add" />
+                  </NavLink>
+                  {/* <a href="/register" target="_blank">
+                    <i className="simple-icon-user-follow" />{" "}
+                    <IntlMessages id="menu.register" />
+                  </a> */}
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/forgot-password">
+                    <i className="simple-icon-user-unfollow" />{" "}
+                    <IntlMessages id="menu.forgot-password" />
+                  </NavLink>
+                  {/* <a href="/forgot-password" target="_blank">
+                    <i className="simple-icon-user-unfollow" />{" "}
+                    <IntlMessages id="menu.forgot-password" />
+                  </a> */}
+                </NavItem>
+              </Nav>
+              <Nav
+                className={classnames({
+                  "d-block":
+                    (this.state.selectedParentMenu == "layouts" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "layouts"
                 })}
                 data-parent="layouts"
               >
@@ -454,32 +523,66 @@ class Sidebar extends Component {
               </Nav>
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "applications" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="applications")
+                  "d-block":
+                    (this.state.selectedParentMenu == "applications" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "applications"
                 })}
                 data-parent="applications"
               >
                 <NavItem>
-                  <NavLink to="/app/applications/todo">
+                  <NavLink to="/app/applications/survey">
                     <i className="simple-icon-check" />{" "}
-                    <IntlMessages id="menu.todo" />
+                    <IntlMessages id="menu.add-host" />
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink to="/app/applications/survey">
-                    <i className="simple-icon-calculator" />{" "}
-                    <IntlMessages id="menu.survey" />
+                  <NavLink to="/app/applications/todo">
+                    <i className="simple-icon-list" />{" "}
+                    <IntlMessages id="menu.hostslist" />
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink to="/app/applications/chat">
                     <i className="simple-icon-bubbles" />{" "}
-                    <IntlMessages id="menu.chat" />
+                    <IntlMessages id="menu.requests" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/app/applications/chat">
+                    <i className="simple-icon-settings" />{" "}
+                    <IntlMessages id="menu.setting" />
                   </NavLink>
                 </NavItem>
               </Nav>
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "ui" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="ui")
+                  "d-block":
+                    (this.state.selectedParentMenu == "hosts" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "hosts"
+                })}
+                data-parent="hosts"
+              >
+                <NavItem>
+                  <NavLink to="/app/hosts/add-host">
+                    <i className="simple-icon-check" />{" "}
+                    <IntlMessages id="menu.add-host" />
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/app/hosts/host-list">
+                    <i className="simple-icon-list" />{" "}
+                    <IntlMessages id="menu.hostslist" />
+                  </NavLink>
+                </NavItem>
+              </Nav>
+              <Nav
+                className={classnames({
+                  "d-block":
+                    (this.state.selectedParentMenu == "ui" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "ui"
                 })}
                 data-parent="ui"
               >
@@ -594,7 +697,10 @@ class Sidebar extends Component {
               </Nav>
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "landingpage" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="landingpage")
+                  "d-block":
+                    (this.state.selectedParentMenu == "landingpage" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "landingpage"
                 })}
                 data-parent="landingpage"
               >
@@ -704,10 +810,12 @@ class Sidebar extends Component {
                   {/* <a href="/videos" target="_blank"><i className="simple-icon-film" />{" "}<IntlMessages id="menu.videos" /></a> */}
                 </NavItem>
               </Nav>
-              
               <Nav
                 className={classnames({
-                  "d-block": ((this.state.selectedParentMenu == "menu" && this.state.viewingParentMenu=="" )|| this.state.viewingParentMenu=="menu")
+                  "d-block":
+                    (this.state.selectedParentMenu == "menu" &&
+                      this.state.viewingParentMenu == "") ||
+                    this.state.viewingParentMenu == "menu"
                 })}
                 data-parent="menu"
               >

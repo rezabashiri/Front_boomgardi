@@ -9,7 +9,7 @@ class ForgotPasswordLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com"
+      email: ""
     };
   }
 
@@ -29,14 +29,8 @@ class ForgotPasswordLayout extends Component {
               <Colxx xxs="12" md="10" className="mx-auto my-auto">
                 <Card className="auth-card">
                   <div className="position-relative image-side ">
-                    <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
                     <p className="white mb-0">
-                      Please use your e-mail to reset your password. <br />
-                      If you are not a member, please{" "}
-                      <NavLink to={`/register`} className="white">
-                        register
-                      </NavLink>
-                      .
+                      رمز جدید برای شما ارسال خواهد شد
                     </p>
                   </div>
                   <div className="form-side">
@@ -61,7 +55,6 @@ class ForgotPasswordLayout extends Component {
                         >
                           <IntlMessages id="user.reset-password-button" />
                         </Button>
-                        
                       </div>
                     </Form>
                   </div>

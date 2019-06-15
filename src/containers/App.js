@@ -16,6 +16,8 @@ import register from 'Routes/layouts/register'
 import error from 'Routes/layouts/error'
 import forgotPassword from 'Routes/layouts/forgot-password'
 
+import Home from "../home";
+
 import MultipageHome from "Routes/landing-pages/multipage-home";
 import SinglepageHome from "Routes/landing-pages/singlepage-home";
 import About from "Routes/landing-pages/about";
@@ -33,7 +35,7 @@ import Prices from "Routes/landing-pages/prices";
 import Videos from "Routes/landing-pages/videos";
 import VideoDetail from "Routes/landing-pages/video-detail";
 import DocsDetails from "Routes/landing-pages/docs-details";
-
+import { getJwt } from "../helpers/Jwt";
 
 import 'Assets/css/vendor/bootstrap.min.css'
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -43,7 +45,7 @@ const InitialPath = ({ component: Component, ...rest, authUser }) =>
 	<Route
 		{...rest}
 		render={props =>
-			authUser
+			getJwt()
 				? <Component {...props} />
 				: <Redirect
 					to={{
@@ -57,7 +59,7 @@ class App extends Component {
 	render() {
 		const { location, match, user, locale } = this.props;
 		const currentAppLocale = AppLocale[locale];
-		if (location.pathname === '/'  || location.pathname==='/app'|| location.pathname==='/app/') {
+		if ( location.pathname==='/app'|| location.pathname==='/app/') {
 			return (<Redirect to={defaultStartPath} />);
 		}
 		return (
@@ -75,7 +77,8 @@ class App extends Component {
 							authUser={user}
 							component={MainRoute}
 						/>
-        					<Route path={`/multipage-home`} component={MultipageHome} />
+							<Route exact path={`/`} component={Home} />
+							<Route path={`/multipage-home`} component={MultipageHome} />
         					<Route path={`/singlepage-home`} component={SinglepageHome} />
         					<Route path={`/about`} component={About} />
         					<Route path={`/auth-login`} component={AuthLogin} />
@@ -92,7 +95,6 @@ class App extends Component {
         					<Route path={`/videos`} component={Videos} />
         					<Route path={`/video-detail`} component={VideoDetail} />
         					<Route path={`/docs-details`} component={DocsDetails} />
-
 							<Route path={`/login`} component={login} />
 							<Route path={`/register`} component={register} />
 							<Route path={`/forgot-password`} component={forgotPassword} />
