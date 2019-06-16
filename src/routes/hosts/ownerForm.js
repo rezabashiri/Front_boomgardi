@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
-import hostService from "../../services/hostService.jsx";
+import userService from "../../services/userService.jsx";
+import userModel from "../../models/registerModel.jsx";
+
 import {
   Row,
   Card,
@@ -30,6 +32,7 @@ import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
+import registerService from "../../services/registerService.jsx";
 
 class OwnerForm extends Component {
   constructor(props) {
@@ -47,8 +50,18 @@ class OwnerForm extends Component {
     this.onOwnerSave = this.onOwnerSave.bind(this);
   }
   onOwnerSave(event) {
-    console.log(event);
     event.preventDefault();
+    console.log(event);
+    //let form = new FormData(event.target);
+    let model = new userModel();
+    let usrService = new userService();
+    //form.forEach((value, key) => (model[key] = value));
+    model["roles"] = [{ name: "اقامتگاه" }];
+    model["firstName"] = this.state.firstName;
+    model["userName"] = this.state.mobile;
+    model["password"] = this.state.codeMeli;
+    console.log(model.getData());
+    usrService.addUser(model);
   }
 
   handleChangeFirstName(e) {

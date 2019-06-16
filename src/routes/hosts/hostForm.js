@@ -3,6 +3,7 @@ import addressService from "../../services/addressService.jsx";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import hostService from "../../services/hostService.jsx";
+import hostModel from "../../models/hostModel.jsx";
 import {
   Row,
   Card,
@@ -59,6 +60,7 @@ class HostForm extends Component {
     this.state = {
       addressModal: false,
       hostName: null,
+      hostTell: null,
       hostTypes: [],
       ostan: [],
       shahr: [],
@@ -79,6 +81,9 @@ class HostForm extends Component {
     this.getBakhshList = this.getBakhshList.bind(this);
     this.getDehestanList = this.getDehestanList.bind(this);
     this.toggleAddressModal = this.toggleAddressModal.bind(this);
+    this.handleHostTellChange = this.handleHostTellChange.bind(this);
+    this.addHost = this.addHost.bind(this);
+    this.handleHostTypeChange = this.handleHostTypeChange.bind(this);
   }
   async componentDidMount() {
     this.getOstanList();
@@ -101,6 +106,23 @@ class HostForm extends Component {
     });
   }
 
+  async addHost() {
+    var service = new hostService();
+    var model = new hostModel();
+    model["name"] = this.state.hostName;
+    model["tell"] = this.state.hostTell;
+    model["residencyTypeId"] = this.state.hostTypes.name;
+    model["address"] = {
+      lat: this.state.postion[1],
+      lng: this.state.postion[0],
+      ostanId: this.state.selectedOstan.value,
+      shahrestanId: this.state.selectedShahr.value,
+      bakhshId: this.state.selectedBakhsh.value,
+      dehestanId: this.state.selectedDehestan.value,
+      roostaId: this.state.selectedRoosta.value
+    };
+    service.addHost(model);
+  }
   async getOstanList() {
     let addrService = new addressService();
     let ostanList = await addrService.getOstan();
@@ -155,6 +177,15 @@ class HostForm extends Component {
     this.setState({
       roosta: newRoosta
     });
+  }
+  handleHostTellChange(e) {
+    this.setState({ hostTell: e.target.value });
+  }
+  handleHostNameChange(e) {
+    this.setState({ hostName: e.target.value });
+  }
+  handleHostTypeChange(e) {
+    this.setState({ hostType: e.target.value });
   }
   handleOstanChange = selectedOstan => {
     this.setState({ selectedOstan });
@@ -235,7 +266,13 @@ class HostForm extends Component {
                         <Label className="av-label">
                           <IntlMessages id="forms.phone" />
                         </Label>
-                        <AvInput name="phone" id="phone" required />
+                        <AvInput
+                          name="phone"
+                          id="phone"
+                          value={this.state.hostTell}
+                          onChange={this.handleHostTellChange}
+                          required
+                        />
                       </AvGroup>
                       <AvFeedback>
                         <IntlMessages id="message.hosttype-message" />
@@ -246,7 +283,11 @@ class HostForm extends Component {
                         <Label className="av-label" for="hostType">
                           <IntlMessages id="forms.host-type" />
                         </Label>
-                        <Select id="hostType" options={this.state.hostTypes} />
+                        <Select
+                          id="hostType"
+                          options={this.state.hostTypes}
+                          onChange={this.handleHostTypeChange}
+                        />
                         <AvFeedback>
                           <IntlMessages id="forms.hosttype-message" />
                         </AvFeedback>
@@ -391,7 +432,7 @@ class HostForm extends Component {
                     </Colxx>
                   </AvGroup>
 
-                  <Button color="primary">
+                  <Button onClick={this.addHost} color="primary">
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>

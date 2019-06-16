@@ -25,7 +25,8 @@ export const serverConfig = {
   bakhshUrl: "address/bakhsh?idShahrestan=",
   dehestanUrl: "address/Dehestan?IdBakhsh=",
   roostaUrl: "address/roosta?IdDehestan=",
-  hostTypeUrl: "common/PersisService?type=residency"
+  hostTypeUrl: "common/PersisService?type=residency",
+  hostUrl: "residency/host"
 };
 
 const authConfig = {
