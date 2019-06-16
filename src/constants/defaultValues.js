@@ -20,16 +20,18 @@ export const firebaseConfig = {
 
 export const serverConfig = {
   baseUrl: "http://192.168.1.5:40679/api/",
-  ostanUrl: "ostan",
-  shahrestanUrl: "Shahrestan?codeostan=",
-  bakhshUrl: "bakhsh?idShahrestan=",
-  dehestanUrl: "Dehestan?IdBakhsh=",
-  roostaUrl: "roosta?IdDehestan="
+  ostanUrl: "address/ostan",
+  shahrestanUrl: "address/Shahrestan?codeostan=",
+  bakhshUrl: "address/bakhsh?idShahrestan=",
+  dehestanUrl: "address/Dehestan?IdBakhsh=",
+  roostaUrl: "address/roosta?IdDehestan=",
+  hostTypeUrl: "common/PersisService?type=residency",
+  hostUrl: "residency/host"
 };
 
 const authConfig = {
   serverUrl: "http://auth.moroorgaran.com/",
-  loginUrl: "jwtlogin",
+  loginUrl: "login",
   registerUrl: "api/registers",
   userUrl: "api/users/",
   appKey: "5ED239940DBB2201427DF98038A1B56F1EC9D72DD62B8ACE6286F569C9280A4D"

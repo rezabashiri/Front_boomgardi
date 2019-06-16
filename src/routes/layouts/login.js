@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { loginUser } from "Redux/actions";
 
 import userService from "../../services/userService.jsx";
-import registerModel from "../../models/registerModel.jsx";
 import userModel from "../../models/userModel.jsx";
 import { getJwt } from "../../helpers/Jwt.js";
 

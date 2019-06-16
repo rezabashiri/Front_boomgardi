@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import addressService from "../../services/addressService.jsx";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
+import hostService from "../../services/hostService.jsx";
+import hostModel from "../../models/hostModel.jsx";
 import {
   Row,
   Card,
@@ -57,6 +59,10 @@ class HostForm extends Component {
     super(props);
     this.state = {
       addressModal: false,
+      hostName: null,
+      hostTell: null,
+      hostType: [],
+      hostTypeSelected: null,
       ostan: [],
       shahr: [],
       selectedOstan: null,
@@ -76,16 +82,48 @@ class HostForm extends Component {
     this.getBakhshList = this.getBakhshList.bind(this);
     this.getDehestanList = this.getDehestanList.bind(this);
     this.toggleAddressModal = this.toggleAddressModal.bind(this);
+    this.handleHostTellChange = this.handleHostTellChange.bind(this);
+    this.addHost = this.addHost.bind(this);
+    this.handleHostTypeChange = this.handleHostTypeChange.bind(this);
   }
   async componentDidMount() {
     this.getOstanList();
+    this.getHostType();
   }
   toggleAddressModal() {
     this.setState({
       addressModal: !this.state.addressModal
     });
   }
+  async getHostType() {
+    var typeService = new hostService();
+    let hostTypes = await typeService.getHostType();
+    let newHostType = hostTypes.map(c => {
+      return { label: c.name, value: c.id };
+    });
+    console.log(newHostType);
+    this.setState({
+      hostType: newHostType
+    });
+  }
 
+  async addHost() {
+    var service = new hostService();
+    var model = new hostModel();
+    model["name"] = this.state.hostName;
+    model["tell"] = this.state.hostTell;
+    model["residencyTypeId"] = this.state.hostTypeSelected.name;
+    model["address"] = {
+      lat: this.state.postion[1],
+      lng: this.state.postion[0],
+      ostanId: this.state.selectedOstan.value,
+      shahrestanId: this.state.selectedShahr.value,
+      bakhshId: this.state.selectedBakhsh.value,
+      dehestanId: this.state.selectedDehestan.value,
+      roostaId: this.state.selectedRoosta.value
+    };
+    service.addHost(model);
+  }
   async getOstanList() {
     let addrService = new addressService();
     let ostanList = await addrService.getOstan();
@@ -141,6 +179,15 @@ class HostForm extends Component {
       roosta: newRoosta
     });
   }
+  handleHostTellChange(e) {
+    this.setState({ hostTell: e.target.value });
+  }
+  handleHostNameChange(e) {
+    this.setState({ hostName: e.target.value });
+  }
+  handleHostTypeChange = selectedHostType => {
+    this.setState({ hostTypeSelected: selectedHostType });
+  };
   handleOstanChange = selectedOstan => {
     this.setState({ selectedOstan });
     this.setState({
@@ -180,6 +227,10 @@ class HostForm extends Component {
     console.log(`dehestan selected:`, selectedDehestan.value);
     this.getRoostaList(selectedDehestan.value);
   };
+  handleRoostaChange = selectedRoosta => {
+    this.setState({ selectedRoosta });
+    console.log(`roosta selected:`, selectedRoosta.value);
+  };
   handleEndDrag(e) {
     console.log(e.lngLat.lng);
     console.log(e.lngLat.lat);
@@ -205,9 +256,47 @@ class HostForm extends Component {
                         <Label className="av-label" for="hostName">
                           <IntlMessages id="forms.host-name" />
                         </Label>
-                        <AvInput name="hostName" id="hostName" required />
+                        <AvInput
+                          name="hostName"
+                          id="hostName"
+                          value={this.state.hostName}
+                          onChange={this.handleHostNameChange}
+                          required
+                        />
                         <AvFeedback>
                           <IntlMessages id="forms.hostname-message" />
+                        </AvFeedback>
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label">
+                          <IntlMessages id="forms.phone" />
+                        </Label>
+                        <AvInput
+                          name="phone"
+                          id="phone"
+                          value={this.state.hostTell}
+                          onChange={this.handleHostTellChange}
+                          required
+                        />
+                      </AvGroup>
+                      <AvFeedback>
+                        <IntlMessages id="message.hosttype-message" />
+                      </AvFeedback>
+                    </Colxx>
+                    <Colxx sm={4}>
+                      <AvGroup>
+                        <Label className="av-label" for="hostType">
+                          <IntlMessages id="forms.host-type" />
+                        </Label>
+                        <Select
+                          id="hostType"
+                          options={this.state.hostType}
+                          onChange={this.handleHostTypeChange}
+                        />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hosttype-message" />
                         </AvFeedback>
                       </AvGroup>
                     </Colxx>
@@ -266,6 +355,7 @@ class HostForm extends Component {
                         <Select
                           options={this.state.roosta}
                           value={this.state.selectedRoosta}
+                          onChange={this.handleRoostaChange}
                         />
                       </AvGroup>
                     </Colxx>
@@ -349,7 +439,7 @@ class HostForm extends Component {
                     </Colxx>
                   </AvGroup>
 
-                  <Button color="primary">
+                  <Button onClick={this.addHost} color="primary">
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>

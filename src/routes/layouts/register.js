@@ -8,7 +8,7 @@ import { Colxx } from "Components/CustomBootstrap";
 import { connect } from "react-redux";
 import { registerUser } from "Redux/actions";
 
-import serviceModel from "../../Services/registerService.jsx";
+import registerService from "../../Services/registerService.jsx";
 import registerModel from "../../models/registerModel.jsx";
 
 class RegisterLayout extends Component {
@@ -32,9 +32,9 @@ class RegisterLayout extends Component {
     event.preventDefault();
     let form = new FormData(event.target);
     let model = new registerModel();
-    let service = new serviceModel();
+    let service = new registerService();
     form.forEach((value, key) => (model[key] = value));
-    model["roles"] = "ادمین";
+    model["roles"] = [{ name: "کاربر" }];
     console.log(model.getData());
     service.registerUser(model);
   }
@@ -68,8 +68,8 @@ class RegisterLayout extends Component {
                     </CardTitle>
                     <Form onSubmit={e => this.submitRegister(e)}>
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="userName" type="email" />
-                        <IntlMessages id="user.email" />
+                        <Input name="userName" />
+                        <IntlMessages id="user.username" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
                         <Input type="password" name="password" />
@@ -77,10 +77,6 @@ class RegisterLayout extends Component {
                           id="user.password"
                           defaultValue={this.state.password}
                         />
-                      </Label>
-                      <Label className="form-group has-float-label mb-4">
-                        <Input type="password" name="confirmPassword" />
-                        <IntlMessages id="user.password-confirm" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">
                         <Button

@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
+import userService from "../../services/userService.jsx";
+import userModel from "../../models/registerModel.jsx";
+
 import {
   Row,
   Card,
@@ -29,8 +32,51 @@ import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
+import registerService from "../../services/registerService.jsx";
 
 class OwnerForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: null,
+      lastName: null,
+      mobile: null,
+      codeMeli: null
+    };
+    this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
+    this.handleChangeLastName = this.handleChangeLastName.bind(this);
+    this.handleChangeMobile = this.handleChangeMobile.bind(this);
+    this.handleChangeCodeMeli = this.handleChangeCodeMeli.bind(this);
+    this.onOwnerSave = this.onOwnerSave.bind(this);
+  }
+  onOwnerSave(event) {
+    event.preventDefault();
+    console.log(event);
+    //let form = new FormData(event.target);
+    let model = new userModel();
+    let usrService = new userService();
+    //form.forEach((value, key) => (model[key] = value));
+    model["roles"] = [{ name: "اقامتگاه" }];
+    model["firstName"] = this.state.firstName;
+    model["userName"] = this.state.mobile;
+    model["password"] = this.state.codeMeli;
+    console.log(model.getData());
+    usrService.addUser(model);
+  }
+
+  handleChangeFirstName(e) {
+    this.setState({ firstName: e.target.value });
+  }
+  handleChangeLastName(e) {
+    this.setState({ lastName: e.target.value });
+  }
+  handleChangeMobile(e) {
+    this.setState({ mobile: e.target.value });
+  }
+  handleChangeCodeMeli(e) {
+    this.setState({ codeMeli: e.target.value });
+  }
+
   render() {
     return (
       <Fragment>
@@ -42,7 +88,7 @@ class OwnerForm extends Component {
                   <IntlMessages id="menu.add-hostowner" />
                 </CardTitle>
 
-                <AvForm className="mb-5 row">
+                <AvForm className="mb-5 row" onSubmit={this.onOwnerSave}>
                   <Colxx sm={6}>
                     <AvGroup>
                       <Label className="av-label" for="firstName">
@@ -53,6 +99,8 @@ class OwnerForm extends Component {
                         name="firstName"
                         id="firstName"
                         required
+                        value={this.state.firstName}
+                        onChange={this.handleChangeFirstName}
                       />
                       <AvFeedback>
                         <IntlMessages id="forms.firstname-message" />
@@ -66,7 +114,13 @@ class OwnerForm extends Component {
                         <IntlMessages id="forms.lastname" />
                       </Label>
 
-                      <AvInput name="lastName" id="lastName" required />
+                      <AvInput
+                        name="lastName"
+                        id="lastName"
+                        value={this.state.lastName}
+                        onChange={this.handleChangeLastName}
+                        required
+                      />
                       <AvFeedback>
                         <IntlMessages id="forms.lastname-message" />
                       </AvFeedback>
@@ -75,10 +129,16 @@ class OwnerForm extends Component {
 
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="avexampleCity">
+                      <Label className="av-label" for="mobile">
                         <IntlMessages id="forms.mobile" />
                       </Label>
-                      <AvInput name="rank" id="avexampleMobile" required />
+                      <AvInput
+                        name="mobile"
+                        id="mobile"
+                        value={this.state.mobile}
+                        onChange={this.handleChangeMobile}
+                        required
+                      />
                       <AvFeedback>
                         <IntlMessages id="forms.mobile-message" />
                       </AvFeedback>
@@ -86,10 +146,16 @@ class OwnerForm extends Component {
                   </Colxx>
                   <Colxx sm={6}>
                     <AvGroup>
-                      <Label className="av-label" for="codemeli">
+                      <Label className="av-label" for="codeMeli">
                         <IntlMessages id="forms.codemeli" />
                       </Label>
-                      <AvInput name="codemeli" id="codemeli" required />
+                      <AvInput
+                        name="codeMeli"
+                        id="codeMeli"
+                        value={this.state.codeMeli}
+                        onChange={this.handleChangeCodeMeli}
+                        required
+                      />
                       <AvFeedback>
                         <IntlMessages id="forms.codemeli-message" />
                       </AvFeedback>
