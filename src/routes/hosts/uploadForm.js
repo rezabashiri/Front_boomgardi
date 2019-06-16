@@ -31,10 +31,10 @@ const hostUploader = new FineUploaderTraditional({
     },
     deleteFile: {
       enabled: true,
-      endpoint: "/uploads"
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
     },
     request: {
-      endpoint: "/uploads"
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
     }
   }
 });
@@ -45,10 +45,10 @@ const licenseUploader = new FineUploaderTraditional({
     },
     deleteFile: {
       enabled: true,
-      endpoint: "/uploads"
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
     },
     request: {
-      endpoint: "/uploads"
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
     }
   }
 });

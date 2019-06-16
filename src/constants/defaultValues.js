@@ -20,12 +20,12 @@ export const firebaseConfig = {
 
 export const serverConfig = {
   baseUrl: "http://192.168.1.5:40679/api/",
-  ostanUrl: "ostan",
-  shahrestanUrl: "Shahrestan?codeostan=",
-  bakhshUrl: "bakhsh?idShahrestan=",
-  dehestanUrl: "Dehestan?IdBakhsh=",
-  roostaUrl: "roosta?IdDehestan=",
-  hostTypeUrl: "residency/residencytype"
+  ostanUrl: "address/ostan",
+  shahrestanUrl: "address/Shahrestan?codeostan=",
+  bakhshUrl: "address/bakhsh?idShahrestan=",
+  dehestanUrl: "address/Dehestan?IdBakhsh=",
+  roostaUrl: "address/roosta?IdDehestan=",
+  hostTypeUrl: "common/PersisService?type=residency"
 };
 
 const authConfig = {
