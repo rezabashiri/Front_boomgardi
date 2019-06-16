@@ -15,7 +15,7 @@ export default class registerModel {
     this[firstName] = val;
   }
   set lasName(val) {
-    this[lasName] = val;
+    this[lastName] = val;
   }
   set password(val) {
     this[password] = val;
@@ -24,7 +24,11 @@ export default class registerModel {
     this[mobile] = val;
   }
   set roles(val) {
-    this[roles] = val;
+      let array = [];
+      if (this[roles])
+          array = this[roles];
+      array.push({ name: val });
+      this[roles] = array;
   }
 
   getData = () => {
