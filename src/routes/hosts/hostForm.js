@@ -61,7 +61,8 @@ class HostForm extends Component {
       addressModal: false,
       hostName: null,
       hostTell: null,
-      hostTypes: [],
+      hostType: [],
+      hostTypeSelected: null,
       ostan: [],
       shahr: [],
       selectedOstan: null,
@@ -96,13 +97,13 @@ class HostForm extends Component {
   }
   async getHostType() {
     var typeService = new hostService();
-    let hostType = await typeService.getHostType();
-    let newHostType = hostType.map(c => {
+    let hostTypes = await typeService.getHostType();
+    let newHostType = hostTypes.map(c => {
       return { label: c.name, value: c.id };
     });
     console.log(newHostType);
     this.setState({
-      hostTypes: newHostType
+      hostType: newHostType
     });
   }
 
@@ -111,7 +112,7 @@ class HostForm extends Component {
     var model = new hostModel();
     model["name"] = this.state.hostName;
     model["tell"] = this.state.hostTell;
-    model["residencyTypeId"] = this.state.hostTypes.name;
+    model["residencyTypeId"] = this.state.hostTypeSelected.name;
     model["address"] = {
       lat: this.state.postion[1],
       lng: this.state.postion[0],
@@ -184,9 +185,9 @@ class HostForm extends Component {
   handleHostNameChange(e) {
     this.setState({ hostName: e.target.value });
   }
-  handleHostTypeChange(e) {
-    this.setState({ hostType: e.target.value });
-  }
+  handleHostTypeChange = selectedHostType => {
+    this.setState({ hostTypeSelected: selectedHostType });
+  };
   handleOstanChange = selectedOstan => {
     this.setState({ selectedOstan });
     this.setState({
@@ -255,7 +256,13 @@ class HostForm extends Component {
                         <Label className="av-label" for="hostName">
                           <IntlMessages id="forms.host-name" />
                         </Label>
-                        <AvInput name="hostName" id="hostName" required />
+                        <AvInput
+                          name="hostName"
+                          id="hostName"
+                          value={this.state.hostName}
+                          onChange={this.handleHostNameChange}
+                          required
+                        />
                         <AvFeedback>
                           <IntlMessages id="forms.hostname-message" />
                         </AvFeedback>
@@ -285,7 +292,7 @@ class HostForm extends Component {
                         </Label>
                         <Select
                           id="hostType"
-                          options={this.state.hostTypes}
+                          options={this.state.hostType}
                           onChange={this.handleHostTypeChange}
                         />
                         <AvFeedback>

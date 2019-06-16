@@ -1,7 +1,7 @@
 let name = Symbol("name");
 let tell = Symbol("tell");
 let address = Symbol("address");
-let residencyTypeId = symbol("residencyTypeId");
+let residencyTypeId = Symbol("residencyTypeId");
 
 export default class hostModel {
   set name(val) {
