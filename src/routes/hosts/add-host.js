@@ -9,7 +9,6 @@ import { injectIntl } from "react-intl";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import BreadcrumbContainer from "Components/BreadcrumbContainer";
 import IntlMessages from "Util/IntlMessages";
-import AddHostWizard from "./addHostWizard";
 
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
