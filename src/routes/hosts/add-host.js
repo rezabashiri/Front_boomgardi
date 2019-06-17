@@ -34,14 +34,13 @@ import {
 } from "reactstrap";
 
 import "react-tagsinput/react-tagsinput.css";
-import "react-datepicker/dist/react-datepicker.css";
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
 const steps = [
-  "ثبت اطلاعات مالک ",
+  " ثبت اطلاعات مالک ",
   "ثبت اطلاعات اقامتگاه ",
   "آپلود عکس و مدارک"
 ];
@@ -145,7 +144,7 @@ class FormsUi extends Component {
   }
 
   handleReset() {
-    this.setState(0);
+    this.setState({ activeStep: 0 });
     this.setState({ completed: {} });
   }
 
@@ -177,7 +176,7 @@ class FormsUi extends Component {
           </Colxx>
         </Row>
         <div className={classes.root}>
-          <Stepper nonLinear activeStep={this.state.activeStep}>
+          <Stepper activeStep={this.state.activeStep}>
             {steps.map((label, index) => (
               <Step key={label}>
                 <StepButton
@@ -195,13 +194,14 @@ class FormsUi extends Component {
                 <Typography className={classes.instructions}>
                   All steps completed - you&apos;re finished
                 </Typography>
-                <Button onClick={handleReset}>Reset</Button>
+                <Button onClick={this.handleReset}>Reset</Button>
               </div>
             ) : (
               <div>
                 {this.getStepContent(this.state.activeStep)}
                 <div>
                   <Button
+                    hidden
                     disabled={this.state.activeStep === 0}
                     onClick={this.handleBack}
                     className={classes.button}
