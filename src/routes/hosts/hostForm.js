@@ -122,7 +122,10 @@ class HostForm extends Component {
       dehestanId: this.state.selectedDehestan.value,
       roostaId: this.state.selectedRoosta.value
     };
-    service.addHost(model);
+    model["ownerUserId"] = this.props.ownerUserId;
+    let result = service.addHost(model);
+    console.log(result);
+    this.props.onHandleAttachId(result.attachId);
   }
   async getOstanList() {
     let addrService = new addressService();

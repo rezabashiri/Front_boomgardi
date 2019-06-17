@@ -49,19 +49,18 @@ class OwnerForm extends Component {
     this.handleChangeCodeMeli = this.handleChangeCodeMeli.bind(this);
     this.onOwnerSave = this.onOwnerSave.bind(this);
   }
-  onOwnerSave(event) {
+  async onOwnerSave(event) {
     event.preventDefault();
-    console.log(event);
     //let form = new FormData(event.target);
     let model = new userModel();
     let usrService = new userService();
     //form.forEach((value, key) => (model[key] = value));
-    model["roles"] = [{ name: "اقامتگاه" }];
+    model["roles"] = "اقامتگاه";
     model["firstName"] = this.state.firstName;
     model["userName"] = this.state.mobile;
     model["password"] = this.state.codeMeli;
-    console.log(model.getData());
-    usrService.addUser(model);
+    let result = await usrService.addUser(model);
+    this.props.onHandleOwnerUserId(result.id);
   }
 
   handleChangeFirstName(e) {

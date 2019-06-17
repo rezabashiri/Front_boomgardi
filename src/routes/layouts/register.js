@@ -34,7 +34,7 @@ class RegisterLayout extends Component {
     let model = new registerModel();
     let service = new registerService();
     form.forEach((value, key) => (model[key] = value));
-    model["roles"] = [{ name: "کاربر" }];
+    model["roles"] = "کاربر";
     console.log(model.getData());
     service.registerUser(model);
   }
