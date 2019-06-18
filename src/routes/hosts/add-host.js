@@ -1,12 +1,26 @@
 import React, { Component, Fragment } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepButton from "@material-ui/core/StepButton";
+//import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import { injectIntl } from "react-intl";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import BreadcrumbContainer from "Components/BreadcrumbContainer";
 import IntlMessages from "Util/IntlMessages";
-import AddHostWizard from "./addHostWizard";
-//import StepperExample from "./hostWizard";
+
+import "rc-switch/assets/index.css";
+import "rc-slider/assets/index.css";
+import "react-rater/lib/react-rater.css";
+import "react-fine-uploader/gallery/gallery.css";
+import OwnerForm from "./ownerForm";
+import HostForm from "./hostForm";
+import UploadForm from "./uploadForm";
+
 import {
   Row,
+  Button,
   Card,
   CardBody,
   Input,
@@ -14,45 +28,33 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
   CardSubtitle
 } from "reactstrap";
-import Select from "react-select";
-import CustomSelectInput from "Components/CustomSelectInput";
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import TagsInput from "react-tagsinput";
 
-import {
-  AvForm,
-  AvGroup,
-  AvInput,
-  AvFeedback
-} from "availity-reactstrap-validation";
 import "react-tagsinput/react-tagsinput.css";
-import "react-datepicker/dist/react-datepicker.css";
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
-const selectData = [
-  { label: "تهران", value: "tehran", key: 0 },
-  { label: "اصفهان", value: "isfahan", key: 1 },
-  { label: "شیراز", value: "shiraz", key: 2 }
+const steps = [
+  " ثبت اطلاعات مالک ",
+  "ثبت اطلاعات اقامتگاه ",
+  "آپلود عکس و مدارک"
 ];
 
 class FormsUi extends Component {
   constructor(props) {
     super(props);
-    this.handleTagChange = this.handleTagChange.bind(this);
-    this.handleTagChangeLabelOver = this.handleTagChangeLabelOver.bind(this);
-    this.handleChangeDateLabelOver = this.handleChangeDateLabelOver.bind(this);
-    this.handleTagChangeLabelTop = this.handleTagChangeLabelTop.bind(this);
-    this.handleChangeLabelTop = this.handleChangeLabelTop.bind(this);
-    this.handleChangeDateLabelTop = this.handleChangeDateLabelTop.bind(this);
+    this.handleNext = this.handleNext.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.handleStep = this.handleStep.bind(this);
+    this.handleOwnerUserId = this.handleOwnerUserId.bind(this);
+    this.handleAttachId = this.handleAttachId.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -64,46 +66,106 @@ class FormsUi extends Component {
       startDateTime: null,
       startDateRange: null,
       endDateRange: null,
-      embeddedDate: moment(),
       tags: [],
       tagsLabelOver: [],
-      tagsLabelTop: []
+      tagsLabelTop: [],
+      activeStep: 0,
+      completed: {},
+      ownerUserId: null,
+      attachId: null
     };
   }
 
-  handleTagChange(tags) {
-    this.setState({ tags });
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <OwnerForm onHandleOwnerUserId={this.handleOwnerUserId} />;
+      case 1:
+        return (
+          <HostForm
+            ownerUserId={this.state.ownerUserId}
+            onHandleAttachId={this.handleAttachId}
+          />
+        );
+      case 2:
+        return <UploadForm attachId={this.state.attachId} />;
+      default:
+        return "مرحله تعریف نشده";
+    }
   }
 
-  handleTagChangeLabelOver(tagsLabelOver) {
-    this.setState({ tagsLabelOver });
-  }
-
-  handleTagChangeLabelTop(tagsLabelTop) {
-    this.setState({ tagsLabelTop });
-  }
-
-  handleChangeLabelOver = selectedOptionLabelOver => {
-    this.setState({ selectedOptionLabelOver });
+  handleOwnerUserId = userId => {
+    this.setState({ ownerUserId: userId });
+    console.log(this.state.ownerUserId);
+  };
+  handleAttachId = attachId => {
+    this.setState({ attachId: attachId });
+    console.log(this.state.attachId);
   };
 
-  handleChangeLabelTop = selectedOptionLabelTop => {
-    this.setState({ selectedOptionLabelTop });
+  totalSteps() {
+    return steps.length;
+  }
+
+  completedSteps() {
+    return Object.keys(this.state.completed).length;
+  }
+
+  isLastStep() {
+    return this.state.activeStep === this.totalSteps() - 1;
+  }
+
+  allStepsCompleted() {
+    return this.completedSteps() === this.totalSteps();
+  }
+
+  handleNext() {
+    const newActiveStep =
+      this.isLastStep() && !allStepsCompleted()
+        ? // It's the last step, but not all steps have been completed,
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in this.state.completed))
+        : this.state.activeStep + 1;
+    console.log(newActiveStep);
+    this.setState({ activeStep: newActiveStep });
+  }
+
+  handleBack() {
+    this.setState({ activeStep: this.state.activeStep - 1 });
+  }
+
+  handleStep = step => () => {
+    this.setState({ activeStep: step });
   };
 
-  handleChangeDateLabelOver(date) {
-    this.setState({
-      startDateLabelOver: date
-    });
+  handleComplete() {
+    const newCompleted = this.state.completed;
+    newCompleted[this.state.activeStep] = true;
+    this.setState({ completed: newCompleted });
+    handleNext();
   }
-  handleChangeDateLabelTop(date) {
-    this.setState({
-      startDateLabelTop: date
-    });
+
+  handleReset() {
+    this.setState({ activeStep: 0 });
+    this.setState({ completed: {} });
   }
 
   render() {
-    const { messages } = this.props.intl;
+    const classes = makeStyles(theme => ({
+      root: {
+        width: "90%"
+      },
+      button: {
+        marginRight: theme.spacing(1)
+      },
+      completed: {
+        display: "inline-block"
+      },
+      instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1)
+      }
+    }));
     return (
       <Fragment>
         <Row>
@@ -115,183 +177,71 @@ class FormsUi extends Component {
             <Separator className="mb-5" />
           </Colxx>
         </Row>
-        <Row hidden className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="menu.add-hostowner" />
-                </CardTitle>
-
-                <AvForm className="mb-5 row">
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="firstName">
-                        <IntlMessages id="forms.firstname" />
-                      </Label>
-                      <AvInput
-                        className="form-control"
-                        name="firstName"
-                        id="firstName"
-                        required
-                      />
-                      <AvFeedback>
-                        <IntlMessages id="forms.firstname-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="lastName">
-                        <IntlMessages id="forms.lastname" />
-                      </Label>
-
-                      <AvInput name="lastName" id="lastName" required />
-                      <AvFeedback>
-                        <IntlMessages id="forms.lastname-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="avexampleCity">
-                        <IntlMessages id="forms.mobile" />
-                      </Label>
-                      <AvInput name="rank" id="avexampleMobile" required />
-                      <AvFeedback>
-                        <IntlMessages id="forms.mobile-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-                  <Colxx sm={6}>
-                    <AvGroup>
-                      <Label className="av-label" for="email">
-                        <IntlMessages id="forms.email" />
-                      </Label>
-                      <AvInput name="email" id="email" required />
-                      <AvFeedback>
-                        <IntlMessages id="forms.email-message" />
-                      </AvFeedback>
-                    </AvGroup>
-                  </Colxx>
-
-                  <Colxx sm={12}>
-                    <FormGroup>
-                      <Button color="primary">
-                        <IntlMessages id="layouts.submit" />
-                      </Button>
-                    </FormGroup>
-                  </Colxx>
-                </AvForm>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-        <Row hidden className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="menu.add-hostdata" />
-                </CardTitle>
-                <AvForm>
-                  <AvGroup row>
-                    <Colxx sm={6}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostName">
-                          <IntlMessages id="forms.host-name" />
-                        </Label>
-                        <AvInput name="hostName" id="hostName" required />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostname-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
-                    <Colxx sm={6}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostCity">
-                          <IntlMessages id="forms.city" />
-                        </Label>
-                        <AvInput
-                          type="password"
-                          name="hostCity"
-                          id="hostCity"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostcity-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
-                    <Colxx sm={12}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostAddress">
-                          <IntlMessages id="forms.address" />
-                        </Label>
-                        <AvInput
-                          type="text"
-                          name="exampleAddressGrid"
-                          id="hostAddress"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostaddress-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
-                    <Colxx sm={12}>
-                      <AvGroup>
-                        <Label className="av-label" for="hostDetail">
-                          <IntlMessages id="forms.host-detail" />
-                        </Label>
-                        <AvInput
-                          type="text"
-                          name="hostDetail"
-                          id="hostDetail"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostdetail-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-
-                    <Colxx sm={4}>
-                      <AvGroup>
-                        <Label className="av-label">
-                          <IntlMessages id="forms.state" />
-                        </Label>
-                        <Select options={selectData} />
-                      </AvGroup>
-                    </Colxx>
-                    <Colxx sm={8}>
-                      <FormGroup>
-                        <Label for="hostTags" className="av-label">
-                          <IntlMessages id="forms.tags" />
-                        </Label>
-                        <TagsInput
-                          value={this.state.tagsLabelOver}
-                          onChange={this.handleTagChangeLabelOver}
-                          inputProps={{ placeholder: messages["forms.tags"] }}
-                        />
-                      </FormGroup>
-                    </Colxx>
-                  </AvGroup>
-
-                  <Button color="primary">
-                    <IntlMessages id="layouts.submit" />
+        <div className={classes.root}>
+          <Stepper activeStep={this.state.activeStep}>
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepButton
+                  onClick={this.handleStep(index)}
+                  completed={this.state.completed[index]}
+                >
+                  {label}
+                </StepButton>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            {this.allStepsCompleted() ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={this.handleReset}>Reset</Button>
+              </div>
+            ) : (
+              <div>
+                {this.getStepContent(this.state.activeStep)}
+                <div>
+                  <Button
+                    hidden
+                    disabled={this.state.activeStep === 0}
+                    onClick={this.handleBack}
+                    className={classes.button}
+                  >
+                    قبلی
                   </Button>
-                </AvForm>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
-        <AddHostWizard />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleNext}
+                    className={classes.button}
+                  >
+                    بعدی
+                  </Button>
+                  {this.state.activeStep !== steps.length &&
+                    (this.state.completed[this.state.activeStep] ? (
+                      <Typography
+                        variant="caption"
+                        className={classes.completed}
+                      >
+                        تکمیل شده
+                      </Typography>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleComplete}
+                      >
+                        {this.completedSteps() === this.totalSteps() - 1
+                          ? "اتمام"
+                          : "تکمیل مرحله"}
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </Fragment>
     );
   }
