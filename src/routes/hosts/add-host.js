@@ -53,6 +53,8 @@ class FormsUi extends Component {
     this.handleComplete = this.handleComplete.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleStep = this.handleStep.bind(this);
+    this.handleOwnerUserId = this.handleOwnerUserId.bind(this);
+    this.handleAttachId = this.handleAttachId.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -86,19 +88,19 @@ class FormsUi extends Component {
           />
         );
       case 2:
-        return <UploadForm hostAttachId={this.state.attachId} />;
+        return <UploadForm attachId={this.state.attachId} />;
       default:
         return "مرحله تعریف نشده";
     }
   }
 
   handleOwnerUserId = userId => {
-    console.log(userId);
-    this.setState({ OwnerUserId: userId });
+    this.setState({ ownerUserId: userId });
+    console.log(this.state.ownerUserId);
   };
   handleAttachId = attachId => {
-    console.log(attachId);
     this.setState({ attachId: attachId });
+    console.log(this.state.attachId);
   };
 
   totalSteps() {

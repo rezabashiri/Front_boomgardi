@@ -85,6 +85,7 @@ class HostForm extends Component {
     this.handleHostTellChange = this.handleHostTellChange.bind(this);
     this.addHost = this.addHost.bind(this);
     this.handleHostTypeChange = this.handleHostTypeChange.bind(this);
+    this.handleHostNameChange = this.handleHostNameChange.bind(this);
   }
   async componentDidMount() {
     this.getOstanList();
@@ -123,7 +124,8 @@ class HostForm extends Component {
       roostaId: this.state.selectedRoosta.value
     };
     model["ownerUserId"] = this.props.ownerUserId;
-    let result = service.addHost(model);
+    let result = await service.addHost(model);
+    console.log("this is  result");
     console.log(result);
     this.props.onHandleAttachId(result.attachId);
   }

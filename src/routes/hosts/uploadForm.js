@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
+import { serverConfig } from "../../constants/defaultValues";
 import {
   Row,
   Card,
@@ -33,11 +34,15 @@ class UploadForm extends Component {
       },
       deleteFile: {
         enabled: true,
-        endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
+        params: { attachId: this.props.attachId }
       },
       request: {
-        endpoint: "http://192.168.1.5:40679/api/common/Attachment",
-        params: { attachId: this.props.attachId }
+        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
+        params: {
+          attachId: this.props.attachId,
+          attachType: { part: "host", type: "profile" }
+        }
       },
       validation: {
         allowedExtensions: ["jpg", "jpeg", "png", "gif", "bmp"],
@@ -57,7 +62,11 @@ class UploadForm extends Component {
         endpoint: "http://192.168.1.5:40679/api/common/Attachment"
       },
       request: {
-        endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+        endpoint: "http://192.168.1.5:40679/api/common/Attachment",
+        params: {
+          attachId: this.props.attachId,
+          attachType: { part: "host", type: "license" }
+        }
       }
     }
   });
