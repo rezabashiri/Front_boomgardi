@@ -20,7 +20,7 @@ import UploadForm from "./uploadForm";
 
 import {
   Row,
-  Button,
+  Button /*,
   Card,
   CardBody,
   Input,
@@ -30,7 +30,7 @@ import {
   CustomInput,
   FormText,
   Form,
-  CardSubtitle
+  CardSubtitle*/
 } from "reactstrap";
 
 import "react-tagsinput/react-tagsinput.css";

@@ -11,12 +11,13 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  ButtonDropdown,
   UncontrolledDropdown,
   Collapse,
+  Dropdown,
   DropdownMenu,
   DropdownToggle,
   DropdownItem,
+  ButtonDropdown,
   Input,
   CardBody,
   CardSubtitle,
@@ -53,6 +54,7 @@ class DataListLayout extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.onContextMenuClick = this.onContextMenuClick.bind(this);
+    this.getHost = this.getHost.bind(this);
 
     this.state = {
       displayMode: "list",
@@ -78,7 +80,9 @@ class DataListLayout extends Component {
       selectedItems: [],
       lastChecked: null,
       displayOptionsIsOpen: false,
-      isLoading: false
+      isLoading: false,
+      hosts: [],
+      isOpenSizingSm: false
     };
   }
   componentWillMount() {
@@ -216,12 +220,15 @@ class DataListLayout extends Component {
     return false;
   }
   async componentDidMount() {
+    this.getHost();
+    this.dataListRender();
+  }
+  async getHost() {
     var service = new hostService();
     let result = await service.getHosts();
     console.log(result);
-    this.dataListRender();
+    this.setState({ hosts: result });
   }
-
   dataListRender() {
     this.setState({
       totalPage: 1,
@@ -553,7 +560,8 @@ class DataListLayout extends Component {
             </Colxx>
           </Row>
           <Row>
-            {this.state.items.map(product => {
+            {this.state.hosts.map(host => {
+              /*
               if (this.state.displayMode === "imagelist") {
                 return (
                   <Colxx sm="6" lg="4" xl="3" className="mb-3" key={product.id}>
@@ -677,62 +685,60 @@ class DataListLayout extends Component {
                     </ContextMenuTrigger>
                   </Colxx>
                 );
-              } else {
-                return (
-                  <Colxx xxs="12" key={product.id} className="mb-3">
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={product.id}
-                      collect={collect}
+              } else {*/
+              return (
+                <Colxx xxs="12" key={host.id} className="mb-3">
+                  <ContextMenuTrigger
+                    id="menu_id"
+                    data={host.id}
+                    collect={collect}
+                  >
+                    <Card
+                      onClick={event => this.handleCheckChange(event, host.id)}
+                      className={classnames("d-flex flex-row", {
+                        active: this.state.selectedItems.includes(host.id)
+                      })}
                     >
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, product.id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(product.id)
-                        })}
+                      <ButtonDropdown
+                        className="ml-1 mb-1"
+                        isOpen={this.state.isOpenSizingLg}
+                        toggle={this.toggleSizingLg}
                       >
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?p=${product.id}`}
-                              className="w-40 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {product.title}
-                              </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.category}
+                        <DropdownToggle caret size="sm" outline color="info">
+                          <IntlMessages id="dropdowns.large-button" />
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem>
+                            <IntlMessages id="dropdowns.another-action" />
+                          </DropdownItem>
+                          <DropdownItem>
+                            <IntlMessages id="dropdowns.another-action" />
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </ButtonDropdown>
+                      <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+                        <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                          <NavLink
+                            to={`?p=${host.id}`}
+                            className="w-40 w-sm-100"
+                          >
+                            <p className="list-item-heading mb-1 truncate">
+                              {host.name}
                             </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.date}
-                            </p>
-                            <div className="w-15 w-sm-100">
-                              <Badge color={product.statusColor} pill>
-                                {product.status}
-                              </Badge>
-                            </div>
-                          </div>
-                          <div className="custom-control custom-checkbox pr-1 align-self-center pl-4">
-                            <CustomInput
-                              className="itemCheck mb-0"
-                              type="checkbox"
-                              id={`check_${product.id}`}
-                              checked={this.state.selectedItems.includes(
-                                product.id
-                              )}
-                              onChange={() => {}}
-                              label=""
-                            />
-                          </div>
+                          </NavLink>
+                          <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                            {host.address}
+                          </p>
+                          <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                            {host.createDate}
+                          </p>
                         </div>
-                      </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              }
+                      </div>
+                    </Card>
+                  </ContextMenuTrigger>
+                </Colxx>
+              );
+              //}
             })}
             <Pagination
               currentPage={this.state.currentPage}
