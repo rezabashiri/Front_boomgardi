@@ -31,11 +31,20 @@ const hostUploader = new FineUploaderTraditional({
     },
     deleteFile: {
       enabled: true,
-      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment/"
     },
     request: {
       endpoint: "http://192.168.1.5:40679/api/common/Attachment"
-    }
+    },
+    
+    callbacks: {
+      onComplete: function(id, name, response) {
+        if (response.success) {
+          console.log("UPLOAD SUCCESS");
+        } else {
+          console.log("problem uploading stuff");
+        }
+      }
   }
 });
 const licenseUploader = new FineUploaderTraditional({
@@ -65,6 +74,7 @@ class UploadForm extends Component {
                   <IntlMessages id="form-components.upload-hostpic" />
                 </CardTitle>
                 <Gallery
+
                   animationsDisabled={true}
                   uploader={hostUploader}
                   deleteButton-children={<span>Delete</span>}
