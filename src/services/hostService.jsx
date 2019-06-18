@@ -1,7 +1,5 @@
 import { serverConfig } from "../constants/defaultValues";
-import axios from "axios";
 import { apiContext } from "../helpers/contextHelper";
-import qs from "qs";
 
 export default class hostService {
   async getHostType() {

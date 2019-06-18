@@ -121,12 +121,11 @@ class FormsUi extends Component {
 
   handleNext() {
     const newActiveStep =
-      this.isLastStep() && !allStepsCompleted()
+      this.isLastStep() && !this.allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
           steps.findIndex((step, i) => !(i in this.state.completed))
         : this.state.activeStep + 1;
-    console.log(newActiveStep);
     this.setState({ activeStep: newActiveStep });
   }
 
@@ -142,7 +141,7 @@ class FormsUi extends Component {
     const newCompleted = this.state.completed;
     newCompleted[this.state.activeStep] = true;
     this.setState({ completed: newCompleted });
-    handleNext();
+    this.handleNext();
   }
 
   handleReset() {

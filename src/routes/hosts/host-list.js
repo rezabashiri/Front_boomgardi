@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
+import hostService from "../../services/hostService.jsx";
+import hostModel from "../../models/hostModel.jsx";
 import {
   Row,
   Card,
@@ -213,7 +215,10 @@ class DataListLayout extends Component {
     document.activeElement.blur();
     return false;
   }
-  componentDidMount() {
+  async componentDidMount() {
+    var service = new hostService();
+    let result = await service.getHosts();
+    console.log(result);
     this.dataListRender();
   }
 
@@ -383,121 +388,6 @@ class DataListLayout extends Component {
                 <h1>
                   <IntlMessages id="menu.host-list" />
                 </h1>
-
-                <div className="float-sm-left">
-                  <Button
-                    color="primary"
-                    size="lg"
-                    className="top-left-button"
-                    onClick={this.toggleModal}
-                  >
-                    <IntlMessages id="layouts.add-new" />
-                  </Button>
-                  {"  "}
-
-                  <Modal
-                    isOpen={this.state.modalOpen}
-                    toggle={this.toggleModal}
-                    wrapClassName="modal-right"
-                    backdrop="static"
-                  >
-                    <ModalHeader toggle={this.toggleModal}>
-                      <IntlMessages id="layouts.add-new-modal-title" />
-                    </ModalHeader>
-                    <ModalBody>
-                      <Label>
-                        <IntlMessages id="layouts.product-name" />
-                      </Label>
-                      <Input />
-                      <Label className="mt-4">
-                        <IntlMessages id="layouts.category" />
-                      </Label>
-                      <Select
-                        components={{ Input: CustomSelectInput }}
-                        className="react-select"
-                        classNamePrefix="react-select"
-                        name="form-field-name"
-                        options={this.state.categories}
-                      />
-                      <Label className="mt-4">
-                        <IntlMessages id="layouts.description" />
-                      </Label>
-                      <Input type="textarea" name="text" id="exampleText" />
-                      <Label className="mt-4">
-                        <IntlMessages id="layouts.status" />
-                      </Label>
-                      <CustomInput
-                        type="radio"
-                        id="exCustomRadio"
-                        name="customRadio"
-                        label="درحال پردازش"
-                      />
-                      <CustomInput
-                        type="radio"
-                        id="exCustomRadio2"
-                        name="customRadio"
-                        label="فرآوری شده"
-                      />
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button
-                        color="secondary"
-                        outline
-                        onClick={this.toggleModal}
-                      >
-                        <IntlMessages id="layouts.cancel" />
-                      </Button>
-                      <Button color="primary" onClick={this.toggleModal}>
-                        <IntlMessages id="layouts.submit" />
-                      </Button>{" "}
-                    </ModalFooter>
-                  </Modal>
-                  <ButtonDropdown
-                    isOpen={this.state.dropdownSplitOpen}
-                    toggle={this.toggleSplit}
-                  >
-                    <div className="btn btn-primary pr-4 pl-0 check-button">
-                      <Label
-                        for="checkAll"
-                        className="custom-control custom-checkbox mb-0 d-inline-block"
-                      >
-                        <Input
-                          className="custom-control-input"
-                          type="checkbox"
-                          id="checkAll"
-                          checked={
-                            this.state.selectedItems.length >=
-                            this.state.items.length
-                          }
-                          onClick={() => this.handleChangeSelectAll(true)}
-                        />
-                        <span
-                          className={`custom-control-label ${
-                            this.state.selectedItems.length > 0 &&
-                            this.state.selectedItems.length <
-                              this.state.items.length
-                              ? "indeterminate"
-                              : ""
-                          }`}
-                        />
-                      </Label>
-                    </div>
-                    <DropdownToggle
-                      caret
-                      color="primary"
-                      className="dropdown-toggle-split pl-2 pr-2"
-                    />
-                    <DropdownMenu left>
-                      <DropdownItem>
-                        <IntlMessages id="layouts.delete" />
-                      </DropdownItem>
-                      <DropdownItem>
-                        <IntlMessages id="layouts.another-action" />
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </div>
-
                 <BreadcrumbItems match={this.props.match} />
               </div>
 
