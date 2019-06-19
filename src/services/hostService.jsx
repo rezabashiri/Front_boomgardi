@@ -17,6 +17,17 @@ export default class hostService {
     } catch (e) {}
   }
   async addHost(model) {
+    console.log(model.getData());
+    try {
+      let response = await apiContext().post(
+        serverConfig.hostUrl,
+        model.getData()
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (e) {}
+  }
+  async addAddress(model) {
     try {
       let response = await apiContext().post(
         serverConfig.hostUrl,

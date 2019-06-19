@@ -3,6 +3,8 @@ let tell = Symbol("tell");
 let address = Symbol("address");
 let residencyTypeId = Symbol("residencyTypeId");
 let ownerUserId = Symbol("ownerUserId");
+let guid = Symbol("guid");
+let detail = Symbol("detail");
 
 export default class hostModel {
   set name(val) {
@@ -20,6 +22,12 @@ export default class hostModel {
   set ownerUserId(val) {
     this[ownerUserId] = val;
   }
+  set guid(val) {
+    this[guid] = val;
+  }
+  set detail(val) {
+    this[detail] = val;
+  }
 
   getData = () => {
     return {
@@ -27,7 +35,9 @@ export default class hostModel {
       tell: this[tell],
       address: this[address],
       residencyTypeId: this[residencyTypeId],
-      ownerUserId: this[ownerUserId]
+      ownerUserId: this[ownerUserId],
+      guid: this[guid],
+      detail: this[detail]
     };
   };
 }

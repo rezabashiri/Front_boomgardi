@@ -17,6 +17,7 @@ import "react-fine-uploader/gallery/gallery.css";
 import OwnerForm from "./ownerForm";
 import HostForm from "./hostForm";
 import UploadForm from "./uploadForm";
+import AddressForm from "./addressForm";
 
 import {
   Row,
@@ -42,6 +43,7 @@ import "react-fine-uploader/gallery/gallery.css";
 const steps = [
   " ثبت اطلاعات مالک ",
   "ثبت اطلاعات اقامتگاه ",
+  "ثبت آدرس اقامتگاه",
   "آپلود عکس و مدارک"
 ];
 
@@ -54,7 +56,8 @@ class FormsUi extends Component {
     this.handleReset = this.handleReset.bind(this);
     this.handleStep = this.handleStep.bind(this);
     this.handleOwnerUserId = this.handleOwnerUserId.bind(this);
-    this.handleAttachId = this.handleAttachId.bind(this);
+    //this.handleAttachId = this.handleAttachId.bind(this);
+    this.handleGuId = this.handleGuId.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -72,7 +75,8 @@ class FormsUi extends Component {
       activeStep: 0,
       completed: {},
       ownerUserId: null,
-      attachId: null
+      attachId: null,
+      guid: null
     };
   }
 
@@ -84,11 +88,13 @@ class FormsUi extends Component {
         return (
           <HostForm
             ownerUserId={this.state.ownerUserId}
-            onHandleAttachId={this.handleAttachId}
+            onHandleGuId={this.handleGuId}
           />
         );
       case 2:
-        return <UploadForm attachId={this.state.attachId} />;
+        return <AddressForm guid={this.state.guid} />;
+      case 3:
+        return <UploadForm attachId={this.state.guid} />;
       default:
         return "مرحله تعریف نشده";
     }
@@ -98,9 +104,14 @@ class FormsUi extends Component {
     this.setState({ ownerUserId: userId });
     console.log(this.state.ownerUserId);
   };
+  /*
   handleAttachId = attachId => {
     this.setState({ attachId: attachId });
     console.log(this.state.attachId);
+  };*/
+  handleGuId = guid => {
+    this.setState({ guid: guid });
+    console.log(this.state.guid);
   };
 
   totalSteps() {

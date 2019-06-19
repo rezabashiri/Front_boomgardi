@@ -21,7 +21,7 @@ export const firebaseConfig = {
 export const serverConfig = {
   baseUrl: "http://192.168.1.5:40679/api/",
   ostanUrl: "address/ostan",
-  shahrestanUrl: "address/Shahrestan?codeostan=",
+  shahrestanUrl: "address/Shahrestan?idostan=",
   bakhshUrl: "address/bakhsh?idShahrestan=",
   dehestanUrl: "address/Dehestan?IdBakhsh=",
   roostaUrl: "address/roosta?IdDehestan=",
