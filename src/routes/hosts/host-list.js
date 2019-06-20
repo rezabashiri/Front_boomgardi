@@ -81,8 +81,7 @@ class DataListLayout extends Component {
       lastChecked: null,
       displayOptionsIsOpen: false,
       isLoading: false,
-      hosts: [],
-      isOpenSizingSm: false
+      hosts: []
     };
   }
   componentWillMount() {
@@ -226,9 +225,10 @@ class DataListLayout extends Component {
   async getHost() {
     var service = new hostService();
     let result = await service.getHosts();
-    console.log(result);
     this.setState({ hosts: result });
+    console.log(this.state.hosts);
   }
+
   dataListRender() {
     this.setState({
       totalPage: 1,
@@ -560,42 +560,32 @@ class DataListLayout extends Component {
             </Colxx>
           </Row>
           <Row>
-            {this.state.hosts.map(host => {
-              /*
-              if (this.state.displayMode === "imagelist") {
-                return (
-                  <Colxx sm="6" lg="4" xl="3" className="mb-3" key={product.id}>
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={product.id}
-                      collect={collect}
-                    >
+            {this.state.hosts &&
+              this.state.hosts.map(host => {
+                if (this.state.displayMode === "imagelist") {
+                  return (
+                    <Colxx sm="6" lg="4" xl="3" className="mb-3" key={host.id}>
                       <Card
                         onClick={event =>
-                          this.handleCheckChange(event, product.id)
+                          this.handleCheckChange(event, host.id)
                         }
                         className={classnames({
-                          active: this.state.selectedItems.includes(product.id)
+                          active: this.state.selectedItems.includes(host.id)
                         })}
                       >
                         <div className="position-relative">
                           <NavLink
-                            to={`?p=${product.id}`}
+                            to={`?p=${host.id}`}
                             className="w-40 w-sm-100"
                           >
                             <CardImg
                               top
-                              alt={product.title}
-                              src={product.img}
+                              alt={host.name}
+                              src={
+                                "http://192.168.1.5:40679/" + host.profileImg
+                              }
                             />
                           </NavLink>
-                          <Badge
-                            color={product.statusColor}
-                            pill
-                            className="position-absolute badge-top-right"
-                          >
-                            {product.status}
-                          </Badge>
                         </div>
                         <CardBody>
                           <Row>
@@ -603,78 +593,74 @@ class DataListLayout extends Component {
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_${product.id}`}
+                                id={`check_${host.id}`}
                                 checked={this.state.selectedItems.includes(
-                                  product.id
+                                  host.id
                                 )}
                                 onChange={() => {}}
                                 label=""
                               />
                             </Colxx>
                             <Colxx xxs="10" className="mb-3">
-                              <CardSubtitle>{product.title}</CardSubtitle>
+                              <CardSubtitle>{host.name}</CardSubtitle>
                               <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {product.date}
+                                {host.address.ostanName}
+                              </CardText>
+                              <CardSubtitle>{host.name}</CardSubtitle>
+                              <CardText className="text-muted text-small mb-0 font-weight-light">
+                                {host.address.shahrestanName}
                               </CardText>
                             </Colxx>
                           </Row>
                         </CardBody>
                       </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              } else if (this.state.displayMode === "thumblist") {
-                return (
-                  <Colxx xxs="12" key={product.id} className="mb-3">
-                    <ContextMenuTrigger
-                      id="menu_id"
-                      data={product.id}
-                      collect={collect}
-                    >
+                    </Colxx>
+                  );
+                } else if (this.state.displayMode === "thumblist") {
+                  return (
+                    <Colxx xxs="12" key={host.id} className="mb-3">
                       <Card
                         onClick={event =>
-                          this.handleCheckChange(event, product.id)
+                          this.handleCheckChange(event, host.id)
                         }
                         className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(product.id)
+                          active: this.state.selectedItems.includes(host.id)
                         })}
                       >
-                        <NavLink to={`?p=${product.id}`} className="d-flex">
+                        <NavLink to={`?p=${host.id}`} className="d-flex">
                           <img
-                            alt={product.title}
-                            src={product.img}
+                            alt={host.name}
+                            src={"http://192.168.1.5:40679/" + host.profileImg}
                             className="list-thumbnail responsive border-0"
                           />
                         </NavLink>
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                             <NavLink
-                              to={`?p=${product.id}`}
+                              to={`?p=${host.id}`}
                               className="w-40 w-sm-100"
                             >
                               <p className="list-item-heading mb-1 truncate">
-                                {product.title}
+                                {host.name}
                               </p>
                             </NavLink>
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.category}
+                              {host.residenceType}
                             </p>
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {product.date}
+                              استان:{host.address.ostanName}
                             </p>
-                            <div className="w-15 w-sm-100">
-                              <Badge color={product.statusColor} pill>
-                                {product.status}
-                              </Badge>
-                            </div>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              شهر:{host.address.shahrestanName}
+                            </p>
                           </div>
                           <div className="custom-control custom-checkbox pr-1 align-self-center pl-4">
                             <CustomInput
                               className="itemCheck mb-0"
                               type="checkbox"
-                              id={`check_${product.id}`}
+                              id={`check_${host.id}`}
                               checked={this.state.selectedItems.includes(
-                                product.id
+                                host.id
                               )}
                               onChange={() => {}}
                               label=""
@@ -682,64 +668,45 @@ class DataListLayout extends Component {
                           </div>
                         </div>
                       </Card>
-                    </ContextMenuTrigger>
-                  </Colxx>
-                );
-              } else {*/
-              return (
-                <Colxx xxs="12" key={host.id} className="mb-3">
-                  <ContextMenuTrigger
-                    id="menu_id"
-                    data={host.id}
-                    collect={collect}
-                  >
-                    <Card
-                      onClick={event => this.handleCheckChange(event, host.id)}
-                      className={classnames("d-flex flex-row", {
-                        active: this.state.selectedItems.includes(host.id)
-                      })}
-                    >
-                      <ButtonDropdown
-                        className="ml-1 mb-1"
-                        isOpen={this.state.isOpenSizingLg}
-                        toggle={this.toggleSizingLg}
+                    </Colxx>
+                  );
+                } else {
+                  return (
+                    <Colxx xxs="12" key={host.id} className="mb-3">
+                      <Card
+                        onClick={event =>
+                          this.handleCheckChange(event, host.id)
+                        }
+                        className={classnames("d-flex flex-row", {
+                          active: this.state.selectedItems.includes(host.id)
+                        })}
                       >
-                        <DropdownToggle caret size="sm" outline color="info">
-                          <IntlMessages id="dropdowns.large-button" />
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem>
-                            <IntlMessages id="dropdowns.another-action" />
-                          </DropdownItem>
-                          <DropdownItem>
-                            <IntlMessages id="dropdowns.another-action" />
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                      <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                        <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                          <NavLink
-                            to={`?p=${host.id}`}
-                            className="w-40 w-sm-100"
-                          >
-                            <p className="list-item-heading mb-1 truncate">
-                              {host.name}
+                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
+                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                            <NavLink
+                              to={`?p=${host.id}`}
+                              className="w-40 w-sm-100"
+                            >
+                              <p className="list-item-heading mb-1 truncate">
+                                {host.name}
+                              </p>
+                            </NavLink>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              {host.residenceType}
                             </p>
-                          </NavLink>
-                          <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                            {host.address}
-                          </p>
-                          <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                            {host.createDate}
-                          </p>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              استان:{host.address.ostanName}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              شهر:{host.address.shahrestanName}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </Card>
-                  </ContextMenuTrigger>
-                </Colxx>
-              );
-              //}
-            })}
+                      </Card>
+                    </Colxx>
+                  );
+                }
+              })}
             <Pagination
               currentPage={this.state.currentPage}
               totalPage={this.state.totalPage}
@@ -747,24 +714,6 @@ class DataListLayout extends Component {
             />
           </Row>
         </div>
-
-        <ContextMenu
-          id="menu_id"
-          onShow={e => this.onContextMenu(e, e.detail.data)}
-        >
-          <MenuItem onClick={this.onContextMenuClick} data={{ action: "copy" }}>
-            <i className="simple-icon-docs" /> <span>Copy</span>
-          </MenuItem>
-          <MenuItem onClick={this.onContextMenuClick} data={{ action: "move" }}>
-            <i className="simple-icon-drawer" /> <span>Move to archive</span>
-          </MenuItem>
-          <MenuItem
-            onClick={this.onContextMenuClick}
-            data={{ action: "delete" }}
-          >
-            <i className="simple-icon-trash" /> <span>Delete</span>
-          </MenuItem>
-        </ContextMenu>
       </Fragment>
     );
   }

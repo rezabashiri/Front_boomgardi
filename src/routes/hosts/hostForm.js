@@ -96,7 +96,8 @@ class HostForm extends Component {
     var model = new hostModel();
     model["name"] = this.state.hostName;
     model["tell"] = this.state.hostTell;
-    model["residencyTypeId"] = this.state.hostTypeSelected.name;
+    console.log(this.state.hostTypeSelected);
+    model["residencyTypeId"] = this.state.hostTypeSelected.value;
     model["ownerUserId"] = this.props.ownerUserId;
     //model["detail"] = this.state.detail;
     let result = await service.addHost(model);
