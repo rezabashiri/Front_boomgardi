@@ -539,8 +539,9 @@ p {
   height: auto;
   max-width: unset;
   height: 85px;
+  width: 85px;
   object-fit: cover;
-  width: unset !important;
+  //width: unset !important;
 
   @include respond-below(md) {
     height: 80px;

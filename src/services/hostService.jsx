@@ -9,9 +9,10 @@ export default class hostService {
       return response.data;
     } catch (e) {}
   }
-  async getHosts() {
+  async getHosts(filterParam) {
     try {
-      let response = await apiContext().get(serverConfig.hostUrl);
+      let filter = filterParam === undefined ? "" : filterParam;
+      let response = await apiContext().get(serverConfig.hostUrl + filter);
       console.log(response.data);
       return response.data;
     } catch (e) {}

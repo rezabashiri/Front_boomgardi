@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
+import addressService from "../../services/addressService.jsx";
 import hostModel from "../../models/hostModel.jsx";
+import { serverConfig } from "../../constants/defaultValues.js";
 import {
   Row,
   Card,
@@ -37,40 +39,29 @@ import { BreadcrumbItems } from "Components/BreadcrumbContainer";
 
 import Pagination from "Components/List/Pagination";
 import mouseTrap from "react-mousetrap";
-import axios from "axios";
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 function collect(props) {
   return { data: props.data };
 }
 const apiUrl = "http://api.crealeaf.com/cakes/paging";
 
-class DataListLayout extends Component {
+class HostList extends Component {
   constructor(props) {
     super(props);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
-    this.toggleSplit = this.toggleSplit.bind(this);
-    this.dataListRender = this.dataListRender.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.getIndex = this.getIndex.bind(this);
-    this.onContextMenuClick = this.onContextMenuClick.bind(this);
     this.getHost = this.getHost.bind(this);
+    //this.getHostOstan = this.getHostOstan.bind(this);
 
     this.state = {
       displayMode: "list",
       pageSizes: [10, 20, 30, 50, 100],
       selectedPageSize: 10,
-      categories: [
-        { label: "بومگردی", value: "boomgardi", key: 0 },
-        { label: "ویلا", value: "vila", key: 1 },
-        { label: "جنگلی", value: "Desserts", key: 2 }
-      ],
-      orderOptions: [
-        { column: "title", label: "بومگردی" },
-        { column: "category", label: "ویلا" },
-        { column: "status", label: "جنگلی" }
-      ],
-      selectedOrderOption: { column: "title", label: "نوع اقامتگاه" },
+      hostTypes: [],
+      hostTypesFilterOption: { column: "", label: "" },
+      ostanList: [],
+      ostanFilterOptions: {},
       dropdownSplitOpen: false,
       modalOpen: false,
       currentPage: 1,
@@ -81,7 +72,12 @@ class DataListLayout extends Component {
       lastChecked: null,
       displayOptionsIsOpen: false,
       isLoading: false,
-      hosts: []
+      hosts: [],
+      filterParams: {
+        residencyTypeId: "",
+        ostanId: "",
+        name: ""
+      }
     };
   }
   componentWillMount() {
@@ -104,19 +100,38 @@ class DataListLayout extends Component {
   toggleDisplayOptions() {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
-  toggleSplit() {
-    this.setState(prevState => ({
-      dropdownSplitOpen: !prevState.dropdownSplitOpen
-    }));
-  }
-  changeOrderBy(column) {
+  async filterByHostType(lable) {
+    let newfilter = this.state.filterParams;
+    newfilter.residencyTypeId = lable;
+    await this.setState({
+      filterParams: newfilter
+    });
+    var queryString = Object.keys(this.state.filterParams)
+      .map(key => key + "=" + this.state.filterParams[key])
+      .join("&");
+    console.log(queryString);
     this.setState(
       {
-        selectedOrderOption: this.state.orderOptions.find(
-          x => x.column === column
-        )
+        hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
       },
-      () => this.dataListRender()
+      () => this.getHost("?" + queryString)
+    );
+  }
+  async filterByOstan(lable) {
+    let newfilter = this.state.filterParams;
+    newfilter.ostanId = lable;
+    await this.setState({
+      filterParams: newfilter
+    });
+    var queryString = Object.keys(this.state.filterParams)
+      .map(key => key + "=" + this.state.filterParams[key])
+      .join("&");
+    console.log(queryString);
+    this.setState(
+      {
+        ostanFilterOptions: this.state.ostanList.find(x => x.lable === lable)
+      },
+      () => this.getHost("?" + queryString)
     );
   }
   changePageSize(size) {
@@ -125,7 +140,7 @@ class DataListLayout extends Component {
         selectedPageSize: size,
         currentPage: 1
       },
-      () => this.dataListRender()
+      () => this.getHost()
     );
   }
   changeDisplayMode(mode) {
@@ -139,18 +154,30 @@ class DataListLayout extends Component {
       {
         currentPage: page
       },
-      () => this.dataListRender()
+      () => this.getHost()
     );
   }
 
-  handleKeyPress(e) {
+  async handleKeyPress(e) {
     if (e.key === "Enter") {
+      let newfilter = this.state.filterParams;
+      newfilter.name = e.target.value.toLowerCase();
+      await this.setState({
+        filterParams: newfilter
+      });
+      var queryString = Object.keys(this.state.filterParams)
+        .map(key => key + "=" + this.state.filterParams[key])
+        .join("&");
+      this.getHost("?" + queryString);
+      /*
       this.setState(
         {
           search: e.target.value.toLowerCase()
         },
-        () => this.dataListRender()
+        () => this.getHost("?name=" + this.state.search)
       );
+    }
+    */
     }
   }
 
@@ -220,165 +247,45 @@ class DataListLayout extends Component {
   }
   async componentDidMount() {
     this.getHost();
-    this.dataListRender();
+    this.getHostType();
+    this.getOstanList();
+    //this.dataListRender();
   }
-  async getHost() {
+  async getHost(filter) {
     var service = new hostService();
-    let result = await service.getHosts();
+    let result = await service.getHosts(filter);
     this.setState({ hosts: result });
     console.log(this.state.hosts);
-  }
-
-  dataListRender() {
     this.setState({
       totalPage: 1,
-      items: [
-        {
-          id: 18,
-          title: "کیک شکلاتی",
-          img: "/assets/img/bebinca-thumb.jpg",
-          category: "دسر",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 574,
-          stock: 16,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 8,
-          title: "چیز کیک",
-          img: "/assets/img/cheesecake-thumb.jpg",
-          category: "کیک",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 887,
-          stock: 21,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 3,
-          title: "دسر شکلاتی",
-          img: "/assets/img/chocolate-cake-thumb.jpg",
-          category: "کیک ها",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 1080,
-          stock: 57,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 19,
-          title: "ژله پرتقالی",
-          img: "/assets/img/cremeschnitte-thumb.jpg",
-          category: "دسر ها",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 562,
-          stock: 18,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 2,
-          title: "پای سیب",
-          img: "/assets/img/fat-rascal-thumb.jpg",
-          category: "کیک فنجونی",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 1240,
-          stock: 48,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 9,
-          title: "شیرینی خامه ای",
-          img: "/assets/img/financier-thumb.jpg",
-          category: "کیک ها",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 865,
-          stock: 53,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 17,
-          title: "کیک میوه ای",
-          img: "/assets/img/fruitcake-thumb.jpg",
-          category: "کیک ها",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 585,
-          stock: 19,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 10,
-          title: "کیک پرتقالی",
-          img: "/assets/img/genoise-thumb.jpg",
-          category: "کیک فنجونی",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 824,
-          stock: 55,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 11,
-          title: "چیز کیک",
-          img: "/assets/img/gingerbread-thumb.jpg",
-          category: "کیک ها",
-          status: "در انتظار",
-          statusColor: "primary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 714,
-          stock: 12,
-          date: "15 اسفند 1397"
-        },
-        {
-          id: 4,
-          title: "کیک قهوه",
-          img: "/assets/img/goose-breast-thumb.jpg",
-          category: "کیک ها",
-          status: "درحال پردازش",
-          statusColor: "secondary",
-          description: "توضیحات این محصول در اینجا قرار می گیرد",
-          sales: 1014,
-          stock: 41,
-          date: "15 اسفند 1397"
-        }
-      ],
       selectedItems: [],
-      totalItemCount: 8,
+      totalItemCount: this.state.hosts.length,
       isLoading: true
     });
   }
 
-  onContextMenuClick = (e, data, target) => {
-    console.log(
-      "onContextMenuClick - selected items",
-      this.state.selectedItems
-    );
-    console.log("onContextMenuClick - action : ", data.action);
-  };
-
-  onContextMenu = (e, data) => {
-    const clickedProductId = data.data;
-    if (!this.state.selectedItems.includes(clickedProductId)) {
-      this.setState({
-        selectedItems: [clickedProductId]
-      });
-    }
-
-    return true;
-  };
-
+  async getHostType() {
+    var typeService = new hostService();
+    let hostTypes = await typeService.getHostType();
+    let newHostType = hostTypes.map(c => {
+      return { column: c.name, lable: c.id };
+    });
+    console.log(newHostType);
+    this.setState({
+      hostTypes: newHostType
+    });
+  }
+  async getOstanList() {
+    let addrService = new addressService();
+    let ostanList = await addrService.getOstan();
+    let newOstan = ostanList.map(c => {
+      return { column: c.name, lable: c.id };
+    });
+    console.log(newOstan);
+    this.setState({
+      ostanList: newOstan
+    });
+  }
   render() {
     const startIndex =
       (this.state.currentPage - 1) * this.state.selectedPageSize;
@@ -506,17 +413,37 @@ class DataListLayout extends Component {
                   <div className="d-block d-md-inline-block">
                     <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                       <DropdownToggle caret color="outline-dark" size="xs">
-                        <IntlMessages id="layouts.orderby" />
-                        {this.state.selectedOrderOption.label}
+                        <IntlMessages id="layouts.filter.hosttype" />
+                        {this.state.hostTypesFilterOption.column}
                       </DropdownToggle>
                       <DropdownMenu right>
-                        {this.state.orderOptions.map((order, index) => {
+                        {this.state.hostTypes.map((order, index) => {
+                          console.log(order);
                           return (
                             <DropdownItem
                               key={index}
-                              onClick={() => this.changeOrderBy(order.column)}
+                              onClick={() => this.filterByHostType(order.lable)}
                             >
-                              {order.label}
+                              {order.column}
+                            </DropdownItem>
+                          );
+                        })}
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                    <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+                      <DropdownToggle caret color="outline-dark" size="xs">
+                        <IntlMessages id="layouts.filter.ostan" />
+                        {this.state.ostanFilterOptions.column}
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                        {this.state.ostanList.map((order, index) => {
+                          console.log(order);
+                          return (
+                            <DropdownItem
+                              key={index}
+                              onClick={() => this.filterByOstan(order.lable)}
+                            >
+                              {order.column}
                             </DropdownItem>
                           );
                         })}
@@ -532,6 +459,7 @@ class DataListLayout extends Component {
                       />
                     </div>
                   </div>
+
                   <div className="float-md-left">
                     <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} از ${
                       this.state.totalItemCount
@@ -581,10 +509,17 @@ class DataListLayout extends Component {
                             <CardImg
                               top
                               alt={host.name}
-                              src={
-                                "http://192.168.1.5:40679/" + host.profileImg
-                              }
+                              src={serverConfig.fileBaseUrl + host.profileImg}
+                              width="100"
+                              height="250"
                             />
+                            <Badge
+                              color="primary"
+                              pill
+                              className="position-absolute badge-top-right"
+                            >
+                              {host.residenceType}
+                            </Badge>
                           </NavLink>
                         </div>
                         <CardBody>
@@ -606,7 +541,6 @@ class DataListLayout extends Component {
                               <CardText className="text-muted text-small mb-0 font-weight-light">
                                 {host.address.ostanName}
                               </CardText>
-                              <CardSubtitle>{host.name}</CardSubtitle>
                               <CardText className="text-muted text-small mb-0 font-weight-light">
                                 {host.address.shahrestanName}
                               </CardText>
@@ -630,8 +564,9 @@ class DataListLayout extends Component {
                         <NavLink to={`?p=${host.id}`} className="d-flex">
                           <img
                             alt={host.name}
-                            src={"http://192.168.1.5:40679/" + host.profileImg}
+                            src={serverConfig.fileBaseUrl + host.profileImg}
                             className="list-thumbnail responsive border-0"
+                            width="auto"
                           />
                         </NavLink>
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
@@ -718,4 +653,4 @@ class DataListLayout extends Component {
     );
   }
 }
-export default injectIntl(mouseTrap(DataListLayout));
+export default injectIntl(mouseTrap(HostList));
