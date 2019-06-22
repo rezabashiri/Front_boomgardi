@@ -72,8 +72,8 @@ class LoginLayout extends Component {
                     </CardTitle>
                     <Form onSubmit={e => this.onUserLogin(e)}>
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="userName" type="email" />
-                        <IntlMessages id="user.email" />
+                        <Input name="userName" />
+                        <IntlMessages id="forms.mobile" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
                         <Input name="password" type="password" />

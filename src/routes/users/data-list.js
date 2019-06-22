@@ -115,6 +115,10 @@ class DataListLayout extends Component {
                   }, 600);
                 })
             }}
+            options={{
+              sorting: true,
+              filtering: true
+            }}
           />
         </div>
       </Fragment>

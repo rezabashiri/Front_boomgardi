@@ -1,7 +1,5 @@
 import { serverConfig } from "../constants/defaultValues";
-import axios from "axios";
 import { apiContext } from "../helpers/contextHelper";
-import qs from "qs";
 
 export default class hostService {
   async getHostType() {
@@ -11,14 +9,26 @@ export default class hostService {
       return response.data;
     } catch (e) {}
   }
-  async getHosts() {
+  async getHosts(filterParam) {
     try {
-      let response = await apiContext().get(serverConfig.hostUrl);
+      let filter = filterParam === undefined ? "" : filterParam;
+      let response = await apiContext().get(serverConfig.hostUrl + filter);
       console.log(response.data);
       return response.data;
     } catch (e) {}
   }
   async addHost(model) {
+    console.log(model.getData());
+    try {
+      let response = await apiContext().post(
+        serverConfig.hostUrl,
+        model.getData()
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (e) {}
+  }
+  async addAddress(model) {
     try {
       let response = await apiContext().post(
         serverConfig.hostUrl,

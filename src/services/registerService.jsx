@@ -11,16 +11,23 @@ export default class registerService {
       alert("رمز عبور با تایید رمز عبور برابر نیست");
       return;
     }*/
-    await userContext()
-      .post(auth.registerUrl, model.getData())
-      .then(response => {
-        if (response.status == 200) {
+    try {
+      let response = await userContext().post(
+        auth.registerUrl,
+        model.getData()
+      );
+      return response.data;
+      /*.then(response => {
+        if (response.status == 201) {
           alert("ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید");
+          return true;
+          return response;
         }
-      })
-      .catch(e => {
+      })*/
+    } catch (e) {}
+    /* catch(e => {
         console.log(e.response.data.error);
         alert(e.response.data.error);
-      });
+      });*/
   }
 }

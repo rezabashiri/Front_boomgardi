@@ -1,11 +1,7 @@
 import { ThemeColors } from "Util/ThemeColors";
-import {
-    chartTooltip, centerTextPlugin
-  } from "Components/Charts";
-  
+import { chartTooltip, centerTextPlugin } from "Components/Charts";
+
 const colors = ThemeColors();
-
-
 
 export const fillChartConfig = {
   legend: {
@@ -35,7 +31,7 @@ export const fillChartConfig = {
         },
         font: {
           weight: "bold",
-          size: 10,
+          size: 10
         },
         formatter: Math.round
       }
@@ -47,7 +43,7 @@ export const fillChartConfig = {
       yAxes: [
         {
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             min: 0
           },
           display: false
@@ -56,7 +52,7 @@ export const fillChartConfig = {
       xAxes: [
         {
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             min: 0
           },
           display: false
@@ -90,7 +86,6 @@ export const fillChartConfig = {
   }
 };
 
-
 export const visitChartConfig = {
   legend: {
     display: false
@@ -109,7 +104,7 @@ export const visitChartConfig = {
             drawBorder: false
           },
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             beginAtZero: true,
             stepSize: 5,
             min: 50,
@@ -124,7 +119,7 @@ export const visitChartConfig = {
             display: false
           },
           ticks: {
-            fontFamily: 'iransans-light'
+            fontFamily: "iransans-light"
           }
         }
       ]
@@ -152,9 +147,6 @@ export const visitChartConfig = {
   }
 };
 
-
-
-
 export const conversionChartConfig = {
   legend: {
     display: false
@@ -173,7 +165,7 @@ export const conversionChartConfig = {
             drawBorder: false
           },
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             beginAtZero: true,
             stepSize: 5,
             min: 50,
@@ -187,8 +179,8 @@ export const conversionChartConfig = {
           gridLines: {
             display: false
           },
-          ticks:{
-            fontFamily: 'iransans-light'
+          ticks: {
+            fontFamily: "iransans-light"
           }
         }
       ]
@@ -216,305 +208,309 @@ export const conversionChartConfig = {
   }
 };
 
-  
-  export const lineChartConfig = {
-    legend: {
-      display: false
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      tooltips: chartTooltip,
-      plugins: {
-        datalabels: {
-          display: false
-        }
-      },
-      scales: {
-        yAxes: [
-          {
-            gridLines: {
-              display: true,
-              lineWidth: 1,
-              color: "rgba(0,0,0,0.1)",
-              drawBorder: false
-            },
-            ticks: {
-              fontFamily: 'iransans-light',
-              beginAtZero: true,
-              stepSize: 5,
-              min: 50,
-              max: 70,
-              padding: 20
-            }
-          }
-        ],
-        xAxes: [
-          {
-            gridLines: {
-              display: false
-            },
-            ticks: {
-              fontFamily: 'iransans-light',
-            }
-          }
-        ]
-      }
-    },
-    data: {
-      labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
-      datasets: [
-        {
-          label: "",
-          data: [54, 63, 60, 65, 60, 68, 60],
-          borderColor: colors.themeColor1,
-          pointBackgroundColor: colors.foregroundColor,
-          pointBorderColor: colors.themeColor1,
-          pointHoverBackgroundColor: colors.themeColor1,
-          pointHoverBorderColor: colors.foregroundColor,
-          pointRadius: 6,
-          pointBorderWidth: 2,
-          pointHoverRadius: 8,
-          fill: false
-        }
-      ]
-    }
-  };
-  
-  export const polarChartConfig = {
-    legend: {
-      position: "bottom",
-      labels: {
-        padding: 30,
-        usePointStyle: true,
-        fontSize: 12,
-        fontFamily: 'iransans-light'
-      }
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scale: {
-        ticks: {
-          fontFamily: 'iransans-light',
-          display: false
-        }
-      },
-      plugins: {
-        datalabels: {
-          display: false
-        }
-      },
-      tooltips: chartTooltip
-    },
-    data: {
-      labels: ["کیک ها", "دسرها", "کاپ کیک ها"],
-      datasets: [
-        {
-          data: [80, 90, 70],
-          borderWidth: 2,
-          borderColor: [
-            colors.themeColor1,
-            colors.themeColor2,
-            colors.themeColor3
-          ],
-          backgroundColor: [
-            colors.themeColor1_10,
-            colors.themeColor2_10,
-            colors.themeColor3_10
-          ]
-        }
-      ]
-    }
-  };
-  
-  export const smallChartData1 = {
-    data: {
-      labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
-      datasets: [
-        {
-          label: "تمام سفارشات",
-          borderColor: colors.themeColor1,
-          pointBorderColor: colors.themeColor1,
-          pointHoverBackgroundColor: colors.themeColor1,
-          pointHoverBorderColor: colors.themeColor1,
-          pointRadius: 2,
-          pointBorderWidth: 3,
-          pointHoverRadius: 2,
-          fill: false,
-          borderWidth: 2,
-          data: [1250, 1300, 1550, 921, 1810, 1106, 1610],
-          datalabels: {
-            align: "end",
-            anchor: "end"
-          }
-        }
-      ]
-    }
-  };
-  
-  export const smallChartData2 = {
-    data: {
-      labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
-      datasets: [
-        {
-          label: "پرداخت نشده",
-          borderColor: colors.themeColor1,
-          pointBorderColor: colors.themeColor1,
-          pointHoverBackgroundColor: colors.themeColor1,
-          pointHoverBorderColor: colors.themeColor1,
-          pointRadius: 2,
-          pointBorderWidth: 3,
-          pointHoverRadius: 2,
-          fill: false,
-          borderWidth: 2,
-          data: [115, 120, 300, 222, 105, 85, 36],
-          datalabels: {
-            align: "end",
-            anchor: "end"
-          }
-        }
-      ]
-    }
-  };
-  
-  export const smallChartData3 = {
-    data: {
-      labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
-      datasets: [
-        {
-          label: "تمام سفارشات",
-          borderColor: colors.themeColor1,
-          pointBorderColor: colors.themeColor1,
-          pointHoverBackgroundColor: colors.themeColor1,
-          pointHoverBorderColor: colors.themeColor1,
-          pointRadius: 2,
-          pointBorderWidth: 3,
-          pointHoverRadius: 2,
-          fill: false,
-          borderWidth: 2,
-          data: [350, 452, 762, 952, 630, 85, 158],
-          datalabels: {
-            align: "end",
-            anchor: "end"
-          }
-        }
-      ]
-    }
-  };
-  
-  export const smallChartData4 = {
-    data: {
-      labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
-      datasets: [
-        {
-          label: "تمام سفارشات",
-          borderColor: colors.themeColor1,
-          pointBorderColor: colors.themeColor1,
-          pointHoverBackgroundColor: colors.themeColor1,
-          pointHoverBorderColor: colors.themeColor1,
-          pointRadius: 2,
-          pointBorderWidth: 3,
-          pointHoverRadius: 2,
-          fill: false,
-          borderWidth: 2,
-          data: [200, 452, 250, 630, 125, 85, 20],
-          datalabels: {
-            align: "end",
-            anchor: "end"
-          }
-        }
-      ]
-    }
-  };
-  
-export const doughnutChartConfig = {
-    plugins: [centerTextPlugin],
-    legend: {
-      position: "bottom",
-      labels: {
-        padding: 30,
-        usePointStyle: true,
-        fontSize: 12,
-        fontFamily: 'iransans-light'
-      }
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      title: {
+export const lineChartConfig = {
+  legend: {
+    display: false
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    tooltips: chartTooltip,
+    plugins: {
+      datalabels: {
         display: false
-      },
-      cutoutPercentage: 80,
-      layout: {
-        padding: {
-          bottom: 20
-        }
-      },
-      tooltips: chartTooltip
-    },
-    data: {
-      labels: ["کیک ها", "کاپ کیک ها", "دسرها"],
-      datasets: [
-        {
-          defaultFontFamily: 'iransans-light',
-          label: "",
-          borderColor: [colors.themeColor3, colors.themeColor2, colors.themeColor1],
-          backgroundColor: [colors.themeColor3_10, colors.themeColor2_10, colors.themeColor1_10],
-          borderWidth: 2,
-          data: [15, 25, 20]
-        }
-      ]
-    }
-  };
-
-
-  export const radarChartConfig = {
-    legend: {
-      position: "bottom",
-      labels: {
-        padding: 30,
-        usePointStyle: true,
-        fontSize: 12,
-        fontFamily: 'iransans-light'
       }
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scale: {
-        ticks: {
-          fontFamily: 'iransans-light',
-          display: false
-        }
-      },
-      tooltips: chartTooltip
-    },
-    data: {
-      datasets: [
+    scales: {
+      yAxes: [
         {
-          label: "موجودی",
-          borderWidth: 2,
-          pointBackgroundColor: colors.themeColor1,
-          borderColor: colors.themeColor1,
-          backgroundColor: colors.themeColor1_10,
-          data: [80, 90, 70]
-        },
-        {
-          label: "سفارش",
-          borderWidth: 2,
-          pointBackgroundColor: colors.themeColor2,
-          borderColor: colors.themeColor2,
-          backgroundColor: colors.themeColor2_10,
-          data: [68, 80, 95]
+          gridLines: {
+            display: true,
+            lineWidth: 1,
+            color: "rgba(0,0,0,0.1)",
+            drawBorder: false
+          },
+          ticks: {
+            fontFamily: "iransans-light",
+            beginAtZero: true,
+            stepSize: 5,
+            min: 50,
+            max: 70,
+            padding: 20
+          }
         }
       ],
-      labels: ["کیک ها", "دسرها", "کاپ کیک ها"]
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            fontFamily: "iransans-light"
+          }
+        }
+      ]
     }
-  };
-  
+  },
+  data: {
+    labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
+    datasets: [
+      {
+        label: "",
+        data: [54, 63, 60, 65, 60, 68, 60],
+        borderColor: colors.themeColor1,
+        pointBackgroundColor: colors.foregroundColor,
+        pointBorderColor: colors.themeColor1,
+        pointHoverBackgroundColor: colors.themeColor1,
+        pointHoverBorderColor: colors.foregroundColor,
+        pointRadius: 6,
+        pointBorderWidth: 2,
+        pointHoverRadius: 8,
+        fill: false
+      }
+    ]
+  }
+};
 
-  
+export const polarChartConfig = {
+  legend: {
+    position: "bottom",
+    labels: {
+      padding: 30,
+      usePointStyle: true,
+      fontSize: 12,
+      fontFamily: "iransans-light"
+    }
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scale: {
+      ticks: {
+        fontFamily: "iransans-light",
+        display: false
+      }
+    },
+    plugins: {
+      datalabels: {
+        display: false
+      }
+    },
+    tooltips: chartTooltip
+  },
+  data: {
+    labels: ["تورلیدر", "اقامتگاه", "تور"],
+    datasets: [
+      {
+        data: [80, 90, 70],
+        borderWidth: 2,
+        borderColor: [
+          colors.themeColor1,
+          colors.themeColor2,
+          colors.themeColor3
+        ],
+        backgroundColor: [
+          colors.themeColor1_10,
+          colors.themeColor2_10,
+          colors.themeColor3_10
+        ]
+      }
+    ]
+  }
+};
+
+export const smallChartData1 = {
+  data: {
+    labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
+    datasets: [
+      {
+        label: "تمام سفارشات",
+        borderColor: colors.themeColor1,
+        pointBorderColor: colors.themeColor1,
+        pointHoverBackgroundColor: colors.themeColor1,
+        pointHoverBorderColor: colors.themeColor1,
+        pointRadius: 2,
+        pointBorderWidth: 3,
+        pointHoverRadius: 2,
+        fill: false,
+        borderWidth: 2,
+        data: [1250, 1300, 1550, 921, 1810, 1106, 1610],
+        datalabels: {
+          align: "end",
+          anchor: "end"
+        }
+      }
+    ]
+  }
+};
+
+export const smallChartData2 = {
+  data: {
+    labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
+    datasets: [
+      {
+        label: "پرداخت نشده",
+        borderColor: colors.themeColor1,
+        pointBorderColor: colors.themeColor1,
+        pointHoverBackgroundColor: colors.themeColor1,
+        pointHoverBorderColor: colors.themeColor1,
+        pointRadius: 2,
+        pointBorderWidth: 3,
+        pointHoverRadius: 2,
+        fill: false,
+        borderWidth: 2,
+        data: [115, 120, 300, 222, 105, 85, 36],
+        datalabels: {
+          align: "end",
+          anchor: "end"
+        }
+      }
+    ]
+  }
+};
+
+export const smallChartData3 = {
+  data: {
+    labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
+    datasets: [
+      {
+        label: "تمام سفارشات",
+        borderColor: colors.themeColor1,
+        pointBorderColor: colors.themeColor1,
+        pointHoverBackgroundColor: colors.themeColor1,
+        pointHoverBorderColor: colors.themeColor1,
+        pointRadius: 2,
+        pointBorderWidth: 3,
+        pointHoverRadius: 2,
+        fill: false,
+        borderWidth: 2,
+        data: [350, 452, 762, 952, 630, 85, 158],
+        datalabels: {
+          align: "end",
+          anchor: "end"
+        }
+      }
+    ]
+  }
+};
+
+export const smallChartData4 = {
+  data: {
+    labels: ["شنبه", "1شنبه", "2شنبه", "3شنبه", "4شنبه", "5شنبه", "جمعه"],
+    datasets: [
+      {
+        label: "تمام سفارشات",
+        borderColor: colors.themeColor1,
+        pointBorderColor: colors.themeColor1,
+        pointHoverBackgroundColor: colors.themeColor1,
+        pointHoverBorderColor: colors.themeColor1,
+        pointRadius: 2,
+        pointBorderWidth: 3,
+        pointHoverRadius: 2,
+        fill: false,
+        borderWidth: 2,
+        data: [200, 452, 250, 630, 125, 85, 20],
+        datalabels: {
+          align: "end",
+          anchor: "end"
+        }
+      }
+    ]
+  }
+};
+
+export const doughnutChartConfig = {
+  plugins: [centerTextPlugin],
+  legend: {
+    position: "bottom",
+    labels: {
+      padding: 30,
+      usePointStyle: true,
+      fontSize: 12,
+      fontFamily: "iransans-light"
+    }
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    title: {
+      display: false
+    },
+    cutoutPercentage: 80,
+    layout: {
+      padding: {
+        bottom: 20
+      }
+    },
+    tooltips: chartTooltip
+  },
+  data: {
+    labels: ["تورلیدر", "اقامتگاه", "تور"],
+    datasets: [
+      {
+        defaultFontFamily: "iransans-light",
+        label: "",
+        borderColor: [
+          colors.themeColor3,
+          colors.themeColor2,
+          colors.themeColor1
+        ],
+        backgroundColor: [
+          colors.themeColor3_10,
+          colors.themeColor2_10,
+          colors.themeColor1_10
+        ],
+        borderWidth: 2,
+        data: [15, 25, 20]
+      }
+    ]
+  }
+};
+
+export const radarChartConfig = {
+  legend: {
+    position: "bottom",
+    labels: {
+      padding: 30,
+      usePointStyle: true,
+      fontSize: 12,
+      fontFamily: "iransans-light"
+    }
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    scale: {
+      ticks: {
+        fontFamily: "iransans-light",
+        display: false
+      }
+    },
+    tooltips: chartTooltip
+  },
+  data: {
+    datasets: [
+      {
+        label: "قطعی",
+        borderWidth: 2,
+        pointBackgroundColor: colors.themeColor1,
+        borderColor: colors.themeColor1,
+        backgroundColor: colors.themeColor1_10,
+        data: [80, 90, 70]
+      },
+      {
+        label: "غیر قطعی",
+        borderWidth: 2,
+        pointBackgroundColor: colors.themeColor2,
+        borderColor: colors.themeColor2,
+        backgroundColor: colors.themeColor2_10,
+        data: [68, 80, 95]
+      }
+    ],
+    labels: ["تورها", "اقامتگاه", "تور لیدرها"]
+  }
+};
+
 export const barChartConfig = {
   legend: {
     position: "bottom",
@@ -522,7 +518,7 @@ export const barChartConfig = {
       padding: 30,
       usePointStyle: true,
       fontSize: 12,
-      fontFamily: 'iransans-light'
+      fontFamily: "iransans-light"
     }
   },
   options: {
@@ -538,7 +534,7 @@ export const barChartConfig = {
             drawBorder: false
           },
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             beginAtZero: true,
             stepSize: 100,
             min: 300,
@@ -553,7 +549,7 @@ export const barChartConfig = {
             display: false
           },
           ticks: {
-            fontFamily: 'iransans-light'
+            fontFamily: "iransans-light"
           }
         }
       ]
@@ -564,14 +560,14 @@ export const barChartConfig = {
     labels: ["مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
     datasets: [
       {
-        label: "کیک ها",
+        label: "اقامتگاه",
         borderColor: colors.themeColor1,
         backgroundColor: colors.themeColor1_10,
         data: [456, 479, 324, 569, 702, 600],
         borderWidth: 2
       },
       {
-        label: "دسرها",
+        label: "تور",
         borderColor: colors.themeColor2,
         backgroundColor: colors.themeColor2_10,
         data: [364, 504, 605, 400, 345, 320],
@@ -581,8 +577,6 @@ export const barChartConfig = {
   }
 };
 
-
-
 export const scatterChartConfig = {
   legend: {
     position: "bottom",
@@ -590,7 +584,7 @@ export const scatterChartConfig = {
       padding: 30,
       usePointStyle: true,
       fontSize: 12,
-      fontFamily: 'iransans-light'
+      fontFamily: "iransans-light"
     }
   },
   options: {
@@ -606,7 +600,7 @@ export const scatterChartConfig = {
             drawBorder: false
           },
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             beginAtZero: true,
             stepSize: 20,
             min: -80,
@@ -623,7 +617,7 @@ export const scatterChartConfig = {
             color: "rgba(0,0,0,0.1)"
           },
           ticks: {
-            fontFamily: 'iransans-light'
+            fontFamily: "iransans-light"
           }
         }
       ]
@@ -634,7 +628,7 @@ export const scatterChartConfig = {
     datasets: [
       {
         borderWidth: 2,
-        label: "کیک ها",
+        label: "تورها",
         borderColor: colors.themeColor1,
         backgroundColor: colors.themeColor1_10,
         data: [
@@ -649,7 +643,7 @@ export const scatterChartConfig = {
       },
       {
         borderWidth: 2,
-        label: "دسرها",
+        label: "اقامتگاه ها",
         borderColor: colors.themeColor2,
         backgroundColor: colors.themeColor2_10,
         data: [
@@ -665,10 +659,6 @@ export const scatterChartConfig = {
     ]
   }
 };
-
-
-
-
 
 export const areaChartConfig = {
   legend: {
@@ -688,7 +678,7 @@ export const areaChartConfig = {
             drawBorder: false
           },
           ticks: {
-            fontFamily: 'iransans-light',
+            fontFamily: "iransans-light",
             beginAtZero: true,
             stepSize: 5,
             min: 50,
@@ -702,7 +692,7 @@ export const areaChartConfig = {
           gridLines: {
             display: false
           },
-          fontFamily: 'iransans-light'
+          fontFamily: "iransans-light"
         }
       ]
     }
@@ -729,7 +719,6 @@ export const areaChartConfig = {
   }
 };
 
-
 export const pieChartConfig = {
   legend: {
     position: "bottom",
@@ -737,7 +726,7 @@ export const pieChartConfig = {
       padding: 30,
       usePointStyle: true,
       fontSize: 12,
-      fontFamily: 'iransans-light'
+      fontFamily: "iransans-light"
     }
   },
   options: {
@@ -754,7 +743,7 @@ export const pieChartConfig = {
     tooltips: chartTooltip
   },
   data: {
-    labels: ["کیک ها", "کاپ کیک ها", "دسرها"],
+    labels: ["تور", "تورلیدر", "اقامتگاه"],
     datasets: [
       {
         label: "",
@@ -770,9 +759,8 @@ export const pieChartConfig = {
         ],
         borderWidth: 2,
         data: [15, 25, 20],
-        fontFamily: 'iransans-light'
+        fontFamily: "iransans-light"
       }
     ]
   }
 };
-

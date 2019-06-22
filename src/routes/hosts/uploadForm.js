@@ -59,10 +59,10 @@ class UploadForm extends Component {
       },
       deleteFile: {
         enabled: true,
-        endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+        endpoint: serverConfig.baseUrl + serverConfig.picUrl
       },
       request: {
-        endpoint: "http://192.168.1.5:40679/api/common/Attachment",
+        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
           attachId: this.props.attachId,
           attachType: { part: "host", type: "license" }

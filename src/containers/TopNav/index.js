@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { injectIntl} from 'react-intl';
+import { injectIntl } from "react-intl";
 import {
   UncontrolledDropdown,
   DropdownItem,
@@ -21,10 +21,14 @@ import {
   changeLocale
 } from "Redux/actions";
 
-import { menuHiddenBreakpoint, searchPath,localeOptions } from "Constants/defaultValues";
+import {
+  menuHiddenBreakpoint,
+  searchPath,
+  localeOptions
+} from "Constants/defaultValues";
+import { rmJwt } from "../../helpers/Jwt.js";
 
 import notifications from "Data/topnav.notifications.json";
-
 
 class TopNav extends Component {
   constructor(props) {
@@ -41,7 +45,7 @@ class TopNav extends Component {
       searchKeyword: ""
     };
   }
-  
+
   handleChangeLocale = locale => {
     this.props.changeLocale(locale);
   };
@@ -165,7 +169,9 @@ class TopNav extends Component {
   };
 
   handleLogout = () => {
-    this.props.logoutUser(this.props.history);
+    //this.props.logoutUser(this.props.history);
+    rmJwt();
+    this.props.history.push("/login");
   };
 
   menuButtonClick(e, menuClickCount, containerClassnames) {
@@ -185,7 +191,7 @@ class TopNav extends Component {
 
   render() {
     const { containerClassnames, menuClickCount, locale } = this.props;
-    const {messages} = this.props.intl;
+    const { messages } = this.props.intl;
     return (
       <nav className="navbar fixed-top">
         <NavLink
@@ -244,7 +250,7 @@ class TopNav extends Component {
         </div>
 
         <div className="d-inline-block">
-          <UncontrolledDropdown className="mr-2">
+          <UncontrolledDropdown hidden className="mr-2">
             <DropdownToggle
               caret
               color="light"
@@ -254,15 +260,16 @@ class TopNav extends Component {
               <span className="name">{this.props.locale.toUpperCase()}</span>
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
-            {
-              localeOptions.map((l)=>{
-                return(
-                  <DropdownItem onClick={() => this.handleChangeLocale(l.id)} key={l.id}>
-                  {l.name}
-                </DropdownItem>
-                )
-              })
-            }
+              {localeOptions.map(l => {
+                return (
+                  <DropdownItem
+                    onClick={() => this.handleChangeLocale(l.id)}
+                    key={l.id}
+                  >
+                    {l.name}
+                  </DropdownItem>
+                );
+              })}
             </DropdownMenu>
           </UncontrolledDropdown>
         </div>
@@ -276,8 +283,9 @@ class TopNav extends Component {
           <div className="header-icons d-inline-block align-middle">
             <div className="position-relative d-none d-none d-lg-inline-block">
               <a
-                className="btn btn-outline-primary btn-sm mb-2 mr-3" target="_top"
-                href="https://themeforest.net/cart/configure_before_adding/22544383?license=regular&ref=ColoredStrategies&size=source"
+                className="btn btn-outline-primary btn-sm mb-2 mr-3"
+                target="_top"
+                href=""
               >
                 <IntlMessages id="user.buy" />
               </a>
@@ -300,30 +308,33 @@ class TopNav extends Component {
                     <IntlMessages id="menu.dashboards" />
                   </NavLink>
 
-                  <NavLink to="/app/ui" className="icon-menu-item">
+                  <NavLink to="/app/users" className="icon-menu-item">
                     <i className="iconsmind-Pantone d-block" />{" "}
                     <IntlMessages id="menu.ui" />
                   </NavLink>
-                  <NavLink to="/app/ui/charts" className="icon-menu-item">
+                  <NavLink
+                    to="/app/dashboards/default"
+                    className="icon-menu-item"
+                  >
                     <i className="iconsmind-Bar-Chart d-block" />{" "}
                     <IntlMessages id="menu.charts" />
                   </NavLink>
                   <NavLink
-                    to="/app/applications/chat"
+                    to="/app/dashboards/default"
                     className="icon-menu-item"
                   >
                     <i className="iconsmind-Speach-BubbleDialog d-block" />{" "}
                     <IntlMessages id="menu.chat" />
                   </NavLink>
                   <NavLink
-                    to="/app/applications/survey"
+                    to="/app/dashboards/default"
                     className="icon-menu-item"
                   >
                     <i className="iconsmind-Formula d-block" />{" "}
                     <IntlMessages id="menu.survey" />
                   </NavLink>
                   <NavLink
-                    to="/app/applications/todo"
+                    to="/app/dashboards/default"
                     className="icon-menu-item"
                   >
                     <i className="iconsmind-Check d-block" />{" "}
@@ -397,16 +408,16 @@ class TopNav extends Component {
           <div className="user d-inline-block">
             <UncontrolledDropdown className="dropdown-menu-right">
               <DropdownToggle className="p-0" color="empty">
-                <span className="name ml-1">فاطمه کاظمی</span>
+                <span className="name ml-1">فاطمه احمدی</span>
                 <span>
                   <img alt="Profile" src="/assets/img/profile-pic-l.jpg" />
                 </span>
               </DropdownToggle>
               <DropdownMenu className="mt-3" right>
                 <DropdownItem>حساب کاربری</DropdownItem>
-                <DropdownItem>امکانات</DropdownItem>
-                <DropdownItem>تاریخچه</DropdownItem>
-                <DropdownItem>پشتیبانی</DropdownItem>
+                <DropdownItem>کیف پول</DropdownItem>
+                <DropdownItem>تراکنش ها</DropdownItem>
+                <DropdownItem>سبد خرید</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={() => this.handleLogout()}>
                   خروج
@@ -425,7 +436,9 @@ const mapStateToProps = ({ menu, settings }) => {
   const { locale } = settings;
   return { containerClassnames, menuClickCount, locale };
 };
-export default injectIntl(connect(
-  mapStateToProps,
-  { setContainerClassnames, clickOnMobileMenu, logoutUser, changeLocale }
-)(TopNav));
+export default injectIntl(
+  connect(
+    mapStateToProps,
+    { setContainerClassnames, clickOnMobileMenu, logoutUser, changeLocale }
+  )(TopNav)
+);

@@ -60,7 +60,6 @@ export default class DetailsLayout extends Component {
       <Fragment>
         <Row>
           <Colxx xxs="12">
-            <h1>کیک شکلاتی</h1>
             <div className="float-sm-left mb-2">
               <UncontrolledDropdown>
                 <DropdownToggle
@@ -74,17 +73,17 @@ export default class DetailsLayout extends Component {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem header>
-                  <IntlMessages id="layouts.header" />
+                    <IntlMessages id="layouts.header" />
                   </DropdownItem>
                   <DropdownItem disabled>
-                  <IntlMessages id="layouts.delete" />
+                    <IntlMessages id="layouts.delete" />
                   </DropdownItem>
                   <DropdownItem>
-                  <IntlMessages id="layouts.another-action" />
+                    <IntlMessages id="layouts.another-action" />
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                  <IntlMessages id="layouts.another-action" />
+                    <IntlMessages id="layouts.another-action" />
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -134,7 +133,7 @@ export default class DetailsLayout extends Component {
                         </Button>
                       </div>
                       <img
-                        src="/assets/img/detail.jpg"
+                        src="/assets/img/boomgardi1.jpg"
                         alt="Detail"
                         className="card-img-top"
                       />
@@ -144,22 +143,21 @@ export default class DetailsLayout extends Component {
                           <IntlMessages id="layouts.description" />
                         </p>
                         <p className="mb-3">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-
+                          اقامتگاه با محیطی دلنشین همراه با گشت جاذبه های دیدنی
+                          اطراف
                           <br />
-                          <br /> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
-
+                          <br /> گشت منطقه و سرویس ناهار و شام ارگانیک
                         </p>
 
                         <p className="text-muted text-small mb-2">
-                        <IntlMessages id="layouts.rating" />
+                          <IntlMessages id="layouts.rating" />
                         </p>
                         <div className="mb-3">
                           <Rating total={5} rating={5} interactive={false} />
                         </div>
 
                         <p className="text-muted text-small mb-2">
-                        <IntlMessages id="layouts.price" />
+                          <IntlMessages id="layouts.price" />
                         </p>
                         <p className="mb-3">15000 تومان</p>
                         <p className="text-muted text-small mb-2">
@@ -168,31 +166,31 @@ export default class DetailsLayout extends Component {
                         <div className="mb-3">
                           <p className="d-sm-inline-block mb-1">
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              برچسب اول
+                              بومگردی
                             </Badge>
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              شکلاتی
+                              عشایری
                             </Badge>
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              دسر
+                              تورلیدر
                             </Badge>
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              مطلب
+                              تورها
                             </Badge>
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              برچسب تستی
+                              آژانس‌ها
                             </Badge>
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              تخم مرغ
+                              اقامتگاه
                             </Badge>
                             <Badge color="outline-secondary mb-1 mr-1" pill>
-                              برچسب
+                              غذای محلی
                             </Badge>
                           </p>
                         </div>
 
                         <p className="text-muted text-small mb-2">
-                        <IntlMessages id="layouts.is-vegan" />
+                          <IntlMessages id="layouts.is-vegan" />
                         </p>
                         <p>خیر</p>
                       </CardBody>
@@ -264,7 +262,7 @@ export default class DetailsLayout extends Component {
                     <Card className="mb-4">
                       <CardBody>
                         <CardTitle>
-                        <IntlMessages id="layouts.popularity" />
+                          <IntlMessages id="layouts.popularity" />
                         </CardTitle>
                         <div className="chart-container">
                           <LineShadow {...areaChartConfig} />
@@ -275,7 +273,7 @@ export default class DetailsLayout extends Component {
                     <Card className="mb-4">
                       <CardBody>
                         <CardTitle>
-                        <IntlMessages id="layouts.comments" />
+                          <IntlMessages id="layouts.comments" />
                         </CardTitle>
                         <div className="d-flex flex-row mb-3 pb-3 border-bottom">
                           <NavLink to="#">
@@ -288,7 +286,7 @@ export default class DetailsLayout extends Component {
                           <div className="pl-3 pr-2">
                             <NavLink to="#">
                               <p className="font-weight-medium mb-0">
-                                خیلی خوشمزس..ممنونم{" "}
+                                خیلی خوشمزس..{" "}
                               </p>
                               <p className="text-muted mb-1 text-small">
                                 مریم کیانی | 27 مرداد 1397
@@ -315,7 +313,7 @@ export default class DetailsLayout extends Component {
                           <div className="pl-3 pr-2">
                             <NavLink to="#">
                               <p className="font-weight-medium mb-0">
-                                این کیک برای نگهدار در دمای گرم هم بسیار مناسب است ممنونم.
+                                محیط دلنشینی داشت
                               </p>
                               <p className="text-muted mb-1 text-small">
                                 ندا کریمی | 15 اردیبهشت 1395
@@ -342,7 +340,7 @@ export default class DetailsLayout extends Component {
                           <div className="pl-3 pr-2">
                             <NavLink to="#">
                               <p className="font-weight-medium mb-0">
-                                من چندروز قبل سفارش دادم ولی هنوز به دستم نرسیده.. جریان چیه
+                                راهش خیلی دور بود
                               </p>
                               <p className="text-muted mb-1 text-small">
                                 محمد محمد زاده محمدی | 10 دی 1397
@@ -369,7 +367,7 @@ export default class DetailsLayout extends Component {
                           <div className="pl-3 pr-2">
                             <NavLink to="#">
                               <p className="font-weight-medium mb-0">
-                                خیلی عالی دارین کار میکنید. راسی پیک دارید؟
+                                خیلی عالی دارین کار میکنید.
                               </p>
                               <p className="text-muted mb-1 text-small">
                                 لیلا رشیدی | 25 خرداد 1397
@@ -396,10 +394,10 @@ export default class DetailsLayout extends Component {
                           <div className="pl-3 pr-2">
                             <NavLink to="#">
                               <p className="font-weight-medium mb-0">
-                                نه این مقدار از مواد براش خیلی زیاده باید به فکر مواد بهتری باشید
+                                قشنگتر از عکس هاش بود
                               </p>
                               <p className="text-muted mb-1 text-small">
-                                آشپز  | 18 شهریور 1397
+                                آشپز | 18 شهریور 1397
                               </p>
                               <div className="form-group mb-0">
                                 <Rating
@@ -419,7 +417,6 @@ export default class DetailsLayout extends Component {
               <TabPane tabId="2">
                 <Row>
                   <Colxx>
-
                     <Card className="d-flex flex-row mb-3">
                       <div className="d-flex flex-grow-1 min-width-zero">
                         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
@@ -430,7 +427,7 @@ export default class DetailsLayout extends Component {
                             سفارش اقای محمودی
                           </NavLink>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                           تهران، میدان امام
+                            تهران، میدان امام
                           </p>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
                             15 دی 1397
@@ -452,18 +449,18 @@ export default class DetailsLayout extends Component {
                             to="#"
                             className="list-item-heading mb-1 truncate w-40 w-xs-100"
                           >
-                          خانم وادی زاده
+                            خانم وادی زاده
                           </NavLink>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          شیراز، پاسارگاد
+                            شیراز، پاسارگاد
                           </p>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          23 دی 1398
+                            23 دی 1398
                           </p>
 
                           <div className="w-15 w-xs-100 text-right">
                             <Badge color="primary" pill>
-                            فرآوری شده
+                              فرآوری شده
                             </Badge>
                           </div>
                         </CardBody>
@@ -477,18 +474,18 @@ export default class DetailsLayout extends Component {
                             to="#"
                             className="list-item-heading mb-1 truncate w-40 w-xs-100"
                           >
-                          محبوبه نظری
+                            محبوبه نظری
                           </NavLink>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          تهران، مولوی
+                            تهران، مولوی
                           </p>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          30 دی 1397
+                            30 دی 1397
                           </p>
 
                           <div className="w-15 w-xs-100 text-right">
                             <Badge color="primary" pill>
-                            فرآوری شده
+                              فرآوری شده
                             </Badge>
                           </div>
                         </CardBody>
@@ -502,18 +499,18 @@ export default class DetailsLayout extends Component {
                             to="#"
                             className="list-item-heading mb-1 truncate w-40 w-xs-100"
                           >
-                          لیلا حاتمی
+                            لیلا حاتمی
                           </NavLink>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          همدان، میدان ولی عصر
+                            همدان، میدان ولی عصر
                           </p>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          18 بهمن 1398
+                            18 بهمن 1398
                           </p>
 
                           <div className="w-15 w-xs-100 text-right">
                             <Badge color="primary" pill>
-                            فرآوری شده
+                              فرآوری شده
                             </Badge>
                           </div>
                         </CardBody>
@@ -527,24 +524,23 @@ export default class DetailsLayout extends Component {
                             to="#"
                             className="list-item-heading mb-1 truncate w-40 w-xs-100"
                           >
-                          اقای بارانی
+                            اقای بارانی
                           </NavLink>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          تهران، آرژانتین
+                            تهران، آرژانتین
                           </p>
                           <p className="mb-1 text-muted text-small w-15 w-xs-100">
-                          27 بهمن 1397
+                            27 بهمن 1397
                           </p>
 
                           <div className="w-15 w-xs-100 text-right">
                             <Badge color="secondary" pill>
-                            درحال پردازش
+                              درحال پردازش
                             </Badge>
                           </div>
                         </CardBody>
                       </div>
                     </Card>
-
                   </Colxx>
                 </Row>
               </TabPane>

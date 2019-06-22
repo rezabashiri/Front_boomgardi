@@ -62,10 +62,10 @@ export default class AnalyticsDashboard extends Component {
                 <div className="float-right float-none-xs">
                   <div className="d-inline-block">
                     <h5 className="d-inline">
-                      <IntlMessages id="dashboards.website-visits" />
+                      <IntlMessages id="dashboards.website-hostsale" />
                     </h5>
                     <span className="text-muted text-small d-block">
-                      <IntlMessages id="dashboards.unique-visitors" />
+                      <IntlMessages id="dashboards.host-sales" />
                     </span>
                   </div>
                 </div>
@@ -103,10 +103,10 @@ export default class AnalyticsDashboard extends Component {
                 <div className="float-right float-none-xs">
                   <div className="d-inline-block">
                     <h5 className="d-inline">
-                      <IntlMessages id="dashboards.conversion-rates" />
+                      <IntlMessages id="dashboards.website-touresale" />
                     </h5>
                     <span className="text-muted text-small d-block">
-                      <IntlMessages id="dashboards.per-session" />
+                      <IntlMessages id="dashboards.reserved" />
                     </span>
                   </div>
                 </div>
@@ -306,7 +306,7 @@ export default class AnalyticsDashboard extends Component {
             <Card>
               <CardBody>
                 <CardTitle>
-                  <IntlMessages id="dashboards.order-stock" />
+                  <IntlMessages id="dashboards.sales" />
                 </CardTitle>
                 <div className="chart-container">
                   <RadarShadow {...radarChartConfig} />
