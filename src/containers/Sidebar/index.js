@@ -306,8 +306,9 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/app/ui"
-                    onClick={e => this.openSubMenu(e, "ui")}
+                    to="/app/hosts"
+                    //to="/app/ui"
+                    //onClick={e => this.openSubMenu(e, "ui")}
                   >
                     <i className="iconsmind-Jeep-2" />{" "}
                     <IntlMessages id="menu.leaders" />
@@ -322,8 +323,9 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/app/layouts"
-                    onClick={e => this.openSubMenu(e, "layouts")}
+                    to="/app/hosts"
+                    //to="/app/layouts"
+                    //onClick={e => this.openSubMenu(e, "layouts")}
                   >
                     <i className="simple-icon-plane" />{" "}
                     <IntlMessages id="menu.company" />
@@ -338,8 +340,9 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/app/dashboards/default"
-                    onClick={e => this.openSubMenu(e, "dashboards")}
+                    to="/app/hosts"
+                    //to="/app/dashboards/default"
+                    //onClick={e => this.openSubMenu(e, "dashboards")}
                   >
                     <i className="iconsmind-Data-Financial" />{" "}
                     <IntlMessages id="menu.finance" />
@@ -354,8 +357,9 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/landingpage"
-                    onClick={e => this.openSubMenu(e, "landingpage")}
+                    to="/app/hosts"
+                    //to="/landingpage"
+                    //onClick={e => this.openSubMenu(e, "landingpage")}
                   >
                     <i className="iconsmind-Bus" />{" "}
                     <IntlMessages id="menu.tours" />
@@ -450,19 +454,19 @@ class Sidebar extends Component {
                 })}
                 data-parent="layouts"
               >
-                <NavItem>
+                <NavItem hidden>
                   <NavLink to="/app/layouts/data-list">
                     <i className="simple-icon-credit-card" />{" "}
                     <IntlMessages id="menu.data-list" />
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem hidden>
                   <NavLink to="/app/layouts/thumb-list">
                     <i className="simple-icon-list" />{" "}
                     <IntlMessages id="menu.thumb-list" />
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem hidden>
                   <NavLink to="/app/layouts/image-list">
                     <i className="simple-icon-grid" />{" "}
                     <IntlMessages id="menu.image-list" />

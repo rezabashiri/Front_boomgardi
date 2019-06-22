@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
-import { injectIntl} from 'react-intl';
+import { injectIntl } from "react-intl";
 import DatePicker from "../../components/DatePicker";
 import {
   Row,
@@ -63,8 +63,7 @@ import productsData from "Data/products.json";
 import profileStatusData from "Data/dashboard.profile.status.json";
 import cakeData from "Data/dashboard.cakes.json";
 
-import MomentUtils from '@date-io/moment';
-
+import MomentUtils from "@date-io/moment";
 
 Chart.defaults.global.plugins.datalabels.display = false;
 
@@ -136,10 +135,10 @@ class DefaultDashboard extends Component {
     this.setState({ selectedOptionsType });
   };
 
-  selectedDate = Date.now()
+  selectedDate = Date.now();
 
   render() {
-    const {messages} = this.props.intl;
+    const { messages } = this.props.intl;
     return (
       <Fragment>
         <Row>
@@ -416,26 +415,22 @@ class DefaultDashboard extends Component {
                 </CardTitle>
                 <table>
                   <tbody>
-                  <tr>
-                    <td>
-                      <label className="pl-3">
-                      <IntlMessages id="form-components.date-picker" />
-                      </label>
-                    </td>
-                    <td>
+                    <tr>
+                      <td>
+                        <label className="pl-3">
+                          <IntlMessages id="form-components.date-picker" />
+                        </label>
+                      </td>
+                      <td>
                         <DatePicker
-                                ref='minDate'
-                                okLabel='تایید'
-                                cancelLabel='لغو' 
-                                
-                                
-                            />
-                    </td>
-                  </tr>
+                          ref="minDate"
+                          okLabel="تایید"
+                          cancelLabel="لغو"
+                        />
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
-                
-
               </CardBody>
             </Card>
           </Colxx>
@@ -457,7 +452,7 @@ class DefaultDashboard extends Component {
           </Colxx>
         </Row>
 
-        <Row>
+        <Row hidden>
           <Colxx sm="12" lg="4" className="mb-4">
             <Card className="h-100">
               <CardBody>
@@ -828,7 +823,10 @@ class DefaultDashboard extends Component {
                     <Label>
                       <IntlMessages id="dashboards.keyword" />
                     </Label>
-                    <Input type="text" placeholder={messages["dashboards.keyword"]} />
+                    <Input
+                      type="text"
+                      placeholder={messages["dashboards.keyword"]}
+                    />
                   </FormGroup>
                   <FormGroup>
                     <CustomInput
@@ -896,13 +894,13 @@ class DefaultDashboard extends Component {
                 >
                   <div className="pr-2 pl-2">
                     <img
-                      src="/assets/img/carousel-1.jpg"
-                      alt="Cheesecake"
+                      src="/assets/img/boomgardi1.jpg"
+                      alt="بومگردی"
                       className="mb-4"
                     />
                     <h6 className="mb-1">
                       <span className="mr-2">1.</span>
-                      چیز کیک
+                      بومگردی
                     </h6>
 
                     <Rating total={5} rating={5} interactive={false} />
@@ -914,13 +912,13 @@ class DefaultDashboard extends Component {
 
                   <div className="pr-2 pl-2">
                     <img
-                      src="/assets/img/carousel-2.jpg"
-                      alt="Cheesecake"
+                      src="/assets/img/boomgardi-katam.jpg"
+                      alt="اقامتگاه بومگردی کتام"
                       className="mb-4"
                     />
                     <h6 className="mb-1">
                       <span className="ml-4">2.</span>
-                      کیک شکلاتی
+                      اقامتگاه بومگردی کتام
                     </h6>
 
                     <Rating total={5} rating={4} interactive={false} />
@@ -931,13 +929,13 @@ class DefaultDashboard extends Component {
 
                   <div className="pr-2 pl-2">
                     <img
-                      src="/assets/img/carousel-3.jpg"
-                      alt="Cheesecake"
+                      src="/assets/img/boomgardi-gilgamesh.jpg"
+                      alt="اقامتگاه بوم گردی گیلگمش"
                       className="mb-4"
                     />
                     <h6 className="mb-1">
                       <span className="ml-4">3.</span>
-                      شیرینی فندقی
+                      اقامتگاه بوم گردی گیلگمش
                     </h6>
 
                     <Rating total={5} rating={4} interactive={false} />

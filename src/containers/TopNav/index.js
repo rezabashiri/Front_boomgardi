@@ -26,6 +26,7 @@ import {
   searchPath,
   localeOptions
 } from "Constants/defaultValues";
+import { rmJwt } from "../../helpers/Jwt.js";
 
 import notifications from "Data/topnav.notifications.json";
 
@@ -168,7 +169,9 @@ class TopNav extends Component {
   };
 
   handleLogout = () => {
-    this.props.logoutUser(this.props.history);
+    //this.props.logoutUser(this.props.history);
+    rmJwt();
+    this.props.history.push("/login");
   };
 
   menuButtonClick(e, menuClickCount, containerClassnames) {
@@ -247,7 +250,7 @@ class TopNav extends Component {
         </div>
 
         <div className="d-inline-block">
-          <UncontrolledDropdown className="mr-2">
+          <UncontrolledDropdown hidden className="mr-2">
             <DropdownToggle
               caret
               color="light"
@@ -305,30 +308,33 @@ class TopNav extends Component {
                     <IntlMessages id="menu.dashboards" />
                   </NavLink>
 
-                  <NavLink to="/app/ui" className="icon-menu-item">
+                  <NavLink to="/app/users" className="icon-menu-item">
                     <i className="iconsmind-Pantone d-block" />{" "}
                     <IntlMessages id="menu.ui" />
                   </NavLink>
-                  <NavLink to="/app/ui/charts" className="icon-menu-item">
+                  <NavLink
+                    to="/app/dashboards/default"
+                    className="icon-menu-item"
+                  >
                     <i className="iconsmind-Bar-Chart d-block" />{" "}
                     <IntlMessages id="menu.charts" />
                   </NavLink>
                   <NavLink
-                    to="/app/applications/chat"
+                    to="/app/dashboards/default"
                     className="icon-menu-item"
                   >
                     <i className="iconsmind-Speach-BubbleDialog d-block" />{" "}
                     <IntlMessages id="menu.chat" />
                   </NavLink>
                   <NavLink
-                    to="/app/applications/survey"
+                    to="/app/dashboards/default"
                     className="icon-menu-item"
                   >
                     <i className="iconsmind-Formula d-block" />{" "}
                     <IntlMessages id="menu.survey" />
                   </NavLink>
                   <NavLink
-                    to="/app/applications/todo"
+                    to="/app/dashboards/default"
                     className="icon-menu-item"
                   >
                     <i className="iconsmind-Check d-block" />{" "}
@@ -402,16 +408,16 @@ class TopNav extends Component {
           <div className="user d-inline-block">
             <UncontrolledDropdown className="dropdown-menu-right">
               <DropdownToggle className="p-0" color="empty">
-                <span className="name ml-1">فاطمه کاظمی</span>
+                <span className="name ml-1">فاطمه احمدی</span>
                 <span>
                   <img alt="Profile" src="/assets/img/profile-pic-l.jpg" />
                 </span>
               </DropdownToggle>
               <DropdownMenu className="mt-3" right>
                 <DropdownItem>حساب کاربری</DropdownItem>
-                <DropdownItem>امکانات</DropdownItem>
-                <DropdownItem>تاریخچه</DropdownItem>
-                <DropdownItem>پشتیبانی</DropdownItem>
+                <DropdownItem>کیف پول</DropdownItem>
+                <DropdownItem>تراکنش ها</DropdownItem>
+                <DropdownItem>سبد خرید</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={() => this.handleLogout()}>
                   خروج

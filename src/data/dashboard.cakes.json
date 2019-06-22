@@ -1,80 +1,32 @@
 {
-    "data": [
-      {
-        "title": "کیک سنگ مرمر",
-        "link": "/app/layouts/details"
-      },
-      {
-        "title": "کیک میوه ای",
-        "link": "/app/layouts/details"
-      },
-      {
-        "title": "کیک شکلاتی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "پن کیک",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک فرانسوی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک پای",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "پای سیب",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک توت فرنگی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک نارگیلی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "چیزکیک",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک هویج",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "پای توت فرنگی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک وانیل پرتقال",
-        "link": "/app/layouts/details"
-      }, {
-        "title": " چای سبز",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک ناپلئونی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک کارامل",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک هویج",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "شیرینی کشمشی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "شیرینی برنجی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "شیرینی فرانسوی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک میوه ای",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک شکلاتی",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "پن کیک",
-        "link": "/app/layouts/details"
-      }, {
-        "title": "کیک وانیل پرتقال",
-        "link": "/app/layouts/details"
-      }
-    ]
-  }
-  
+  "data": [
+    {
+      "title": "اقامتگاه بومگردی کتام",
+      "link": "/app/layouts/details"
+    },
+    {
+      "title": "سرای بومگردی آلمن",
+      "link": "/app/layouts/details"
+    },
+    {
+      "title": "اقامتگاه بوم گردی گیلگمش",
+      "link": "/app/layouts/details"
+    },
+    {
+      "title": "اقامتگاه نایب",
+      "link": "/app/layouts/details"
+    },
+    {
+      "title": "اقامتگاه بومگردی و عشایری جَوَرگ",
+      "link": "/app/layouts/details"
+    },
+    {
+      "title": "اقامتگاه بومگردی کاشمر",
+      "link": "/app/layouts/details"
+    },
+    {
+      "title": "اقامتگاه بومگردی",
+      "link": "/app/layouts/details"
+    }
+  ]
+}

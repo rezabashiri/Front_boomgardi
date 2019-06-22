@@ -36,7 +36,12 @@ class RegisterLayout extends Component {
     form.forEach((value, key) => (model[key] = value));
     model["roles"] = "کاربر";
     console.log(model.getData());
-    service.registerUser(model);
+    let result = await service.registerUser(model);
+    console.log(result.password);
+
+    if (result.password !== null) {
+      this.props.history.push("login");
+    }
   }
 
   componentDidMount() {
@@ -69,7 +74,7 @@ class RegisterLayout extends Component {
                     <Form onSubmit={e => this.submitRegister(e)}>
                       <Label className="form-group has-float-label mb-4">
                         <Input name="userName" />
-                        <IntlMessages id="user.username" />
+                        <IntlMessages id="forms.mobile" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
                         <Input type="password" name="password" />
@@ -77,6 +82,10 @@ class RegisterLayout extends Component {
                           id="user.password"
                           defaultValue={this.state.password}
                         />
+                      </Label>
+                      <Label className="form-group has-float-label mb-4">
+                        <Input type="password" />
+                        <IntlMessages id="user.password-confirm" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">
                         <Button
@@ -87,6 +96,11 @@ class RegisterLayout extends Component {
                         >
                           <IntlMessages id="user.register-button" />
                         </Button>
+                      </div>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <NavLink to={`/login`}>
+                          <IntlMessages id="user.login-title" />
+                        </NavLink>
                       </div>
                     </Form>
                   </div>
