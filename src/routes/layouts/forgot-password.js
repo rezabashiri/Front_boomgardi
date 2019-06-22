@@ -9,7 +9,7 @@ class ForgotPasswordLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ""
+      mobile: ""
     };
   }
 
@@ -42,8 +42,8 @@ class ForgotPasswordLayout extends Component {
                     </CardTitle>
                     <Form>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="email" defaultValue={this.state.email} />
-                        <IntlMessages id="user.email" />
+                        <Input defaultValue={this.state.mobile} />
+                        <IntlMessages id="forms.mobile" />
                       </Label>
 
                       <div className="d-flex justify-content-end align-items-center">
