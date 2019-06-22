@@ -26,6 +26,42 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
+<<<<<<< HEAD
+const hostUploader = new FineUploaderTraditional({
+  options: {
+    chunking: {
+      enabled: false
+    },
+    deleteFile: {
+      enabled: true,
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment/"
+    },
+    request: {
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+    },
+    
+    callbacks: {
+      onComplete: function(id, name, response) {
+        if (response.success) {
+          console.log("UPLOAD SUCCESS");
+        } else {
+          console.log("problem uploading stuff");
+        }
+      }
+  }
+});
+const licenseUploader = new FineUploaderTraditional({
+  options: {
+    chunking: {
+      enabled: false
+    },
+    deleteFile: {
+      enabled: true,
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+    },
+    request: {
+      endpoint: "http://192.168.1.5:40679/api/common/Attachment"
+=======
 class UploadForm extends Component {
   hostUploader = new FineUploaderTraditional({
     options: {
@@ -40,7 +76,7 @@ class UploadForm extends Component {
       request: {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
-          attachId: '8d6f405077980d3',//this.props.attachId,
+          attachId: this.props.attachId,
           attachType: { part: "host", type: "profile" }
         }
       },
@@ -68,6 +104,7 @@ class UploadForm extends Component {
           attachType: { part: "host", type: "license" }
         }
       }
+>>>>>>> 43c8a789298560d995b4fece5a126ab07b9a975b
     }
   });
 
@@ -82,6 +119,7 @@ class UploadForm extends Component {
                   <IntlMessages id="form-components.upload-hostpic" />
                 </CardTitle>
                 <Gallery
+
                   animationsDisabled={true}
                   uploader={this.hostUploader}
                   deleteButton-children={<span>Delete</span>}
