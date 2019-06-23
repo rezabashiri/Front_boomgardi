@@ -3,6 +3,11 @@ import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
 import addressService from "../../services/addressService.jsx";
 import hostModel from "../../models/hostModel.jsx";
+import OwnerForm from "./ownerForm";
+import HostForm from "./hostForm";
+import UploadForm from "./uploadForm";
+import AddressForm from "./addressForm";
+import HostActions from "./hostActions";
 import { serverConfig } from "../../constants/defaultValues.js";
 import {
   Row,
@@ -43,13 +48,11 @@ import mouseTrap from "react-mousetrap";
 function collect(props) {
   return { data: props.data };
 }
-const apiUrl = "http://api.crealeaf.com/cakes/paging";
 
 class HostList extends Component {
   constructor(props) {
     super(props);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.getHost = this.getHost.bind(this);
     //this.getHostOstan = this.getHostOstan.bind(this);
@@ -62,8 +65,6 @@ class HostList extends Component {
       hostTypesFilterOption: { column: "", label: "" },
       ostanList: [],
       ostanFilterOptions: {},
-      dropdownSplitOpen: false,
-      modalOpen: false,
       currentPage: 1,
       totalItemCount: 0,
       totalPage: 1,
@@ -80,6 +81,7 @@ class HostList extends Component {
       }
     };
   }
+
   componentWillMount() {
     this.props.bindShortcut(["ctrl+a", "command+a"], () =>
       this.handleChangeSelectAll(false)
@@ -92,11 +94,6 @@ class HostList extends Component {
     });
   }
 
-  toggleModal() {
-    this.setState({
-      modalOpen: !this.state.modalOpen
-    });
-  }
   toggleDisplayOptions() {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
@@ -489,7 +486,7 @@ class HostList extends Component {
           </Row>
           <Row>
             {this.state.hosts &&
-              this.state.hosts.map(host => {
+              this.state.hosts.map((host, index) => {
                 if (this.state.displayMode === "imagelist") {
                   return (
                     <Colxx sm="6" lg="4" xl="3" className="mb-3" key={host.id}>
@@ -588,8 +585,12 @@ class HostList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               شهر:{host.address.shahrestanName}
                             </p>
+                            <HostActions hostInfo={host} />
                           </div>
-                          <div className="custom-control custom-checkbox pr-1 align-self-center pl-4">
+                          <div
+                            hidden
+                            className="custom-control custom-checkbox pr-1 align-self-center pl-4"
+                          >
                             <CustomInput
                               className="itemCheck mb-0"
                               type="checkbox"
@@ -635,6 +636,7 @@ class HostList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               شهر:{host.address.shahrestanName}
                             </p>
+                            <HostActions hostInfo={host} />
                           </div>
                         </div>
                       </Card>

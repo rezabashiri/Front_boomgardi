@@ -36,30 +36,13 @@ import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
-import CedarMaps from "@cedarstudios/react-cedarmaps";
-const {
-  RotationControl,
-  ZoomControl,
-  ScaleControl,
-  Marker,
-  Feature,
-  Layer
-} = CedarMaps.getReactMapboxGl();
-
-const POSITION_CIRCLE_PAINT = {
-  "circle-stroke-width": 4,
-  "circle-radius": 10,
-  "circle-blur": 0.15,
-  "circle-color": "#3770C6",
-  "circle-stroke-color": "white"
-};
 
 class HostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hostName: null,
-      hostTell: null,
+      hostName: this.props.hostInfo.name,
+      hostTell: this.props.hostInfo.tell,
       hostDetail: null,
       hostType: [],
       hostTypeSelected: null,
@@ -96,7 +79,6 @@ class HostForm extends Component {
     var model = new hostModel();
     model["name"] = this.state.hostName;
     model["tell"] = this.state.hostTell;
-    console.log(this.state.hostTypeSelected);
     model["residencyTypeId"] = this.state.hostTypeSelected.value;
     model["ownerUserId"] = this.props.ownerUserId;
     //model["detail"] = this.state.detail;

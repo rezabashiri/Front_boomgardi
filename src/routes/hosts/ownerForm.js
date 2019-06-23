@@ -57,6 +57,7 @@ class OwnerForm extends Component {
     //form.forEach((value, key) => (model[key] = value));
     model["roles"] = "اقامتگاه";
     model["firstName"] = this.state.firstName;
+    model["lastName"] = this.state.lastName;
     model["userName"] = this.state.mobile;
     model["password"] = this.state.codeMeli;
     let result = await usrService.addUser(model);
@@ -74,6 +75,20 @@ class OwnerForm extends Component {
   }
   handleChangeCodeMeli(e) {
     this.setState({ codeMeli: e.target.value });
+  }
+
+  async componentDidMount() {
+    if (this.props.ownerId !== undefined) {
+      let srv = new userService();
+      let user = await srv.getUsers("?id=" + this.props.ownerId);
+      console.log(user[0].firsName);
+      this.setState({
+        firstName: user[0].firstName,
+        mobile: user[0].userName,
+        lastName: user[0].lastName,
+        codeMeli: user[0].nationalCode
+      });
+    }
   }
 
   render() {

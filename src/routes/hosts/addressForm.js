@@ -81,8 +81,58 @@ class AddressForm extends Component {
     this.addAddress = this.addAddress.bind(this);
   }
   async componentDidMount() {
-    console.log("fired");
     this.getOstanList();
+
+    await this.setState({
+      centerPosition: [this.props.addressInfo.lng, this.props.addressInfo.lat],
+      postion: [this.props.addressInfo.lng, this.props.addressInfo.lat],
+      selectedOstan: {
+        value: this.props.addressInfo.ostanId,
+        label: this.props.addressInfo.ostanName,
+        lat: this.props.addressInfo.lat,
+        lng: this.props.addressInfo.lng
+      },
+      selectedShahr: {
+        value: this.props.addressInfo.shahrestanId,
+        label: this.props.addressInfo.shahrestanName
+      },
+      selectedBakhsh: {
+        value: this.props.addressInfo.bakhshId,
+        label: this.props.addressInfo.bakhshName
+      },
+      selectedDehestan: {
+        value: this.props.addressInfo.dehestanId,
+        label: this.props.addressInfo.dehestanName
+      },
+      selectedRoosta: {
+        value: this.props.addressInfo.roostaId,
+        label: this.props.addressInfo.roostaName
+      }
+    });
+
+    this.getShahrestanList(this.props.addressInfo.ostanId);
+    this.getBakhshList(this.props.addressInfo.shahrestanId);
+    this.getDehestanList(this.props.addressInfo.bakhshId);
+    this.getRoostaList(this.props.addressInfo.dehestanId);
+    /*
+    this.handleOstanChange({
+      value: this.props.addressInfo.ostanId,
+      lable: this.props.addressInfo.ostanName,
+      lat: this.props.addressInfo.lat,
+      lng: this.props.addressInfo.lng
+    });
+    this.handleShahrChange({
+      value: this.props.addressInfo.shahrestanId,
+      lable: this.props.addressInfo.shahrestanName
+    });
+    this.handleBakhshChange({
+      value: this.props.addressInfo.bakhshId,
+      lable: this.props.addressInfo.bakhshName
+    });
+    this.handleDehestanChange({
+      value: this.props.addressInfo.dehestanId,
+      lable: this.props.addressInfo.dehestanName
+    });*/
   }
   toggleAddressModal() {
     this.setState({
@@ -165,6 +215,7 @@ class AddressForm extends Component {
   }
 
   handleOstanChange = selectedOstan => {
+    console.log(selectedOstan);
     this.setState({ selectedOstan });
     this.setState({
       selectedBakhsh: null,
@@ -193,6 +244,7 @@ class AddressForm extends Component {
       selectedRoosta: null
     });
     console.log(`bakhsh selected:`, selectedBakhsh.value);
+    console.log(selectedBakhsh);
     this.getDehestanList(selectedBakhsh.value);
   };
   handleDehestanChange = selectedDehestan => {
@@ -235,6 +287,7 @@ class AddressForm extends Component {
                         <Select
                           onChange={this.handleOstanChange}
                           options={this.state.ostan}
+                          value={this.state.selectedOstan}
                         />
                       </AvGroup>
                     </Colxx>
