@@ -2,20 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import { serverConfig } from "../../constants/defaultValues";
-import {
-  Row,
-  Card,
-  CardBody,
-  Input,
-  CardTitle,
-  FormGroup,
-  Label,
-  CustomInput,
-  Button,
-  FormText,
-  Form,
-  CardSubtitle
-} from "reactstrap";
+import { Row, Card, CardBody, CardTitle } from "reactstrap";
 import FineUploaderTraditional from "fine-uploader-wrappers";
 import Gallery from "react-fine-uploader";
 //import Thumbnail from "react-fine-uploader/thumbnail";

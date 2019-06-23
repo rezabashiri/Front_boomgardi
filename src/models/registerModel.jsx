@@ -24,11 +24,10 @@ export default class registerModel {
     this[mobile] = val;
   }
   set roles(val) {
-      let array = [];
-      if (this[roles])
-          array = this[roles];
-      array.push({ name: val });
-      this[roles] = array;
+    let array = [];
+    if (this[roles]) array = this[roles];
+    array.push({ name: val });
+    this[roles] = array;
   }
 
   getData = () => {

@@ -39,8 +39,6 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 function collect(props) {
   return { data: props.data };
 }
-const apiUrl ="http://api.crealeaf.com/cakes/paging"
-import axios from 'axios';
 
 class ImageListLayout extends Component {
     constructor(props) {

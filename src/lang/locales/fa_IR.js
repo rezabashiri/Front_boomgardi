@@ -130,6 +130,13 @@ module.exports = {
   "menu.features": "امکانات",
   "menu.prices": "قیمت ها",
   "menu.videos": "ویدئوها",
+  /* host actions */
+  "host.action": "عملیات",
+  "host.action.edit-owner": "ویرایش مالک",
+  "host.action.edit-address": "ویرایش آدرس",
+  "host.action.edit-hostinfo": "ویرایش اقامتگاه",
+  "host.action.edit-hostpic": "ویرایش تصاویر",
+  "host.action.delete-host": "حذف اقامتگاه",
 
   /* 04.Dashboards */
   "dashboards.pending-orders": "سفارشات در انتظار تایید",

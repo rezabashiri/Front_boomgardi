@@ -89,6 +89,7 @@ class FormsUi extends Component {
           <HostForm
             ownerUserId={this.state.ownerUserId}
             onHandleGuId={this.handleGuId}
+            hostInfo={{}}
           />
         );
       case 2:
@@ -171,6 +172,9 @@ class FormsUi extends Component {
       completed: {
         display: "inline-block"
       },
+      stepper: {
+        iconColor: "green"
+      },
       instructions: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1)
@@ -188,7 +192,7 @@ class FormsUi extends Component {
           </Colxx>
         </Row>
         <div className={classes.root}>
-          <Stepper activeStep={this.state.activeStep}>
+          <Stepper className={classes} activeStep={this.state.activeStep}>
             {steps.map((label, index) => (
               <Step key={label}>
                 <StepButton

@@ -13,9 +13,10 @@ export default class userService {
       setJwt(response.data.access_token);
     } catch (e) {}
   }
-  async getUsers() {
+  async getUsers(filterParam) {
     try {
-      let response = await userContext().get(authConfig.userUrl);
+      let filter = filterParam === undefined ? "" : filterParam;
+      let response = await userContext().get(authConfig.userUrl + filter);
       console.log(response.data);
       return response.data;
     } catch (e) {}
