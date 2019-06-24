@@ -2,11 +2,7 @@ import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
 import addressService from "../../services/addressService.jsx";
-import hostModel from "../../models/hostModel.jsx";
-import OwnerForm from "./ownerForm";
-import HostForm from "./hostForm";
-import UploadForm from "./uploadForm";
-import AddressForm from "./addressForm";
+//import hostModel from "../../models/hostModel.jsx";
 import HostActions from "./hostActions";
 import { serverConfig } from "../../constants/defaultValues.js";
 import {

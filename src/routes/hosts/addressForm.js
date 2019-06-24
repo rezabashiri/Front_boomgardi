@@ -70,7 +70,7 @@ class AddressForm extends Component {
       roosta: [],
       styleKey: "",
       postion: [],
-      centerPosition: [51.67462, 32.65246]
+      centerPosition: [this.props.addressInfo.lng, this.props.addressInfo.lat]
     };
 
     this.getOstanList = this.getOstanList.bind(this);
@@ -84,7 +84,7 @@ class AddressForm extends Component {
     this.getOstanList();
 
     await this.setState({
-      centerPosition: [this.props.addressInfo.lng, this.props.addressInfo.lat],
+      //centerPosition: [this.props.addressInfo.lng, this.props.addressInfo.lat],
       postion: [this.props.addressInfo.lng, this.props.addressInfo.lat],
       selectedOstan: {
         value: this.props.addressInfo.ostanId,

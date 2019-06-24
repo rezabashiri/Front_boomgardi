@@ -19,8 +19,8 @@ export const firebaseConfig = {
 };
 
 export const serverConfig = {
-  baseUrl: "http://192.168.1.5:40679/api/",
-  fileBaseUrl: "http://192.168.1.5:40679",
+  baseUrl: "http://persis.moroorgaran.com/api/",
+  fileBaseUrl: "http://persis.moroorgaran.com/",
   ostanUrl: "address/ostan",
   shahrestanUrl: "address/Shahrestan?idostan=",
   bakhshUrl: "address/bakhsh?idShahrestan=",

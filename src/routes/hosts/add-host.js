@@ -93,7 +93,12 @@ class FormsUi extends Component {
           />
         );
       case 2:
-        return <AddressForm guid={this.state.guid} />;
+        return (
+          <AddressForm
+            guid={this.state.guid}
+            addressInfo={{ lat: 32.65246, lng: 51.67462 }}
+          />
+        );
       case 3:
         return <UploadForm attachId={this.state.guid} />;
       default:
