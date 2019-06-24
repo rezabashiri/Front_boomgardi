@@ -59,7 +59,7 @@ class App extends Component {
 	render() {
 		const { location, match, user, locale } = this.props;
 		const currentAppLocale = AppLocale[locale];
-		if ( location.pathname==='/app'|| location.pathname==='/app/') {
+		if ( location.pathname==='/app'|| location.pathname==='/app/' || location.pathname==='/') {
 			return (<Redirect to={defaultStartPath} />);
 		}
 		return (
