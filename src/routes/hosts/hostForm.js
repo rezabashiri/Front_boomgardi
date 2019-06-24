@@ -56,6 +56,12 @@ class HostForm extends Component {
   }
   async componentDidMount() {
     this.getHostType();
+    this.setState({
+      selectedHostType: {
+        value: this.props.hostInfo.residencyTypeId,
+        label: this.props.hostInfo.residenceType
+      }
+    });
   }
   toggleAddressModal() {
     this.setState({
