@@ -203,6 +203,7 @@ module.exports = {
   "layouts.display-options": "نمایش گزینه ها",
   "layouts.orderby": "مرتب سازی بر اساس : ",
   "layouts.filter.hosttype": "نوع:",
+  "layouts.filter.select": "انتخاب کنید",
   "layouts.filter.ostan": "استان:",
   "layouts.filter.shahr": "شهرستان:",
   "layouts.product-name": "نام محصول",

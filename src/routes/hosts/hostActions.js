@@ -124,7 +124,7 @@ class HostActions extends Component {
             <DropdownItem onClick={this.togglePicModal}>
               <IntlMessages id="host.action.edit-hostpic" />
             </DropdownItem>
-            <DropdownItem>
+            <DropdownItem hidden>
               <IntlMessages id="host.action.delete-host" />
             </DropdownItem>
           </DropdownMenu>

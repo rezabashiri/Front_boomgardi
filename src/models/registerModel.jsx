@@ -7,6 +7,7 @@ let roles = Symbol("roles");
 let email = Symbol("email");
 let firstName = Symbol("firstname");
 let lastName = Symbol("lastname");
+let nationalCode = Symbol("nationalcode");
 export default class registerModel {
   set userName(val) {
     this[userName] = val;
@@ -14,7 +15,7 @@ export default class registerModel {
   set firstName(val) {
     this[firstName] = val;
   }
-  set lasName(val) {
+  set lastName(val) {
     this[lastName] = val;
   }
   set password(val) {
@@ -22,6 +23,9 @@ export default class registerModel {
   }
   set mobile(val) {
     this[mobile] = val;
+  }
+  set nationalCode(val) {
+    this[nationalCode] = val;
   }
   set roles(val) {
     let array = [];
@@ -38,7 +42,8 @@ export default class registerModel {
       email: this[email],
       password: this[password],
       mobile: this[mobile],
-      roles: this[roles]
+      roles: this[roles],
+      nationalCode: this[nationalCode]
     };
   };
 }

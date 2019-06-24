@@ -102,7 +102,6 @@ class HostList extends Component {
     var queryString = Object.keys(this.state.filterParams)
       .map(key => key + "=" + this.state.filterParams[key])
       .join("&");
-    console.log(queryString);
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
@@ -407,17 +406,26 @@ class HostList extends Component {
                     <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                       <DropdownToggle caret color="outline-dark" size="xs">
                         <IntlMessages id="layouts.filter.hosttype" />
-                        {this.state.hostTypesFilterOption.column}
+                        {this.state.hostTypesFilterOption &&
+                          this.state.hostTypesFilterOption.column}
                       </DropdownToggle>
-                      <DropdownMenu right>
-                        {this.state.hostTypes.map((order, index) => {
-                          console.log(order);
+                      <DropdownMenu down>
+                        <DropdownItem
+                          key="0"
+                          onClick={() => this.filterByHostType("")}
+                        >
+                          <IntlMessages id="layouts.filter.select" />
+                        </DropdownItem>
+                        {this.state.hostTypes.map((hostType, index) => {
+                          console.log(hostType);
                           return (
                             <DropdownItem
-                              key={index}
-                              onClick={() => this.filterByHostType(order.lable)}
+                              key={index + 1}
+                              onClick={() =>
+                                this.filterByHostType(hostType.lable)
+                              }
                             >
-                              {order.column}
+                              {hostType.column}
                             </DropdownItem>
                           );
                         })}
@@ -426,14 +434,21 @@ class HostList extends Component {
                     <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                       <DropdownToggle caret color="outline-dark" size="xs">
                         <IntlMessages id="layouts.filter.ostan" />
-                        {this.state.ostanFilterOptions.column}
+                        {this.state.ostanFilterOptions &&
+                          this.state.ostanFilterOptions.column}
                       </DropdownToggle>
-                      <DropdownMenu right>
+                      <DropdownMenu down>
+                        <DropdownItem
+                          key="0"
+                          onClick={() => this.filterByOstan("")}
+                        >
+                          <IntlMessages id="layouts.filter.select" />
+                        </DropdownItem>
                         {this.state.ostanList.map((order, index) => {
                           console.log(order);
                           return (
                             <DropdownItem
-                              key={index}
+                              key={index + 1}
                               onClick={() => this.filterByOstan(order.lable)}
                             >
                               {order.column}

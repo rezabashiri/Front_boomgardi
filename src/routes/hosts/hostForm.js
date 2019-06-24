@@ -57,7 +57,7 @@ class HostForm extends Component {
   async componentDidMount() {
     this.getHostType();
     this.setState({
-      selectedHostType: {
+      hostTypeSelected: {
         value: this.props.hostInfo.residencyTypeId,
         label: this.props.hostInfo.residenceType
       }
@@ -162,6 +162,7 @@ class HostForm extends Component {
                           id="hostType"
                           options={this.state.hostType}
                           onChange={this.handleHostTypeChange}
+                          value={this.state.hostTypeSelected}
                         />
                         <AvFeedback>
                           <IntlMessages id="forms.hosttype-message" />

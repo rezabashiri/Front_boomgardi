@@ -60,6 +60,7 @@ class OwnerForm extends Component {
     model["lastName"] = this.state.lastName;
     model["userName"] = this.state.mobile;
     model["password"] = this.state.codeMeli;
+    model["nationalCode"] = this.state.codeMeli;
     let result = await usrService.addUser(model);
     this.props.onHandleOwnerUserId(result.id);
   }
