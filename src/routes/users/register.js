@@ -30,13 +30,7 @@ class RegisterLayout extends Component {
   */
   async submitRegister(event) {
     event.preventDefault();
-    let form = new FormData(event.target);
-    let model = new registerModel();
-    let service = new serviceModel();
-    form.forEach((value, key) => (model[key] = value));
-    model["roles"] = "ادمین";
-    console.log(model.getData());
-    service.registerUser(model);
+   
   }
 
   componentDidMount() {
@@ -80,7 +74,7 @@ class RegisterLayout extends Component {
                       </Label>
                       <Label className="form-group has-float-label mb-4">
                         <Input type="password" name="confirmPassword" />
-                        <IntlMessages id="user.password-confirm" />
+                        <IntlMessages id="user.confirmPassword" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">
                         <Button

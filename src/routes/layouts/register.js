@@ -10,6 +10,8 @@ import { registerUser } from "Redux/actions";
 
 import registerService from "../../Services/registerService.jsx";
 import registerModel from "../../models/registerModel.jsx";
+import swal from "sweetalert";
+
 
 class RegisterLayout extends Component {
   constructor(props) {
@@ -30,17 +32,39 @@ class RegisterLayout extends Component {
   */
   async submitRegister(event) {
     event.preventDefault();
+    try
+    {
     let form = new FormData(event.target);
     let model = new registerModel();
     let service = new registerService();
     form.forEach((value, key) => (model[key] = value));
     model["roles"] = "کاربر";
-    console.log(model.getData());
-    let result = await service.registerUser(model);
-    console.log(result.password);
+    if (model.password !== model.confirmPassword || model.password === '') {
+      swal("پیغام", "رمز عبور با تایید رمز عبور برابر نیست", "warning");
+      return;
+    }
+    let response = await service.registerUser(model);
+    if (response.status >= 200 && response.status < 300 ) {
+      swal(
+        "پیغام",
+        "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
+        "success"
+      ).then( () =>{
+        this.props.history.push("login");
+      }
+      );
+    }
+ 
+    }
+    catch(e)
+    {
+      console.log(e);
 
-    if (result.password !== null) {
-      this.props.history.push("login");
+      swal(
+        "پیغام",
+        "خطا : ثبت نام انجام نشد" + e.response.data.message,
+        "warning"
+      );
     }
   }
 
@@ -84,7 +108,7 @@ class RegisterLayout extends Component {
                         />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" />
+                        <Input type="password" name="confirmPassword"  />
                         <IntlMessages id="user.password-confirm" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">

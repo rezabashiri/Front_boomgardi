@@ -6,6 +6,7 @@ let email = Symbol("email");
 let firstName = Symbol("firstname");
 let lastName = Symbol("lastname");
 let nationalCode = Symbol("nationalcode");
+let confirmPassword = Symbol("confirmPassword");
 export default class registerModel {
   set userName(val) {
     this[userName] = val;
@@ -25,6 +26,13 @@ export default class registerModel {
   set nationalCode(val) {
     this[nationalCode] = val;
   }
+  set confirmPassword(val){
+    this[confirmPassword]=val;
+  }
+  get password(){
+    return this[password];
+  }
+  get confirmPassword () {return this[confirmPassword]}
   set roles(val) {
     let array = [];
     if (this[roles]) array = this[roles];
