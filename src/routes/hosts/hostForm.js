@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import addressService from "../../services/addressService.jsx";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import hostService from "../../services/hostService.jsx";
@@ -45,8 +44,7 @@ class HostForm extends Component {
       hostTell: this.props.hostInfo.tell,
       hostDetail: null,
       hostType: [],
-      hostTypeSelected: null,
-      styleKey: ""
+      hostTypeSelected: null
     };
     this.handleHostTellChange = this.handleHostTellChange.bind(this);
     this.addHost = this.addHost.bind(this);

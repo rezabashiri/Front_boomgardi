@@ -7,7 +7,7 @@ import FineUploaderTraditional from "fine-uploader-wrappers";
 import Gallery from "react-fine-uploader";
 //import Thumbnail from "react-fine-uploader/thumbnail";
 
-import "react-datepicker/dist/react-datepicker.css";
+//import "react-datepicker/dist/react-datepicker.css";
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
@@ -71,7 +71,7 @@ class UploadForm extends Component {
                 <Gallery
                   animationsDisabled={true}
                   uploader={this.hostUploader}
-                  deleteButton-children={<span>Delete</span>}
+                  deleteButton-children={<span>حذف</span>}
                   fileInput-children={<span />}
                 >
                   <span className="react-fine-uploader-gallery-dropzone-content">
@@ -90,7 +90,7 @@ class UploadForm extends Component {
                 <Gallery
                   animationsDisabled={true}
                   uploader={this.licenseUploader}
-                  deleteButton-children={<span>Delete</span>}
+                  deleteButton-children={<span>حذف</span>}
                   fileInput-children={<span />}
                 >
                   <span className="react-fine-uploader-gallery-dropzone-content">

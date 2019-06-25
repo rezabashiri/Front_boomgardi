@@ -11,6 +11,7 @@ import OwnerForm from "./ownerForm";
 import HostForm from "./hostForm";
 import UploadForm from "./uploadForm";
 import AddressForm from "./addressForm";
+import RoomForm from "./add-room";
 
 import {
   Row,
@@ -54,6 +55,7 @@ class HostActions extends Component {
     this.toggleHostModal = this.toggleHostModal.bind(this);
     this.toggleAddressModal = this.toggleAddressModal.bind(this);
     this.togglePicModal = this.togglePicModal.bind(this);
+    this.toggleRoomModal = this.toggleRoomModal.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -68,7 +70,8 @@ class HostActions extends Component {
       ownerModalOpen: false,
       hostModalOpen: false,
       addressModalOpen: false,
-      picModalOpen: false
+      picModalOpen: false,
+      roomModalOpen: false
     };
   }
 
@@ -90,6 +93,11 @@ class HostActions extends Component {
   togglePicModal() {
     this.setState({
       picModalOpen: !this.state.picModalOpen
+    });
+  }
+  toggleRoomModal() {
+    this.setState({
+      roomModalOpen: !this.state.roomModalOpen
     });
   }
 
@@ -123,6 +131,9 @@ class HostActions extends Component {
             </DropdownItem>
             <DropdownItem onClick={this.togglePicModal}>
               <IntlMessages id="host.action.edit-hostpic" />
+            </DropdownItem>
+            <DropdownItem onClick={this.toggleRoomModal}>
+              <IntlMessages id="host.action.add-room" />
             </DropdownItem>
             <DropdownItem hidden>
               <IntlMessages id="host.action.delete-host" />
@@ -181,6 +192,18 @@ class HostActions extends Component {
           </ModalHeader>
           <ModalBody>
             <UploadForm />
+          </ModalBody>
+        </Modal>
+        <Modal
+          isOpen={this.state.roomModalOpen}
+          toggle={this.toggleRoomModal}
+          size="lg"
+        >
+          <ModalHeader toggle={this.toggleRoomModal}>
+            <IntlMessages id="host.action.add-room" />
+          </ModalHeader>
+          <ModalBody>
+            <RoomForm />
           </ModalBody>
         </Modal>
       </Fragment>
