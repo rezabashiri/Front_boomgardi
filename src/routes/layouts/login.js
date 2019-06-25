@@ -11,6 +11,7 @@ import { loginUser } from "Redux/actions";
 import userService from "../../services/userService.jsx";
 import userModel from "../../models/userModel.jsx";
 import { getJwt } from "../../helpers/Jwt.js";
+import swal from "sweetalert";
 
 class LoginLayout extends Component {
   constructor(props) {
@@ -41,6 +42,9 @@ class LoginLayout extends Component {
     var t = await srv.getToken(user);
 
     if (getJwt() !== null) this.props.history.push("app");
+    else {
+      swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
+    }
   }
 
   componentDidMount() {
