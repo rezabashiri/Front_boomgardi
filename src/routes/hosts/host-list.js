@@ -31,7 +31,7 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import Select from "react-select";
-import CustomSelectInput from "Components/CustomSelectInput";
+//import CustomSelectInput from "Components/CustomSelectInput";
 import classnames from "classnames";
 
 import IntlMessages from "Util/IntlMessages";
@@ -170,6 +170,20 @@ class HostList extends Component {
       );
     }
     */
+    }
+  }
+  async handleKeyUp(e) {
+    console.log(e.target.value.toLowerCase());
+    if (e.target.value.toLowerCase() === "") {
+      let newfilter = this.state.filterParams;
+      newfilter.name = "";
+      await this.setState({
+        filterParams: newfilter
+      });
+      var queryString = Object.keys(this.state.filterParams)
+        .map(key => key + "=" + this.state.filterParams[key])
+        .join("&");
+      this.getHost("?" + queryString);
     }
   }
 
@@ -464,6 +478,7 @@ class HostList extends Component {
                         id="search"
                         placeholder={messages["menu.search"]}
                         onKeyPress={e => this.handleKeyPress(e)}
+                        onKeyUp={e => this.handleKeyUp(e)}
                       />
                     </div>
                   </div>
