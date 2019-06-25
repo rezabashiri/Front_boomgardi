@@ -15,9 +15,9 @@ class RegisterLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com",
-      password: "gogo123",
-      name: "Sarah Kortney"
+      email: "",
+      password: "",
+      name: ""
     };
   }
   /*
