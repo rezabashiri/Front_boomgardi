@@ -1,33 +1,38 @@
-﻿import axios from "axios";
-import registerModel from "../models/registerModel.jsx";
-import auth from "../constants/defaultValues";
+﻿import registerModel from "../models/registerModel.jsx";
 import { userContext } from "../helpers/contextHelper";
 import { loginContext } from "../helpers/contextHelper";
+import authConfig from "../constants/defaultValues";
+import swal from "sweetalert";
 
 export default class registerService {
   async registerUser(model) {
     /*
     if (model.password != model.confirmPassword) {
-      alert("رمز عبور با تایید رمز عبور برابر نیست");
+      swal("پیغام", "رمز عبور با تایید رمز عبور برابر نیست", "warning");
+
       return;
     }*/
-    try {
-      let response = await userContext().post(
-        auth.registerUrl,
-        model.getData()
-      );
-      return response.data;
-      /*.then(response => {
-        if (response.status == 201) {
-          alert("ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید");
-          return true;
-          return response;
+    userContext()
+      .post(authConfig.registerUrl, model.getData())
+      .then(response => {
+        //return response.data;
+        if (response.status === 201) {
+          swal(
+            "پیغام",
+            "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
+            "success"
+          );
         }
-      })*/
-    } catch (e) {}
-    /* catch(e => {
-        console.log(e.response.data.error);
-        alert(e.response.data.error);
-      });*/
+      })
+      .catch(e => {
+        console.log(e);
+
+        swal(
+          "پیغام",
+          "خطا : ثبت نام انجام نشد" + e.response.data.error,
+          "warning"
+        );
+        return response.data;
+      });
   }
 }
