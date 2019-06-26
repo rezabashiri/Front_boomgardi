@@ -5,7 +5,6 @@ export default class hostService {
   async getHostType() {
     try {
       let response = await apiContext().get(serverConfig.hostTypeUrl);
-      console.log(response.data);
       return response.data;
     } catch (e) {}
   }
@@ -13,7 +12,6 @@ export default class hostService {
     try {
       let filter = filterParam === undefined ? "" : filterParam;
       let response = await apiContext().get(serverConfig.hostUrl + filter);
-      console.log(response.data);
       return response.data;
     } catch (e) {}
   }
@@ -24,8 +22,7 @@ export default class hostService {
         serverConfig.hostUrl,
         model.getData()
       );
-      console.log(response.data);
-      return response.data;
+      return response;
     } catch (e) {}
   }
   async addAddress(model) {
@@ -34,8 +31,7 @@ export default class hostService {
         serverConfig.hostUrl,
         model.getData()
       );
-      console.log(response.data);
-      return response.data;
+      return response;
     } catch (e) {}
   }
 }

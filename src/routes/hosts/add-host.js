@@ -83,13 +83,21 @@ class FormsUi extends Component {
   getStepContent(step) {
     switch (step) {
       case 0:
-        return <OwnerForm onHandleOwnerUserId={this.handleOwnerUserId} />;
+        return (
+          <OwnerForm
+            onHandleOwnerUserId={this.handleOwnerUserId}
+            onHandleComplete={this.handleComplete}
+            ownerId={this.state.ownerUserId}
+          />
+        );
       case 1:
         return (
           <HostForm
             ownerUserId={this.state.ownerUserId}
             onHandleGuId={this.handleGuId}
             hostInfo={{}}
+            onHandleComplete={this.handleComplete}
+            //guid={this.state.guid}
           />
         );
       case 2:
@@ -97,6 +105,7 @@ class FormsUi extends Component {
           <AddressForm
             guid={this.state.guid}
             addressInfo={{ lat: 32.65246, lng: 51.67462 }}
+            onHandleComplete={this.handleComplete}
           />
         );
       case 3:
@@ -108,7 +117,6 @@ class FormsUi extends Component {
 
   handleOwnerUserId = userId => {
     this.setState({ ownerUserId: userId });
-    console.log(this.state.ownerUserId);
   };
   /*
   handleAttachId = attachId => {
@@ -117,7 +125,6 @@ class FormsUi extends Component {
   };*/
   handleGuId = guid => {
     this.setState({ guid: guid });
-    console.log(this.state.guid);
   };
 
   totalSteps() {
@@ -213,9 +220,11 @@ class FormsUi extends Component {
             {this.allStepsCompleted() ? (
               <div>
                 <Typography className={classes.instructions}>
-                  All steps completed - you&apos;re finished
+                  <IntlMessages id="host.action.all-completed" />
                 </Typography>
-                <Button onClick={this.handleReset}>Reset</Button>
+                <Button onClick={this.handleReset}>
+                  <IntlMessages id="host.action.reset" />
+                </Button>
               </div>
             ) : (
               <div>
@@ -227,7 +236,7 @@ class FormsUi extends Component {
                     onClick={this.handleBack}
                     className={classes.button}
                   >
-                    قبلی
+                    <IntlMessages id="host.action.prev" />
                   </Button>
                   <Button
                     variant="contained"
@@ -235,7 +244,7 @@ class FormsUi extends Component {
                     onClick={this.handleNext}
                     className={classes.button}
                   >
-                    بعدی
+                    <IntlMessages id="host.action.next" />
                   </Button>
                   {this.state.activeStep !== steps.length &&
                     (this.state.completed[this.state.activeStep] ? (
@@ -243,10 +252,11 @@ class FormsUi extends Component {
                         variant="caption"
                         className={classes.completed}
                       >
-                        تکمیل شده
+                        <IntlMessages id="host.action.completed" />
                       </Typography>
                     ) : (
                       <Button
+                        hidden
                         variant="contained"
                         color="primary"
                         onClick={this.handleComplete}

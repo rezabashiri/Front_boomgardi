@@ -261,7 +261,6 @@ class HostList extends Component {
     var service = new hostService();
     let result = await service.getHosts(filter);
     this.setState({ hosts: result });
-    console.log(this.state.hosts);
     this.setState({
       totalPage: 1,
       selectedItems: [],
@@ -611,7 +610,10 @@ class HostList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               شهر:{host.address.shahrestanName}
                             </p>
-                            <HostActions hostInfo={host} />
+                            <HostActions
+                              hostInfo={host}
+                              getHost={this.getHost}
+                            />
                           </div>
                           <div
                             hidden

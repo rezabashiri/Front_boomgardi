@@ -76,6 +76,7 @@ class HostActions extends Component {
   }
 
   toggleOwnerModal() {
+    console.log("owner modal toggled");
     this.setState({
       ownerModalOpen: !this.state.ownerModalOpen
     });
@@ -103,16 +104,13 @@ class HostActions extends Component {
 
   handleOwnerUserId = userId => {
     this.setState({ ownerUserId: userId });
-    console.log(this.state.ownerUserId);
   };
 
   handleGuId = guid => {
     this.setState({ guid: guid });
-    console.log(this.state.guid);
   };
 
   render() {
-    console.log(this.props.hostInfo);
     return (
       <Fragment>
         <UncontrolledDropdown>
@@ -149,7 +147,11 @@ class HostActions extends Component {
             <IntlMessages id="host.action.edit-owner" />
           </ModalHeader>
           <ModalBody>
-            <OwnerForm ownerId={this.props.hostInfo.ownerUserId} />
+            <OwnerForm
+              ownerId={this.props.hostInfo.ownerUserId}
+              getHost={this.props.getHost}
+              onToggleModal={this.toggleOwnerModal}
+            />
           </ModalBody>
         </Modal>
         <Modal
@@ -164,6 +166,8 @@ class HostActions extends Component {
             <HostForm
               hostInfo={this.props.hostInfo}
               ownerUserId={this.props.hostInfo.ownerUserId}
+              getHost={this.props.getHost}
+              onToggleModal={this.toggleHostModal}
             />
           </ModalBody>
         </Modal>
@@ -179,6 +183,8 @@ class HostActions extends Component {
             <AddressForm
               guid={this.props.hostInfo.guid}
               addressInfo={this.props.hostInfo.address}
+              getHost={this.props.getHost}
+              onToggleModal={this.toggleAddressModal}
             />
           </ModalBody>
         </Modal>
@@ -191,7 +197,10 @@ class HostActions extends Component {
             <IntlMessages id="host.action.edit-hostpic" />
           </ModalHeader>
           <ModalBody>
-            <UploadForm />
+            <UploadForm
+              attachId={this.props.hostInfo.guid}
+              getHost={this.props.getHost}
+            />
           </ModalBody>
         </Modal>
         <Modal

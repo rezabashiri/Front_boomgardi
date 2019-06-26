@@ -27,7 +27,7 @@ class UploadForm extends Component {
       request: {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
-          attachId: '8d6f405077980d3',//this.props.attachId,
+          attachId: this.props.attachId,
           attachType: { part: "host", type: "profile" }
         }
       },
@@ -46,7 +46,8 @@ class UploadForm extends Component {
       },
       deleteFile: {
         enabled: true,
-        endpoint: serverConfig.baseUrl + serverConfig.picUrl
+        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
+        params: { attachId: this.props.attachId }
       },
       request: {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,

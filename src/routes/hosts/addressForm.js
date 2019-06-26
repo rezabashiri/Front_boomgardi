@@ -154,9 +154,12 @@ class AddressForm extends Component {
     };
     model["guid"] = this.props.guid;
     let result = await service.addAddress(model);
-    console.log("this is save address result");
-    console.log(result);
-    //this.props.onHandleAttachId(result.attachId);
+    if (result.status === 201) {
+      this.props.onHandleComplete && this.props.onHandleComplete();
+      this.props.getHost && this.props.getHost();
+      this.props.onToggleModal && this.props.onToggleModal();
+    }
+    //this.props.onHandleAttachId(result.data.attachId);
   }
   async getOstanList() {
     let addrService = new addressService();
