@@ -492,6 +492,7 @@ module.exports = {
   "forms.hostcity-message": "لطفا شهر اقامتگاه را وارد کنید",
   "forms.register-success": "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
   "forms.register-fail": "خطا : ثبت نام انجام نشد",
+  "forms.login-fail": "نام کاربری یا رمز عبور معتبر نیست",
   "forms.alerttitle": "پیغام",
   "forms.lastname": "نام خانوادگی",
   "forms.lastname-message": "لطفا نام خانوادگی خود را وارد کنید!",
