@@ -99,7 +99,6 @@
     "redux-saga": "^0.16.0",
     "sortablejs": "^1.6.1",
     "sweetalert": "^2.1.2",
-    "video.js": "^7.3.0",
-    "zubair-react-form-builder": "^1.1.1"
+    "video.js": "^7.3.0" 
   }
 }
