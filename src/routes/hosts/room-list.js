@@ -574,10 +574,10 @@ class RoomList extends Component {
                             <Colxx xxs="10" className="mb-3">
                               <CardSubtitle>{room.name}</CardSubtitle>
                               <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {room.name}
+                                {room.type}
                               </CardText>
                               <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {/*room.address.shahrestanName*/}
+                                {room.services}
                               </CardText>
                             </Colxx>
                           </Row>

@@ -81,12 +81,12 @@ class RoomForm extends Component {
       deleteFile: {
         enabled: true,
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
-        params: { attachId: "8d6fb107492c094" /*this.props.attachId*/ }
+        params: { attachId: "8d6fb199fd4b212" /*this.props.attachId*/ }
       },
       request: {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
-          attachId: "8d6fb107492c094",
+          attachId: "8d6fb199fd4b212",
           attachType: { part: "residancyUnit", type: "profile" }
         }
       },
