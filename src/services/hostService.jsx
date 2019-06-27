@@ -4,7 +4,17 @@ import { apiContext } from "../helpers/contextHelper";
 export default class hostService {
   async getHostType() {
     try {
-      let response = await apiContext().get(serverConfig.hostTypeUrl);
+      let response = await apiContext().get(
+        serverConfig.hostTypeUrl + "?type=residency"
+      );
+      return response.data;
+    } catch (e) {}
+  }
+  async getRoomType() {
+    try {
+      let response = await apiContext().get(
+        serverConfig.hostTypeUrl + "?type=residencyunit"
+      );
       return response.data;
     } catch (e) {}
   }

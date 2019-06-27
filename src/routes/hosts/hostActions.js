@@ -213,7 +213,11 @@ class HostActions extends Component {
           </ModalHeader>
           <ModalBody>
             <RoomForm
-              roomInfo={{ roomName: "اتاق 1", roomCapacity: 4, hostId: 1050 }}
+              roomInfo={{
+                roomName: "اتاق 1",
+                roomCapacity: 4,
+                hostId: this.props.hostInfo.id
+              }}
             />
           </ModalBody>
         </Modal>

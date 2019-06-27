@@ -63,14 +63,15 @@ class RoomForm extends Component {
 
     var service = new roomService();
     var model = new roomModel();
-    model["roomName"] = this.state.roomName;
-    model["hostId"] = this.state.hostId;
-    model["roomDetail"] = this.state.roomDetail;
-    model["roomCapacity"] = this.state.roomCapacity;
-    model["roomTypeId"] = this.state.roomTypeId;
+    model["name"] = this.state.roomName;
+    model["residenceId"] = this.state.hostId;
+    model["description"] = this.state.roomDetail;
+    model["capacity"] = this.state.roomCapacity;
+    model["residencyTypeId"] = this.state.roomTypeId;
+    model["serivces"] = ["حمام اختصاصی", "دستشویی فرنگی"];
     let result = await service.addRoom(model);
     console.log("this is addroom result");
-    console.log(result);
+    console.log(result.data);
   }
   roomUploader = new FineUploaderTraditional({
     options: {
@@ -80,13 +81,13 @@ class RoomForm extends Component {
       deleteFile: {
         enabled: true,
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
-        params: { attachId: "8d6f56ac80ebc8e" /*this.props.attachId*/ }
+        params: { attachId: "8d6fb107492c094" /*this.props.attachId*/ }
       },
       request: {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
-          attachId: this.props.attachId,
-          attachType: { part: "room", type: "profile" }
+          attachId: "8d6fb107492c094",
+          attachType: { part: "residancyUnit", type: "profile" }
         }
       },
       validation: {
@@ -200,6 +201,7 @@ class RoomForm extends Component {
                   <IntlMessages id="form-components.upload-roompic" />
                 </Label>
                 <Gallery
+                  hidden
                   animationsDisabled={true}
                   uploader={this.roomUploader}
                   deleteButton-children={<span>حذف</span>}

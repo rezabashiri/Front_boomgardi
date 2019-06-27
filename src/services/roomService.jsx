@@ -12,26 +12,23 @@ export default class roomService {
   async getRooms(filterParam) {
     console.log(filterParam);
     console.log("room list");
-    /*
+
     try {
       let filter = filterParam === undefined ? "" : filterParam;
-      let response = await apiContext().get(serverConfig.hostUrl + filter);
+      let response = await apiContext().get(serverConfig.unitUrl + filter);
       console.log(response.data);
       return response.data;
     } catch (e) {}
-    */
   }
   async addRoom(model) {
     console.log(model.getData());
-    return true;
-    /*
+
     try {
       let response = await apiContext().post(
-        serverConfig.hostUrl,
+        serverConfig.unitUrl,
         model.getData()
       );
-      console.log(response.data);
-      return response.data;
-    } catch (e) {}*/
+      return response;
+    } catch (e) {}
   }
 }
