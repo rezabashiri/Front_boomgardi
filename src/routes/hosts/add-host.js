@@ -87,7 +87,6 @@ class FormsUi extends Component {
           <OwnerForm
             onHandleOwnerUserId={this.handleOwnerUserId}
             onHandleComplete={this.handleComplete}
-            ownerId={this.state.ownerUserId}
           />
         );
       case 1:

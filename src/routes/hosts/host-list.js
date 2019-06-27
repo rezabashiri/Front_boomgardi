@@ -173,7 +173,7 @@ class HostList extends Component {
     }
   }
   async handleKeyUp(e) {
-    console.log(e.target.value.toLowerCase());
+    //console.log(e.target.value.toLowerCase());
     if (e.target.value.toLowerCase() === "") {
       let newfilter = this.state.filterParams;
       newfilter.name = "";
@@ -275,7 +275,6 @@ class HostList extends Component {
     let newHostType = hostTypes.map(c => {
       return { column: c.name, lable: c.id };
     });
-    console.log(newHostType);
     this.setState({
       hostTypes: newHostType
     });
@@ -286,7 +285,6 @@ class HostList extends Component {
     let newOstan = ostanList.map(c => {
       return { column: c.name, lable: c.id };
     });
-    console.log(newOstan);
     this.setState({
       ostanList: newOstan
     });
@@ -430,7 +428,6 @@ class HostList extends Component {
                           <IntlMessages id="layouts.filter.select" />
                         </DropdownItem>
                         {this.state.hostTypes.map((hostType, index) => {
-                          console.log(hostType);
                           return (
                             <DropdownItem
                               key={index + 1}
@@ -457,14 +454,13 @@ class HostList extends Component {
                         >
                           <IntlMessages id="layouts.filter.select" />
                         </DropdownItem>
-                        {this.state.ostanList.map((order, index) => {
-                          console.log(order);
+                        {this.state.ostanList.map((ostan, index) => {
                           return (
                             <DropdownItem
                               key={index + 1}
-                              onClick={() => this.filterByOstan(order.lable)}
+                              onClick={() => this.filterByOstan(ostan.lable)}
                             >
-                              {order.column}
+                              {ostan.column}
                             </DropdownItem>
                           );
                         })}

@@ -11,6 +11,7 @@ export default class roomService {
   }
   async getRooms(filterParam) {
     console.log(filterParam);
+    console.log("room list");
     /*
     try {
       let filter = filterParam === undefined ? "" : filterParam;
@@ -22,6 +23,7 @@ export default class roomService {
   }
   async addRoom(model) {
     console.log(model.getData());
+    return true;
     /*
     try {
       let response = await apiContext().post(

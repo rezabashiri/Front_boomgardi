@@ -11,7 +11,7 @@ import OwnerForm from "./ownerForm";
 import HostForm from "./hostForm";
 import UploadForm from "./uploadForm";
 import AddressForm from "./addressForm";
-import RoomForm from "./add-room";
+import RoomForm from "./roomForm";
 
 import {
   Row,
@@ -212,7 +212,9 @@ class HostActions extends Component {
             <IntlMessages id="host.action.add-room" />
           </ModalHeader>
           <ModalBody>
-            <RoomForm />
+            <RoomForm
+              roomInfo={{ roomName: "اتاق 1", roomCapacity: 4, hostId: 1050 }}
+            />
           </ModalBody>
         </Modal>
       </Fragment>

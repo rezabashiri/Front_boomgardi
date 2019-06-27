@@ -86,8 +86,7 @@ class OwnerForm extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props.ownerId);
-    if (this.props.ownerId !== undefined) {
+    if (this.props.ownerId) {
       let srv = new userService();
       let user = await srv.getUsers("?id=" + this.props.ownerId);
       console.log(user[0].firsName);

@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
-//import roomService from "../../services/roomService.jsx";
-//import roomModel from "../../models/roomModel.jsx";
+import roomService from "../../services/roomService.jsx";
+import roomModel from "../../models/roomModel.jsx";
 import {
   Row,
   Card,
@@ -42,11 +42,11 @@ class RoomForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roomName: null, //this.props.roomInfo.name,
-      hostId: null, //this.props.roomInfo.hostId,
-      roomDetail: null, //this.props.roomInfo.roomDetail,
-      roomType: null, //this.props.roomInfo.roomType,
-      roomCapacity: null //this.props.roomInfo.roomCapacity
+      roomName: this.props.roomInfo.roomName,
+      hostId: this.props.roomInfo.hostId,
+      roomDetail: this.props.roomInfo.roomDetail,
+      roomTypeId: this.props.roomInfo.roomTypeId,
+      roomCapacity: this.props.roomInfo.roomCapacity
     };
     this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
     this.addRoom = this.addRoom.bind(this);
@@ -55,23 +55,22 @@ class RoomForm extends Component {
     this.handleRoomCapacityChange = this.handleRoomCapacityChange.bind(this);
   }
   async componentDidMount() {
-    this.setState({ hostId: 1051 /*this.props.roomInfo.hostId*/ });
+    this.setState({ hostId: this.props.roomInfo.hostId });
   }
 
   async addRoom() {
     console.log("add room done");
-    /*
+
     var service = new roomService();
     var model = new roomModel();
     model["roomName"] = this.state.roomName;
     model["hostId"] = this.state.hostId;
     model["roomDetail"] = this.state.roomDetail;
-    model["roomCapacity"] = this.props.roomCapacity;
-    model["roomType"] = this.props.roomType;
+    model["roomCapacity"] = this.state.roomCapacity;
+    model["roomTypeId"] = this.state.roomTypeId;
     let result = await service.addRoom(model);
     console.log("this is addroom result");
     console.log(result);
-    */
   }
   roomUploader = new FineUploaderTraditional({
     options: {
@@ -87,7 +86,7 @@ class RoomForm extends Component {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
           attachId: this.props.attachId,
-          attachType: { part: "room", type: "gallery" }
+          attachType: { part: "room", type: "profile" }
         }
       },
       validation: {
@@ -102,7 +101,7 @@ class RoomForm extends Component {
     this.setState({ roomName: e.target.value });
   }
   handleRoomTypeChange(e) {
-    this.setState({ RoomType: e.target.value });
+    this.setState({ RoomTypeId: e.target.value });
   }
   handleRoomDetailChange(e) {
     this.setState({ roomDetail: e.target.value });
@@ -149,9 +148,9 @@ class RoomForm extends Component {
                           <IntlMessages id="forms.room-type" />
                         </Label>
                         <AvInput
-                          name="roomType"
-                          id="roomType"
-                          value={this.state.roomType}
+                          name="roomTypeId"
+                          id="roomTypeId"
+                          value={this.state.roomTypeId}
                           onChange={this.handleRoomTypeChange}
                           required
                         />
