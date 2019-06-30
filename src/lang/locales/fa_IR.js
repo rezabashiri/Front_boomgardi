@@ -139,6 +139,7 @@ module.exports = {
   "host.action.edit-address": "ویرایش آدرس",
   "host.action.edit-hostinfo": "ویرایش اقامتگاه",
   "host.action.edit-hostpic": "ویرایش تصاویر",
+  "host.action.edit-roompic": "ویرایش تصاویر",
   "host.action.all-completed": "مراحل ثبت اقامتگاه تکمیل شد",
   "host.action.next": "بعدی",
   "host.action.prev": "قبلی",
@@ -146,6 +147,17 @@ module.exports = {
   "host.action.reset": "شروع مجدد",
   "host.action.add-room": "افزودن اتاق",
   "host.action.delete-host": "حذف اقامتگاه",
+
+  /* room actions */
+  "room.action": "عملیات",
+  "room.action.edit-roominfo": "ویرایش اطلاعات اتاق",
+  "room.action.edit-roompic": "ویرایش تصاویر",
+  "room.action.all-completed": "مراحل ثبت اتاق تکمیل شد",
+  "room.action.next": "بعدی",
+  "room.action.prev": "قبلی",
+  "room.action.completed": "تکمیل شده",
+  "room.action.reset": "شروع مجدد",
+  "room.action.delete-room": "حذف اتاق",
 
   /* 04.Dashboards */
   "dashboards.pending-orders": "سفارشات در انتظار تایید",
@@ -520,7 +532,8 @@ module.exports = {
   "form-components.embedded": "جاسازی شده",
   "form-components.fine-uploader": "آپلود کننده عالی",
   "form-components.upload-hostpic": "آپلود تصاویر اقاتگاه",
-  "form-components.upload-roompic": "آپلود تصاویر اتاق",
+  "form-components.upload-roompic": "آپلود تصویر پروفایل ",
+  "form-components.upload-roomgallery": "آپلود تصاویر گالری ",
   "form-components.upload-licensepic": "آپلود تصویر مجوز",
   "form-components.drop-files-here": "فایل ها را در اینجا بکشید",
   "form-components.tags": "برچسب ها",

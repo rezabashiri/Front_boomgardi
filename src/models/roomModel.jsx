@@ -3,6 +3,7 @@ let residencyTypeId = Symbol("residencyTypeId");
 let residenceId = Symbol("residenceId");
 let description = Symbol("description");
 let capacity = Symbol("capacity");
+let guid = Symbol("guid");
 
 export default class roomModel {
   set name(val) {
@@ -20,6 +21,9 @@ export default class roomModel {
   set capacity(val) {
     this[capacity] = val;
   }
+  set guid(val) {
+    this[guid] = val;
+  }
 
   getData = () => {
     return {
@@ -27,7 +31,8 @@ export default class roomModel {
       residencyTypeId: this[residencyTypeId],
       residenceId: this[residenceId],
       description: this[description],
-      capacity: this[capacity]
+      capacity: this[capacity],
+      guid: this[guid]
     };
   };
 }

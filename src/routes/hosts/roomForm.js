@@ -22,8 +22,6 @@ import {
   ModalFooter
 } from "reactstrap";
 import { serverConfig } from "../../constants/defaultValues";
-import FineUploaderTraditional from "fine-uploader-wrappers";
-import Gallery from "react-fine-uploader";
 //import Select from "react-select";
 
 import {
@@ -42,11 +40,11 @@ class RoomForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roomName: this.props.roomInfo.roomName,
-      hostId: this.props.roomInfo.hostId,
-      roomDetail: this.props.roomInfo.roomDetail,
-      roomTypeId: this.props.roomInfo.roomTypeId,
-      roomCapacity: this.props.roomInfo.roomCapacity
+      roomName: this.props.roomInfo.name,
+      hostId: this.props.roomInfo.residenceId,
+      roomDetail: this.props.roomInfo.description,
+      roomTypeId: this.props.roomInfo.residencyTypeId,
+      roomCapacity: this.props.roomInfo.capacity
     };
     this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
     this.addRoom = this.addRoom.bind(this);
@@ -55,49 +53,30 @@ class RoomForm extends Component {
     this.handleRoomCapacityChange = this.handleRoomCapacityChange.bind(this);
   }
   async componentDidMount() {
-    this.setState({ hostId: this.props.roomInfo.hostId });
+    console.log(this.props.roomInfo);
+    this.setState({ hostId: this.props.roomInfo.residenceId });
   }
 
   async addRoom() {
-    console.log("add room done");
-
     var service = new roomService();
     var model = new roomModel();
     model["name"] = this.state.roomName;
+    model["guid"] = this.props.roomInfo.guid;
     model["residenceId"] = this.state.hostId;
     model["description"] = this.state.roomDetail;
     model["capacity"] = this.state.roomCapacity;
     model["residencyTypeId"] = this.state.roomTypeId;
     model["serivces"] = ["حمام اختصاصی", "دستشویی فرنگی"];
     let result = await service.addRoom(model);
-    console.log("this is addroom result");
-    console.log(result.data);
-  }
-  roomUploader = new FineUploaderTraditional({
-    options: {
-      chunking: {
-        enabled: false
-      },
-      deleteFile: {
-        enabled: true,
-        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
-        params: { attachId: "8d6fb199fd4b212" /*this.props.attachId*/ }
-      },
-      request: {
-        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
-        params: {
-          attachId: "8d6fb199fd4b212",
-          attachType: { part: "residancyUnit", type: "profile" }
-        }
-      },
-      validation: {
-        allowedExtensions: ["jpg", "jpeg", "png", "gif", "bmp"],
-        allowEmpty: false,
-        sizeLimit: 20971520,
-        stopOnFirstInvalidFile: true
-      }
+
+    if (result.status === 201) {
+      console.log(result.data.guid);
+      this.props.onHandleComplete && this.props.onHandleComplete();
+      this.props.onHandleGuId && this.props.onHandleGuId(result.data.guid);
+      this.props.onToggleModal && this.props.onToggleModal();
+      //this.props.getRoom && this.props.getRoom();
     }
-  });
+  }
   handleRoomNameChange(e) {
     this.setState({ roomName: e.target.value });
   }
@@ -197,21 +176,6 @@ class RoomForm extends Component {
                     </Colxx>
                   </AvGroup>
                 </AvForm>
-                <Label className="av-label" for="roomPic">
-                  <IntlMessages id="form-components.upload-roompic" />
-                </Label>
-                <Gallery
-                  hidden
-                  animationsDisabled={true}
-                  uploader={this.roomUploader}
-                  deleteButton-children={<span>حذف</span>}
-                  fileInput-children={<span />}
-                  id="roomPic"
-                >
-                  <span className="react-fine-uploader-gallery-dropzone-content">
-                    <IntlMessages id="form-components.drop-files-here" />
-                  </span>
-                </Gallery>
                 <Button onClick={this.addRoom} color="primary">
                   <IntlMessages id="layouts.submit" />
                 </Button>

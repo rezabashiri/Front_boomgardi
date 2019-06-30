@@ -5,7 +5,7 @@ import roomService from "../../services/roomService.jsx";
 import roomModel from "../../models/roomModel.jsx";
 import addressService from "../../services/addressService.jsx";
 //import hostModel from "../../models/hostModel.jsx";
-import HostActions from "./hostActions";
+import RoomActions from "./roomActions";
 import { serverConfig } from "../../constants/defaultValues.js";
 import {
   Row,
@@ -165,7 +165,7 @@ class RoomList extends Component {
       var queryString = Object.keys(this.state.filterParams)
         .map(key => key + "=" + this.state.filterParams[key])
         .join("&");
-      this.getHost("?" + queryString);
+      this.getRoom("?" + queryString);
       /*
       this.setState(
         {
@@ -188,7 +188,7 @@ class RoomList extends Component {
       var queryString = Object.keys(this.state.filterParams)
         .map(key => key + "=" + this.state.filterParams[key])
         .join("&");
-      this.getHost("?" + queryString);
+      this.getRoom("?" + queryString);
     }
   }
 
@@ -623,7 +623,7 @@ class RoomList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               {room.capacity}
                             </p>
-                            <HostActions hostInfo={{}} />
+                            <RoomActions roomInfo={room} />
                           </div>
                           <div
                             hidden
@@ -674,7 +674,7 @@ class RoomList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               {room.capacity}
                             </p>
-                            <HostActions hostInfo={{}} />
+                            <RoomActions roomInfo={room} />
                           </div>
                         </div>
                       </Card>

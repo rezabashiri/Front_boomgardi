@@ -8,6 +8,7 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import RoomForm from "./roomForm";
+import RoomUploadForm from "./roomUploadForm";
 
 import {
   Row,
@@ -48,6 +49,7 @@ class HostActions extends Component {
     //this.handleAttachId = this.handleAttachId.bind(this);
     this.handleGuId = this.handleGuId.bind(this);
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
+    this.togglePicModal = this.togglePicModal.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -59,13 +61,19 @@ class HostActions extends Component {
       ownerUserId: null,
       attachId: null,
       guid: null,
-      roomModalOpen: false
+      roomModalOpen: false,
+      picModalOpen: false
     };
   }
 
   toggleRoomModal() {
     this.setState({
       roomModalOpen: !this.state.roomModalOpen
+    });
+  }
+  togglePicModal() {
+    this.setState({
+      picModalOpen: !this.state.picModalOpen
     });
   }
 
@@ -82,11 +90,14 @@ class HostActions extends Component {
       <Fragment>
         <UncontrolledDropdown>
           <DropdownToggle caret color="secondary" outline>
-            <IntlMessages id="host.action" />
+            <IntlMessages id="room.action" />
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem onClick={this.toggleRoomModal}>
-              <IntlMessages id="host.action.add-room" />
+              <IntlMessages id="room.action.edit-roominfo" />
+            </DropdownItem>
+            <DropdownItem onClick={this.togglePicModal}>
+              <IntlMessages id="room.action.edit-roompic" />
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
@@ -100,11 +111,23 @@ class HostActions extends Component {
           </ModalHeader>
           <ModalBody>
             <RoomForm
-              roomInfo={{
-                roomName: "اتاق 1",
-                roomCapacity: 4,
-                hostId: this.props.hostInfo.id
-              }}
+              roomInfo={this.props.roomInfo}
+              onToggleModal={this.toggleRoomModal}
+            />
+          </ModalBody>
+        </Modal>
+        <Modal
+          isOpen={this.state.picModalOpen}
+          toggle={this.togglePicModal}
+          size="lg"
+        >
+          <ModalHeader toggle={this.togglePicModal}>
+            <IntlMessages id="room.action.edit-roompic" />
+          </ModalHeader>
+          <ModalBody>
+            <RoomUploadForm
+              attachId={this.props.roomInfo.guid}
+              onToggleModal={this.togglePicModal}
             />
           </ModalBody>
         </Modal>
