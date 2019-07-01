@@ -60,9 +60,14 @@ class RoomUploadForm extends Component {
   });
 
   render() {
+    /*
+    this.roomUploader.options.request.params = {
+      attachId: this.props.attachId,
+      attachType: { part: "residancyUnit", type: "profile" }
+    };*/
+    console.log(this.roomUploader);
     return (
       <Fragment>
-        {this.props.attachId}
         <Row className="mb-4">
           <Colxx xxs="12">
             <Card>

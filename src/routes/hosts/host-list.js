@@ -30,7 +30,7 @@ import {
   Badge
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import Select from "react-select";
+//import Select from "react-select";
 //import CustomSelectInput from "Components/CustomSelectInput";
 import classnames from "classnames";
 
@@ -512,9 +512,17 @@ class HostList extends Component {
                   return (
                     <Colxx sm="6" lg="4" xl="3" className="mb-3" key={host.id}>
                       <Card
-                        onClick={event =>
+                        /*onClick={event =>
                           this.handleCheckChange(event, host.id)
-                        }
+                        }*/
+                        onClick={() => {
+                          this.props.history.push({
+                            pathname: "/app/hosts/hostpage",
+                            state: {
+                              hostInfo: host
+                            }
+                          });
+                        }}
                         className={classnames({
                           active: this.state.selectedItems.includes(host.id)
                         })}
@@ -572,9 +580,17 @@ class HostList extends Component {
                   return (
                     <Colxx xxs="12" key={host.id} className="mb-3">
                       <Card
-                        onClick={event =>
+                        /*onClick={event =>
                           this.handleCheckChange(event, host.id)
-                        }
+                        }*/
+                        onClick={() => {
+                          this.props.history.push({
+                            pathname: "/app/hosts/hostpage",
+                            state: {
+                              hostInfo: host
+                            }
+                          });
+                        }}
                         className={classnames("d-flex flex-row", {
                           active: this.state.selectedItems.includes(host.id)
                         })}
@@ -607,6 +623,7 @@ class HostList extends Component {
                               شهر:{host.address.shahrestanName}
                             </p>
                             <HostActions
+                              {...this.props}
                               hostInfo={host}
                               getHost={this.getHost}
                             />
@@ -634,23 +651,27 @@ class HostList extends Component {
                   return (
                     <Colxx xxs="12" key={host.id} className="mb-3">
                       <Card
-                        onClick={event =>
+                        /*onClick={event =>
                           this.handleCheckChange(event, host.id)
-                        }
+                        }*/
+                        onClick={() => {
+                          this.props.history.push({
+                            pathname: "/app/hosts/hostpage",
+                            state: {
+                              hostInfo: host
+                            }
+                          });
+                        }}
                         className={classnames("d-flex flex-row", {
                           active: this.state.selectedItems.includes(host.id)
                         })}
                       >
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?p=${host.id}`}
-                              className="w-40 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {host.name}
-                              </p>
-                            </NavLink>
+                            <p className="list-item-heading mb-1 truncate">
+                              {host.name}
+                            </p>
+
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               {host.residenceType}
                             </p>
@@ -660,7 +681,11 @@ class HostList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               شهر:{host.address.shahrestanName}
                             </p>
-                            <HostActions hostInfo={host} />
+                            <HostActions
+                              {...this.props}
+                              hostInfo={host}
+                              getHost={this.getHost}
+                            />
                           </div>
                         </div>
                       </Card>
