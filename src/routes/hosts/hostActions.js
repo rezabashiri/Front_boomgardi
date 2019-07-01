@@ -133,16 +133,7 @@ class HostActions extends Component {
             <DropdownItem onClick={this.toggleRoomModal}>
               <IntlMessages id="host.action.add-room" />
             </DropdownItem>
-            <DropdownItem
-              onClick={() => {
-                this.props.history.push({
-                  pathname: "/app/hosts/hostpage",
-                  state: {
-                    hostInfo: this.props.hostInfo
-                  }
-                });
-              }}
-            >
+            <DropdownItem hidden>
               <IntlMessages id="host.action.delete-host" />
             </DropdownItem>
           </DropdownMenu>

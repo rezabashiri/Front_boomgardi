@@ -528,25 +528,20 @@ class HostList extends Component {
                         })}
                       >
                         <div className="position-relative">
-                          <NavLink
-                            to={`?p=${host.id}`}
-                            className="w-40 w-sm-100"
+                          <CardImg
+                            top
+                            alt={host.name}
+                            src={serverConfig.fileBaseUrl + host.profileImg}
+                            width="100"
+                            height="250"
+                          />
+                          <Badge
+                            color="primary"
+                            pill
+                            className="position-absolute badge-top-right"
                           >
-                            <CardImg
-                              top
-                              alt={host.name}
-                              src={serverConfig.fileBaseUrl + host.profileImg}
-                              width="100"
-                              height="250"
-                            />
-                            <Badge
-                              color="primary"
-                              pill
-                              className="position-absolute badge-top-right"
-                            >
-                              {host.residenceType}
-                            </Badge>
-                          </NavLink>
+                            {host.residenceType}
+                          </Badge>
                         </div>
                         <CardBody>
                           <Row>
@@ -580,39 +575,35 @@ class HostList extends Component {
                   return (
                     <Colxx xxs="12" key={host.id} className="mb-3">
                       <Card
-                        /*onClick={event =>
+                        onClick={event =>
                           this.handleCheckChange(event, host.id)
-                        }*/
-                        onClick={() => {
-                          this.props.history.push({
-                            pathname: "/app/hosts/hostpage",
-                            state: {
-                              hostInfo: host
-                            }
-                          });
-                        }}
+                        }
                         className={classnames("d-flex flex-row", {
                           active: this.state.selectedItems.includes(host.id)
                         })}
                       >
-                        <NavLink to={`?p=${host.id}`} className="d-flex">
-                          <img
-                            alt={host.name}
-                            src={serverConfig.fileBaseUrl + host.profileImg}
-                            className="list-thumbnail responsive border-0"
-                            width="auto"
-                          />
-                        </NavLink>
+                        <img
+                          alt={host.name}
+                          src={serverConfig.fileBaseUrl + host.profileImg}
+                          className="list-thumbnail responsive border-0"
+                          width="auto"
+                        />
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?p=${host.id}`}
-                              className="w-40 w-sm-100"
+                            <p
+                              className="list-item-heading mb-1 truncate"
+                              onClick={() => {
+                                this.props.history.push({
+                                  pathname: "/app/hosts/hostpage",
+                                  state: {
+                                    hostInfo: host
+                                  }
+                                });
+                              }}
                             >
-                              <p className="list-item-heading mb-1 truncate">
-                                {host.name}
-                              </p>
-                            </NavLink>
+                              {host.name}
+                            </p>
+
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               {host.residenceType}
                             </p>
@@ -651,24 +642,26 @@ class HostList extends Component {
                   return (
                     <Colxx xxs="12" key={host.id} className="mb-3">
                       <Card
-                        /*onClick={event =>
+                        onClick={event =>
                           this.handleCheckChange(event, host.id)
-                        }*/
-                        onClick={() => {
-                          this.props.history.push({
-                            pathname: "/app/hosts/hostpage",
-                            state: {
-                              hostInfo: host
-                            }
-                          });
-                        }}
+                        }
                         className={classnames("d-flex flex-row", {
                           active: this.state.selectedItems.includes(host.id)
                         })}
                       >
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <p className="list-item-heading mb-1 truncate">
+                            <p
+                              className="list-item-heading mb-1 truncate"
+                              onClick={() => {
+                                this.props.history.push({
+                                  pathname: "/app/hosts/hostpage",
+                                  state: {
+                                    hostInfo: host
+                                  }
+                                });
+                              }}
+                            >
                               {host.name}
                             </p>
 
