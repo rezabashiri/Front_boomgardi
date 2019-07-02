@@ -28,9 +28,7 @@ export default class CarouselUi extends Component {
           <Colxx xxs="12" className="pl-0 pr-0 mb-5">
             <ReactSiemaCarousel
               perPage={{
-                0: 1,
-                1000: 2,
-                1400: 3
+                0: 1
               }}
               loop={false}
               rtl={true}
@@ -108,9 +106,7 @@ export default class CarouselUi extends Component {
 
                   <div className="w-50">
                     <CardBody>
-                      <h6 className="mb-4">
-                        چیزکیک با شکلات و خامه عسل
-                      </h6>
+                      <h6 className="mb-4">چیزکیک با شکلات و خامه عسل</h6>
 
                       <footer>
                         <p className="text-muted text-small mb-0 font-weight-light">
@@ -137,9 +133,7 @@ export default class CarouselUi extends Component {
 
                   <div className="w-50">
                     <CardBody>
-                      <h6 className="mb-4">
-                        چیزکیک با شکلات و خامه عسل
-                      </h6>
+                      <h6 className="mb-4">چیزکیک با شکلات و خامه عسل</h6>
 
                       <footer>
                         <p className="text-muted text-small mb-0 font-weight-light">
@@ -211,7 +205,9 @@ export default class CarouselUi extends Component {
                       </p>
 
                       <p className="mb-0 text-muted text-small">کاپ کیک</p>
-                      <p className="mb-0 text-muted text-small">28 خرداد 1395</p>
+                      <p className="mb-0 text-muted text-small">
+                        28 خرداد 1395
+                      </p>
                       <div>
                         <span className="badge badge-pill badge-primary ml-1">
                           جدید
@@ -240,7 +236,9 @@ export default class CarouselUi extends Component {
                       </p>
 
                       <p className="mb-0 text-muted text-small">Cupcakes</p>
-                      <p className="mb-0 text-muted text-small">31 فروردین 1397</p>
+                      <p className="mb-0 text-muted text-small">
+                        31 فروردین 1397
+                      </p>
                       <div>
                         <span className="badge badge-pill badge-primary ml-1">
                           جدید
@@ -291,9 +289,7 @@ export default class CarouselUi extends Component {
                   </div>
 
                   <CardBody>
-                    <h6 className="mb-4">
-                      چیزکیک با شکلات و خامه عسل
-                    </h6>
+                    <h6 className="mb-4">چیزکیک با شکلات و خامه عسل</h6>
 
                     <footer>
                       <p className="text-muted text-small mb-0 font-weight-light">
@@ -378,9 +374,7 @@ export default class CarouselUi extends Component {
                   </div>
 
                   <CardBody>
-                    <h6 className="mb-4">
-                      چیزکیک با شکلات و خامه عسل
-                    </h6>
+                    <h6 className="mb-4">چیزکیک با شکلات و خامه عسل</h6>
 
                     <footer>
                       <p className="text-muted text-small mb-0 font-weight-light">

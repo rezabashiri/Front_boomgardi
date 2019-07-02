@@ -44,4 +44,19 @@ export default class hostService {
       return response;
     } catch (e) {}
   }
+  async deleteHost(guid) {
+    try {
+      let response = await apiContext().delete(
+        serverConfig.hostUrl + "/" + guid
+      );
+      return response;
+    } catch (e) {}
+  }
+  async getHostPics(filterParam) {
+    try {
+      let filter = filterParam === undefined ? "" : filterParam;
+      let response = await apiContext().get(serverConfig.picUrl + filter);
+      return response;
+    } catch (e) {}
+  }
 }

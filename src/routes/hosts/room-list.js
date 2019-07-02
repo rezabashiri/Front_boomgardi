@@ -76,7 +76,8 @@ class RoomList extends Component {
       filterParams: {
         residencyTypeId: "",
         ostanId: "",
-        name: ""
+        name: "",
+        residenceId: this.props.residenceId ? this.props.residenceId : ""
       }
     };
   }
@@ -151,7 +152,7 @@ class RoomList extends Component {
       {
         currentPage: page
       },
-      () => this.getHost()
+      () => this.getRoom()
     );
   }
 
@@ -257,8 +258,11 @@ class RoomList extends Component {
     return false;
   }
   async componentDidMount() {
+    var queryString = Object.keys(this.state.filterParams)
+      .map(key => key + "=" + this.state.filterParams[key])
+      .join("&");
     //this.getHost();
-    this.getRoom();
+    this.getRoom("?" + queryString);
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
@@ -318,7 +322,7 @@ class RoomList extends Component {
         <div className="disable-text-selection">
           <Row>
             <Colxx xxs="12">
-              <div className="mb-2">
+              <div hidden className="mb-2">
                 <h1>
                   <IntlMessages id="menu.roomslist" />
                 </h1>

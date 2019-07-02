@@ -81,6 +81,7 @@
     "react-datepicker": "^1.5.0",
     "react-fine-uploader": "^1.1.0",
     "react-headroom": "^2.2.4",
+    "react-image-gallery": "^0.8.17",
     "react-intl": "2.4.0",
     "react-lines-ellipsis": "^0.13.2",
     "react-loadable": "5.4.0",
@@ -101,6 +102,6 @@
     "redux-saga": "^0.16.0",
     "sortablejs": "^1.6.1",
     "sweetalert": "^2.1.2",
-    "video.js": "^7.3.0" 
+    "video.js": "^7.3.0"
   }
 }

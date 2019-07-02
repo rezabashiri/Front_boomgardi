@@ -9,6 +9,7 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import RoomForm from "./roomForm";
 import RoomUploadForm from "./roomUploadForm";
+import roomService from "../../services/roomService.jsx";
 
 import {
   Row,
@@ -85,11 +86,25 @@ class HostActions extends Component {
     this.setState({ guid: guid });
   };
 
+  async deleteRoom(guid) {
+    var service = new roomService();
+    let result = await service.deleteRoom(guid);
+
+    if (result.status === 201) {
+      alert("اتاق حذف شد");
+    }
+  }
   render() {
     return (
       <Fragment>
         <UncontrolledDropdown>
-          <DropdownToggle caret color="secondary" outline>
+          <DropdownToggle
+            caret
+            color="primary"
+            size="lg"
+            outline
+            className="top-right-button top-right-button-single"
+          >
             <IntlMessages id="room.action" />
           </DropdownToggle>
           <DropdownMenu>
@@ -98,6 +113,9 @@ class HostActions extends Component {
             </DropdownItem>
             <DropdownItem onClick={this.togglePicModal}>
               <IntlMessages id="room.action.edit-roompic" />
+            </DropdownItem>
+            <DropdownItem onClick={this.deleteRoom(this.props.roomInfo.guid)}>
+              <IntlMessages id="room.action.delete" />
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
