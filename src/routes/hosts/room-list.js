@@ -163,10 +163,7 @@ class RoomList extends Component {
       await this.setState({
         filterParams: newfilter
       });
-      var queryString = Object.keys(this.state.filterParams)
-        .map(key => key + "=" + this.state.filterParams[key])
-        .join("&");
-      this.getRoom("?" + queryString);
+      this.getRoom();
       /*
       this.setState(
         {
@@ -186,10 +183,7 @@ class RoomList extends Component {
       await this.setState({
         filterParams: newfilter
       });
-      var queryString = Object.keys(this.state.filterParams)
-        .map(key => key + "=" + this.state.filterParams[key])
-        .join("&");
-      this.getRoom("?" + queryString);
+      this.getRoom();
     }
   }
 
@@ -258,11 +252,7 @@ class RoomList extends Component {
     return false;
   }
   async componentDidMount() {
-    var queryString = Object.keys(this.state.filterParams)
-      .map(key => key + "=" + this.state.filterParams[key])
-      .join("&");
-    //this.getHost();
-    this.getRoom("?" + queryString);
+    this.getRoom();
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
@@ -280,8 +270,11 @@ class RoomList extends Component {
   }
   // getRoom = async filter => {
   async getRoom(filter) {
+    var queryString = Object.keys(this.state.filterParams)
+      .map(key => key + "=" + this.state.filterParams[key])
+      .join("&");
     var service = new roomService();
-    let result = await service.getRooms(filter);
+    let result = await service.getRooms("?" + queryString);
     this.setState({ rooms: result });
     this.setState({
       totalPage: 1,
@@ -290,9 +283,6 @@ class RoomList extends Component {
       isLoading: true
     });
   }
-  testfunc = param => {
-    console.log(param);
-  };
   async getHostType() {
     var typeService = new hostService();
     let hostTypes = await typeService.getHostType();
@@ -622,18 +612,24 @@ class RoomList extends Component {
                               </p>
                             </NavLink>
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-detail" />
+                              {": "}
+                              {room.description}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-type" />
+                              {": "}
                               {room.type}
                             </p>
+
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {room.services}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-capacity" />
+                              {": "}
                               {room.capacity}
                             </p>
                             <RoomActions
                               roomInfo={room}
                               onGetRooms={this.getRoom}
-                              onTestFunc={this.testfunc}
                             />
                           </div>
                           <div
@@ -669,26 +665,33 @@ class RoomList extends Component {
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                             <NavLink
-                              to={`?p=${room.id}`}
+                              to={`?name=${room.name}`}
                               className="w-40 w-sm-100"
                             >
                               <p className="list-item-heading mb-1 truncate">
                                 {room.name}
                               </p>
                             </NavLink>
+
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-detail" />
+                              {": "}
+                              {room.description}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-type" />
+                              {": "}
                               {room.type}
                             </p>
+
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {room.services}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-capacity" />
+                              {": "}
                               {room.capacity}
                             </p>
                             <RoomActions
                               roomInfo={room}
                               onGetRooms={this.getRoom}
-                              onTestFunc={this.testfunc}
                             />
                           </div>
                         </div>
