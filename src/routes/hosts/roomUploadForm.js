@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import { serverConfig } from "../../constants/defaultValues";
-import { Row, Card, CardBody, CardTitle } from "reactstrap";
+import { Row, Card, CardBody, CardTitle, Button } from "reactstrap";
 import FineUploaderTraditional from "fine-uploader-wrappers";
 import Gallery from "react-fine-uploader";
 //import Thumbnail from "react-fine-uploader/thumbnail";
@@ -61,12 +61,18 @@ class RoomUploadForm extends Component {
   getRoomUploader() {
     this.roomUploader.options.request.params.attachId = this.props.attachId;
     this.roomUploader.options.deleteFile.params.attachId = this.props.attachId;
+    console.log(this.roomUploader);
     return this.roomUploader;
   }
   getGalleryUploader() {
     this.galleryUploader.options.request.params.attachId = this.props.attachId;
     this.galleryUploader.options.deleteFile.params.attachId = this.props.attachId;
     return this.galleryUploader;
+  }
+  uploadCompleted() {
+    //this.props.onGetRooms && (await this.props.onGetRooms());
+    this.props.onHandleComplete && this.props.onHandleComplete();
+    this.props.onToggleModal && this.props.onToggleModal();
   }
 
   render() {
@@ -117,6 +123,9 @@ class RoomUploadForm extends Component {
               </CardBody>
             </Card>
           </Colxx>
+          <Button onClick={() => this.uploadCompleted()} color="primary">
+            <IntlMessages id="layouts.submit" />
+          </Button>
         </Row>
       </Fragment>
     );
