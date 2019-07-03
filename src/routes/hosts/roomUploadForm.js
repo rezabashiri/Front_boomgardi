@@ -58,6 +58,16 @@ class RoomUploadForm extends Component {
       }
     }
   });
+  getRoomUploader() {
+    this.roomUploader.options.request.params.attachId = this.props.attachId;
+    this.roomUploader.options.deleteFile.params.attachId = this.props.attachId;
+    return this.roomUploader;
+  }
+  getGalleryUploader() {
+    this.galleryUploader.options.request.params.attachId = this.props.attachId;
+    this.galleryUploader.options.deleteFile.params.attachId = this.props.attachId;
+    return this.galleryUploader;
+  }
 
   render() {
     /*
@@ -65,7 +75,7 @@ class RoomUploadForm extends Component {
       attachId: this.props.attachId,
       attachType: { part: "residancyUnit", type: "profile" }
     };*/
-    console.log(this.roomUploader);
+
     return (
       <Fragment>
         <Row className="mb-4">
@@ -77,7 +87,7 @@ class RoomUploadForm extends Component {
                 </CardTitle>
                 <Gallery
                   animationsDisabled={true}
-                  uploader={this.roomUploader}
+                  uploader={this.getRoomUploader()}
                   deleteButton-children={<span>حذف</span>}
                   fileInput-children={<span />}
                 >
@@ -96,7 +106,7 @@ class RoomUploadForm extends Component {
                 </CardTitle>
                 <Gallery
                   animationsDisabled={true}
-                  uploader={this.galleryUploader}
+                  uploader={this.getGalleryUploader()}
                   deleteButton-children={<span>حذف</span>}
                   fileInput-children={<span />}
                 >
