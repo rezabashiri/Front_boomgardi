@@ -74,8 +74,7 @@ class RoomForm extends Component {
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleGuId && this.props.onHandleGuId(result.data.guid);
       this.props.onToggleModal && this.props.onToggleModal();
-      await this.props.onGetRooms();
-      //this.props.getRoom && this.props.getRoom();
+      this.props.onGetRooms && (await this.props.onGetRooms());
     }
   }
   handleRoomNameChange(e) {

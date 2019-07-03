@@ -4,7 +4,7 @@ import RoomList from "./room-list";
 import { serverConfig } from "../../constants/defaultValues.js";
 import HostActions from "./hostActions";
 import hostService from "../../services/hostService.jsx";
-import ReactSiemaCarousel from "Components/ReactSiema/ReactSiemaCarousel";
+//import ReactSiemaCarousel from "Components/ReactSiema/ReactSiemaCarousel";
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from "react-image-gallery";
 import {

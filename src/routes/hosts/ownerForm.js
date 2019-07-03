@@ -68,7 +68,6 @@ class OwnerForm extends Component {
         this.props.onHandleOwnerUserId(result.data.id);
       this.props.onToggleModal && this.props.onToggleModal();
       this.props.getHost && this.props.getHost();
-      console.log(this.props);
     }
   }
 

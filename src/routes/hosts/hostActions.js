@@ -49,7 +49,6 @@ class HostActions extends Component {
     super(props);
 
     this.handleOwnerUserId = this.handleOwnerUserId.bind(this);
-    //this.handleAttachId = this.handleAttachId.bind(this);
     this.handleGuId = this.handleGuId.bind(this);
     this.toggleOwnerModal = this.toggleOwnerModal.bind(this);
     this.toggleHostModal = this.toggleHostModal.bind(this);
@@ -76,7 +75,6 @@ class HostActions extends Component {
   }
 
   toggleOwnerModal() {
-    console.log("owner modal toggled");
     this.setState({
       ownerModalOpen: !this.state.ownerModalOpen
     });
@@ -212,7 +210,10 @@ class HostActions extends Component {
             <IntlMessages id="host.action.add-room" />
           </ModalHeader>
           <ModalBody>
-            <AddRoomWizard roomInfo={{ residenceId: this.props.hostInfo.id }} />
+            <AddRoomWizard
+              roomInfo={{ residenceId: this.props.hostInfo.id }}
+              onToggleModal={this.toggleRoomModal}
+            />
           </ModalBody>
         </Modal>
       </Fragment>
