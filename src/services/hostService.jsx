@@ -1,5 +1,6 @@
 import { serverConfig } from "../constants/defaultValues";
 import { apiContext } from "../helpers/contextHelper";
+import QueryString from "./queryString.jsx";
 
 export default class hostService {
   async getHostType() {
@@ -18,10 +19,20 @@ export default class hostService {
       return response.data;
     } catch (e) {}
   }
+  /*
   async getHosts(filterParam) {
     try {
       let filter = filterParam === undefined ? "" : filterParam;
       let response = await apiContext().get(serverConfig.hostUrl + filter);
+      return response.data;
+    } catch (e) {}
+  }*/
+  async getHosts(filterObject) {
+    try {
+      let filter = filterObject === undefined ? "" : filterObject;
+      let queryService = new QueryString();
+      let queryString = queryService.buildQuery(filter);
+      let response = await apiContext().get(serverConfig.hostUrl + queryString);
       return response.data;
     } catch (e) {}
   }

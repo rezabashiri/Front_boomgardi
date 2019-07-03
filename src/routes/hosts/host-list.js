@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
 import addressService from "../../services/addressService.jsx";
+import QueryString from "../../services/queryString.jsx";
 //import hostModel from "../../models/hostModel.jsx";
 import HostActions from "./hostActions";
 import { serverConfig } from "../../constants/defaultValues.js";
@@ -99,14 +100,18 @@ class HostList extends Component {
     await this.setState({
       filterParams: newfilter
     });
+    //let queryService = new QueryString();
+    //let queryString = queryService.buildQuery(this.state.filterParams);
+    /*
     var queryString = Object.keys(this.state.filterParams)
       .map(key => key + "=" + this.state.filterParams[key])
       .join("&");
+*/
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
       },
-      () => this.getHost("?" + queryString)
+      () => this.getHost(this.state.filterParams)
     );
   }
   async filterByOstan(lable) {
@@ -115,15 +120,11 @@ class HostList extends Component {
     await this.setState({
       filterParams: newfilter
     });
-    var queryString = Object.keys(this.state.filterParams)
-      .map(key => key + "=" + this.state.filterParams[key])
-      .join("&");
-    console.log(queryString);
     this.setState(
       {
         ostanFilterOptions: this.state.ostanList.find(x => x.lable === lable)
       },
-      () => this.getHost("?" + queryString)
+      () => this.getHost(this.state.filterParams)
     );
   }
   changePageSize(size) {
@@ -154,13 +155,13 @@ class HostList extends Component {
     if (e.key === "Enter") {
       let newfilter = this.state.filterParams;
       newfilter.name = e.target.value.toLowerCase();
-      await this.setState({
-        filterParams: newfilter
-      });
-      var queryString = Object.keys(this.state.filterParams)
-        .map(key => key + "=" + this.state.filterParams[key])
-        .join("&");
-      this.getHost("?" + queryString);
+      await this.setState(
+        {
+          filterParams: newfilter
+        },
+        () => this.getHost(this.state.filterParams)
+      );
+
       /*
       this.setState(
         {
@@ -177,13 +178,12 @@ class HostList extends Component {
     if (e.target.value.toLowerCase() === "") {
       let newfilter = this.state.filterParams;
       newfilter.name = "";
-      await this.setState({
-        filterParams: newfilter
-      });
-      var queryString = Object.keys(this.state.filterParams)
-        .map(key => key + "=" + this.state.filterParams[key])
-        .join("&");
-      this.getHost("?" + queryString);
+      await this.setState(
+        {
+          filterParams: newfilter
+        },
+        () => this.getHost(this.state.filterParams)
+      );
     }
   }
 
@@ -257,9 +257,9 @@ class HostList extends Component {
     this.getOstanList();
     //this.dataListRender();
   }
-  async getHost(filter) {
+  async getHost(filterObject) {
     var service = new hostService();
-    let result = await service.getHosts(filter);
+    let result = await service.getHosts(filterObject);
     this.setState({ hosts: result });
     this.setState({
       totalPage: 1,
