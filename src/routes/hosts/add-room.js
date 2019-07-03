@@ -80,20 +80,21 @@ class AddRoomWizard extends Component {
             onHandleGuId={this.handleGuId}
             roomInfo={this.props.roomInfo}
             onHandleComplete={this.handleComplete}
+            onGetRooms={this.props.onGetRooms}
           />
         );
       case 1:
-        return <RoomUploadForm attachId={this.state.guid} />;
+        return (
+          <RoomUploadForm
+            attachId={this.state.guid}
+            onHandleComplete={this.handleComplete}
+          />
+        );
       default:
         return "مرحله تعریف نشده";
     }
   }
 
-  /*
-  handleAttachId = attachId => {
-    this.setState({ attachId: attachId });
-    console.log(this.state.attachId);
-  };*/
   handleGuId = guid => {
     this.setState({ guid: guid });
   };
@@ -201,6 +202,7 @@ class AddRoomWizard extends Component {
                     <IntlMessages id="room.action.prev" />
                   </Button>
                   <Button
+                    hidden
                     variant="contained"
                     color="primary"
                     onClick={this.handleNext}
