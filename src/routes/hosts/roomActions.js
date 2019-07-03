@@ -90,8 +90,10 @@ class HostActions extends Component {
     var service = new roomService();
     let result = await service.deleteRoom(guid);
 
-    if (result.status === 201) {
+    if (result.status === 204) {
       alert("اتاق حذف شد");
+      console.log(this.props);
+      await this.props.onGetRooms();
     }
   }
   render() {
@@ -114,7 +116,9 @@ class HostActions extends Component {
             <DropdownItem onClick={this.togglePicModal}>
               <IntlMessages id="room.action.edit-roompic" />
             </DropdownItem>
-            <DropdownItem onClick={this.deleteRoom(this.props.roomInfo.guid)}>
+            <DropdownItem
+              onClick={() => this.deleteRoom(this.props.roomInfo.guid)}
+            >
               <IntlMessages id="room.action.delete" />
             </DropdownItem>
           </DropdownMenu>
@@ -131,6 +135,7 @@ class HostActions extends Component {
             <RoomForm
               roomInfo={this.props.roomInfo}
               onToggleModal={this.toggleRoomModal}
+              onGetRooms={this.props.onGetRooms}
             />
           </ModalBody>
         </Modal>
@@ -146,6 +151,7 @@ class HostActions extends Component {
             <RoomUploadForm
               attachId={this.props.roomInfo.guid}
               onToggleModal={this.togglePicModal}
+              onGetRooms={this.props.onGetRooms}
             />
           </ModalBody>
         </Modal>

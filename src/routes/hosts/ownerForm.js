@@ -62,13 +62,13 @@ class OwnerForm extends Component {
     model["password"] = this.state.codeMeli;
     model["nationalCode"] = this.state.codeMeli;
     let result = await usrService.addUser(model);
-    console.log("here we are1");
     if (result.status === 201) {
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleOwnerUserId &&
         this.props.onHandleOwnerUserId(result.data.id);
       this.props.onToggleModal && this.props.onToggleModal();
       this.props.getHost && this.props.getHost();
+      console.log(this.props);
     }
   }
 

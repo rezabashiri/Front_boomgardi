@@ -278,6 +278,7 @@ class RoomList extends Component {
       isLoading: true
     });
   }
+  // getRoom = async filter => {
   async getRoom(filter) {
     var service = new roomService();
     let result = await service.getRooms(filter);
@@ -289,7 +290,9 @@ class RoomList extends Component {
       isLoading: true
     });
   }
-
+  testfunc = param => {
+    console.log(param);
+  };
   async getHostType() {
     var typeService = new hostService();
     let hostTypes = await typeService.getHostType();
@@ -627,7 +630,11 @@ class RoomList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               {room.capacity}
                             </p>
-                            <RoomActions roomInfo={room} />
+                            <RoomActions
+                              roomInfo={room}
+                              onGetRooms={this.getRoom}
+                              onTestFunc={this.testfunc}
+                            />
                           </div>
                           <div
                             hidden
@@ -678,7 +685,11 @@ class RoomList extends Component {
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               {room.capacity}
                             </p>
-                            <RoomActions roomInfo={room} />
+                            <RoomActions
+                              roomInfo={room}
+                              onGetRooms={this.getRoom}
+                              onTestFunc={this.testfunc}
+                            />
                           </div>
                         </div>
                       </Card>
