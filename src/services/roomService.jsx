@@ -1,5 +1,6 @@
 import { serverConfig } from "../constants/defaultValues";
 import { apiContext } from "../helpers/contextHelper";
+import QueryString from "./queryString.jsx";
 
 export default class roomService {
   async getRoomType() {
@@ -10,11 +11,22 @@ export default class roomService {
       return response.data;
     } catch (e) {}
   }
+  /*
   async getRooms(filterParam) {
     try {
       let filter = filterParam === undefined ? "" : filterParam;
       let response = await apiContext().get(serverConfig.unitUrl + filter);
       console.log(response.data);
+      return response.data;
+    } catch (e) {}
+  }*/
+  async getRooms(filterObject) {
+    try {
+      console.log("this is get room service:" + filterObject);
+      let filter = filterObject === undefined ? "" : filterObject;
+      let queryService = new QueryString();
+      let queryString = queryService.buildQuery(filter);
+      let response = await apiContext().get(serverConfig.unitUrl + queryString);
       return response.data;
     } catch (e) {}
   }

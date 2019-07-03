@@ -51,7 +51,6 @@ class RoomList extends Component {
     super(props);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
     this.getIndex = this.getIndex.bind(this);
-    this.getHost = this.getHost.bind(this);
     this.getRoom = this.getRoom.bind(this);
     //this.getHostOstan = this.getHostOstan.bind(this);
 
@@ -75,7 +74,7 @@ class RoomList extends Component {
       rooms: [],
       filterParams: {
         residencyTypeId: "",
-        ostanId: "",
+        //ostanId: "",
         name: "",
         residenceId: this.props.residenceId ? this.props.residenceId : ""
       }
@@ -163,7 +162,7 @@ class RoomList extends Component {
       await this.setState({
         filterParams: newfilter
       });
-      this.getRoom();
+      () => this.getRoom(this.state.filterParams);
       /*
       this.setState(
         {
@@ -183,7 +182,7 @@ class RoomList extends Component {
       await this.setState({
         filterParams: newfilter
       });
-      this.getRoom();
+      () => this.getRoom(this.state.filterParams);
     }
   }
 
@@ -257,24 +256,11 @@ class RoomList extends Component {
     this.getOstanList();
     //this.dataListRender();
   }
-  async getHost(filter) {
-    var service = new hostService();
-    let result = await service.getHosts(filter);
-    this.setState({ hosts: result });
-    this.setState({
-      totalPage: 1,
-      selectedItems: [],
-      totalItemCount: this.state.hosts.length,
-      isLoading: true
-    });
-  }
   // getRoom = async filter => {
-  async getRoom(filter) {
-    var queryString = Object.keys(this.state.filterParams)
-      .map(key => key + "=" + this.state.filterParams[key])
-      .join("&");
+  async getRoom(filterObject) {
     var service = new roomService();
-    let result = await service.getRooms("?" + queryString);
+    let result = await service.getRooms(filterObject);
+    console.log("this is roomlist result:" + result);
     this.setState({ rooms: result });
     this.setState({
       totalPage: 1,
