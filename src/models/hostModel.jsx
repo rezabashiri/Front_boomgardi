@@ -4,7 +4,7 @@ let address = Symbol("address");
 let residencyTypeId = Symbol("residencyTypeId");
 let ownerUserId = Symbol("ownerUserId");
 let guid = Symbol("guid");
-let detail = Symbol("detail");
+let description = Symbol("description");
 
 export default class hostModel {
   set name(val) {
@@ -25,8 +25,8 @@ export default class hostModel {
   set guid(val) {
     this[guid] = val;
   }
-  set detail(val) {
-    this[detail] = val;
+  set description(val) {
+    this[description] = val;
   }
 
   getData = () => {
@@ -37,7 +37,7 @@ export default class hostModel {
       residencyTypeId: this[residencyTypeId],
       ownerUserId: this[ownerUserId],
       guid: this[guid],
-      detail: this[detail]
+      description: this[description]
     };
   };
 }

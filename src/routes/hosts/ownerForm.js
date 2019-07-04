@@ -88,7 +88,6 @@ class OwnerForm extends Component {
     if (this.props.ownerId) {
       let srv = new userService();
       let user = await srv.getUsers("?id=" + this.props.ownerId);
-      console.log(user[0].firsName);
       this.setState({
         firstName: user[0].firstName,
         mobile: user[0].userName,

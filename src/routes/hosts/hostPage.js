@@ -154,8 +154,14 @@ export default class HostPage extends Component {
                         <p className="mb-3">
                           {this.state.hostInfo.name}
                           <br />
-                          <br />
-                          <br />
+                        </p>
+                        <p
+                          className="mb-3"
+                          dangerouslySetInnerHTML={{
+                            __html: this.state.hostInfo.description
+                          }}
+                        />
+                        <p className="mb-3">
                           اقامتگاه با محیطی دلنشین همراه با گشت جاذبه های دیدنی
                           اطراف
                           <br />

@@ -238,6 +238,7 @@ class FormsUi extends Component {
                     <IntlMessages id="host.action.prev" />
                   </Button>
                   <Button
+                    hidden
                     variant="contained"
                     color="primary"
                     onClick={this.handleNext}

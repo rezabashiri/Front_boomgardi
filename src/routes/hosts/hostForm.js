@@ -22,6 +22,8 @@ import {
   ModalFooter
 } from "reactstrap";
 import Select from "react-select";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import {
   AvForm,
@@ -36,28 +38,53 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
+const quillModules = {
+  toolbar: [
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" }
+    ],
+    ["link"],
+    ["clean"]
+  ]
+};
+
+const quillFormats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link"
+];
+
 class HostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       hostName: this.props.hostInfo.name,
       hostTell: this.props.hostInfo.tell,
-      hostDetail: null,
       hostType: [],
-      hostTypeSelected: null
+      hostTypeSelected: null,
+      hostInformation: this.props.hostInfo.description
     };
     this.handleHostTellChange = this.handleHostTellChange.bind(this);
     this.addHost = this.addHost.bind(this);
     this.handleHostTypeChange = this.handleHostTypeChange.bind(this);
     this.handleHostNameChange = this.handleHostNameChange.bind(this);
-    this.handleDetailChange = this.handleDetailChange.bind(this);
+    this.handleChangeHostInformation = this.handleChangeHostInformation.bind(
+      this
+    );
   }
   async componentDidMount() {
     this.getHostType();
-    //var service = new hostService();
-    //let result = await service.getHosts("?guid=" + this.props.guid);
-    //console.log("here");
-    //console.log(result);
     this.setState({
       hostTypeSelected: {
         value: this.props.hostInfo.residencyTypeId,
@@ -65,6 +92,7 @@ class HostForm extends Component {
       }
     });
   }
+
   toggleAddressModal() {
     this.setState({
       addressModal: !this.state.addressModal
@@ -89,7 +117,7 @@ class HostForm extends Component {
     model["residencyTypeId"] = this.state.hostTypeSelected.value;
     model["ownerUserId"] = this.props.ownerUserId;
     model["guid"] = this.props.hostInfo.guid;
-    //model["detail"] = this.state.detail;
+    model["description"] = this.state.hostInformation;
     let result = await service.addHost(model);
     if (result.status === 201) {
       this.props.onHandleComplete && this.props.onHandleComplete();
@@ -108,10 +136,10 @@ class HostForm extends Component {
   handleHostTypeChange = selectedHostType => {
     this.setState({ hostTypeSelected: selectedHostType });
   };
-  handleDetailChange(e) {
-    this.setState({ detail: e.target.value });
-  }
 
+  handleChangeHostInformation(hostInformation) {
+    this.setState({ hostInformation });
+  }
   render() {
     return (
       <Fragment>
@@ -174,21 +202,18 @@ class HostForm extends Component {
                         </AvFeedback>
                       </AvGroup>
                     </Colxx>
-                    <Colxx sm={8}>
+                    <Colxx sm={12}>
                       <AvGroup>
                         <Label className="av-label" for="hostDetail">
                           <IntlMessages id="forms.host-detail" />
                         </Label>
-                        <AvInput
-                          type="text"
-                          name="hostDetail"
-                          value={this.state.detail}
-                          onChange={this.handleDetailChange}
-                          id="hostDetail"
+                        <ReactQuill
+                          theme="snow"
+                          value={this.state.hostInformation}
+                          onChange={this.handleChangeHostInformation}
+                          modules={quillModules}
+                          formats={quillFormats}
                         />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hostdetail-message" />
-                        </AvFeedback>
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
