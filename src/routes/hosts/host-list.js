@@ -55,7 +55,7 @@ class HostList extends Component {
     //this.getHostOstan = this.getHostOstan.bind(this);
 
     this.state = {
-      displayMode: "list",
+      displayMode: "thumblist",
       pageSizes: [10, 20, 30, 50, 100],
       selectedPageSize: 10,
       hostTypes: [],
