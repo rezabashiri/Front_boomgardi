@@ -28,6 +28,7 @@ export const serverConfig = {
   roostaUrl: "address/roosta?IdDehestan=",
   hostTypeUrl: "residency/residencytype",
   hostUrl: "residency/host",
+  unitUrl: "residency/residencyunit",
   picUrl: "common/Attachment"
 };
 

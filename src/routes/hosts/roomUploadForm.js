@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import { serverConfig } from "../../constants/defaultValues";
-import { Row, Card, CardBody, CardTitle } from "reactstrap";
+import { Row, Card, CardBody, CardTitle, Button } from "reactstrap";
 import FineUploaderTraditional from "fine-uploader-wrappers";
 import Gallery from "react-fine-uploader";
 //import Thumbnail from "react-fine-uploader/thumbnail";
@@ -13,8 +13,8 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
-class UploadForm extends Component {
-  hostUploader = new FineUploaderTraditional({
+class RoomUploadForm extends Component {
+  roomUploader = new FineUploaderTraditional({
     options: {
       chunking: {
         enabled: false
@@ -28,7 +28,7 @@ class UploadForm extends Component {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
           attachId: this.props.attachId,
-          attachType: { part: "host", type: "profile" }
+          attachType: { part: "residancyUnit", type: "profile" }
         }
       },
       validation: {
@@ -39,7 +39,7 @@ class UploadForm extends Component {
       }
     }
   });
-  licenseUploader = new FineUploaderTraditional({
+  galleryUploader = new FineUploaderTraditional({
     options: {
       chunking: {
         enabled: false
@@ -53,13 +53,35 @@ class UploadForm extends Component {
         endpoint: serverConfig.baseUrl + serverConfig.picUrl,
         params: {
           attachId: this.props.attachId,
-          attachType: { part: "host", type: "license" }
+          attachType: { part: "residancyUnit", type: "gallery" }
         }
       }
     }
   });
+  getRoomUploader() {
+    this.roomUploader.options.request.params.attachId = this.props.attachId;
+    this.roomUploader.options.deleteFile.params.attachId = this.props.attachId;
+    console.log(this.roomUploader);
+    return this.roomUploader;
+  }
+  getGalleryUploader() {
+    this.galleryUploader.options.request.params.attachId = this.props.attachId;
+    this.galleryUploader.options.deleteFile.params.attachId = this.props.attachId;
+    return this.galleryUploader;
+  }
+  uploadCompleted() {
+    //this.props.onGetRooms && (await this.props.onGetRooms());
+    this.props.onHandleComplete && this.props.onHandleComplete();
+    this.props.onToggleModal && this.props.onToggleModal();
+  }
 
   render() {
+    /*
+    this.roomUploader.options.request.params = {
+      attachId: this.props.attachId,
+      attachType: { part: "residancyUnit", type: "profile" }
+    };*/
+
     return (
       <Fragment>
         <Row className="mb-4">
@@ -67,11 +89,11 @@ class UploadForm extends Component {
             <Card>
               <CardBody>
                 <CardTitle>
-                  <IntlMessages id="form-components.upload-hostpic" />
+                  <IntlMessages id="form-components.upload-roompic" />
                 </CardTitle>
                 <Gallery
                   animationsDisabled={true}
-                  uploader={this.hostUploader}
+                  uploader={this.getRoomUploader()}
                   deleteButton-children={<span>حذف</span>}
                   fileInput-children={<span />}
                 >
@@ -86,11 +108,11 @@ class UploadForm extends Component {
             <Card>
               <CardBody>
                 <CardTitle>
-                  <IntlMessages id="form-components.upload-licensepic" />
+                  <IntlMessages id="form-components.upload-roomgallery" />
                 </CardTitle>
                 <Gallery
                   animationsDisabled={true}
-                  uploader={this.licenseUploader}
+                  uploader={this.getGalleryUploader()}
                   deleteButton-children={<span>حذف</span>}
                   fileInput-children={<span />}
                 >
@@ -101,9 +123,12 @@ class UploadForm extends Component {
               </CardBody>
             </Card>
           </Colxx>
+          <Button onClick={() => this.uploadCompleted()} color="primary">
+            <IntlMessages id="layouts.submit" />
+          </Button>
         </Row>
       </Fragment>
     );
   }
 }
-export default UploadForm;
+export default RoomUploadForm;

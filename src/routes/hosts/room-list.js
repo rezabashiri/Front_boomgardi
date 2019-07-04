@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
+import roomService from "../../services/roomService.jsx";
+import roomModel from "../../models/roomModel.jsx";
 import addressService from "../../services/addressService.jsx";
-import QueryString from "../../services/queryString.jsx";
 //import hostModel from "../../models/hostModel.jsx";
-import HostActions from "./hostActions";
+import RoomActions from "./roomActions";
 import { serverConfig } from "../../constants/defaultValues.js";
 import {
   Row,
@@ -31,8 +32,7 @@ import {
   Badge
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
-//import Select from "react-select";
-//import CustomSelectInput from "Components/CustomSelectInput";
+import Select from "react-select";
 import classnames from "classnames";
 
 import IntlMessages from "Util/IntlMessages";
@@ -46,12 +46,12 @@ function collect(props) {
   return { data: props.data };
 }
 
-class HostList extends Component {
+class RoomList extends Component {
   constructor(props) {
     super(props);
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
     this.getIndex = this.getIndex.bind(this);
-    this.getHost = this.getHost.bind(this);
+    this.getRoom = this.getRoom.bind(this);
     //this.getHostOstan = this.getHostOstan.bind(this);
 
     this.state = {
@@ -71,10 +71,12 @@ class HostList extends Component {
       displayOptionsIsOpen: false,
       isLoading: false,
       hosts: [],
+      rooms: [],
       filterParams: {
         residencyTypeId: "",
-        ostanId: "",
-        name: ""
+        //ostanId: "",
+        name: "",
+        residenceId: this.props.residenceId ? this.props.residenceId : ""
       }
     };
   }
@@ -95,37 +97,39 @@ class HostList extends Component {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
   async filterByHostType(lable) {
+    /*
     let newfilter = this.state.filterParams;
     newfilter.residencyTypeId = lable;
     await this.setState({
       filterParams: newfilter
     });
-    //let queryService = new QueryString();
-    //let queryString = queryService.buildQuery(this.state.filterParams);
-    /*
     var queryString = Object.keys(this.state.filterParams)
       .map(key => key + "=" + this.state.filterParams[key])
       .join("&");
-*/
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
       },
-      () => this.getHost(this.state.filterParams)
-    );
+      () => this.getHost("?" + queryString)
+    );*/
   }
   async filterByOstan(lable) {
+    /*
     let newfilter = this.state.filterParams;
     newfilter.ostanId = lable;
     await this.setState({
       filterParams: newfilter
     });
+    var queryString = Object.keys(this.state.filterParams)
+      .map(key => key + "=" + this.state.filterParams[key])
+      .join("&");
+    console.log(queryString);
     this.setState(
       {
         ostanFilterOptions: this.state.ostanList.find(x => x.lable === lable)
       },
-      () => this.getHost(this.state.filterParams)
-    );
+      () => this.getHost("?" + queryString)
+    );*/
   }
   changePageSize(size) {
     this.setState(
@@ -133,7 +137,7 @@ class HostList extends Component {
         selectedPageSize: size,
         currentPage: 1
       },
-      () => this.getHost()
+      () => this.getRoom()
     );
   }
   changeDisplayMode(mode) {
@@ -147,7 +151,7 @@ class HostList extends Component {
       {
         currentPage: page
       },
-      () => this.getHost()
+      () => this.getRoom()
     );
   }
 
@@ -155,13 +159,10 @@ class HostList extends Component {
     if (e.key === "Enter") {
       let newfilter = this.state.filterParams;
       newfilter.name = e.target.value.toLowerCase();
-      await this.setState(
-        {
-          filterParams: newfilter
-        },
-        () => this.getHost(this.state.filterParams)
-      );
-
+      await this.setState({
+        filterParams: newfilter
+      });
+      () => this.getRoom(this.state.filterParams);
       /*
       this.setState(
         {
@@ -178,12 +179,10 @@ class HostList extends Component {
     if (e.target.value.toLowerCase() === "") {
       let newfilter = this.state.filterParams;
       newfilter.name = "";
-      await this.setState(
-        {
-          filterParams: newfilter
-        },
-        () => this.getHost(this.state.filterParams)
-      );
+      await this.setState({
+        filterParams: newfilter
+      });
+      () => this.getRoom(this.state.filterParams);
     }
   }
 
@@ -252,23 +251,24 @@ class HostList extends Component {
     return false;
   }
   async componentDidMount() {
-    this.getHost();
+    this.getRoom();
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
   }
-  async getHost(filterObject) {
-    var service = new hostService();
-    let result = await service.getHosts(filterObject);
-    this.setState({ hosts: result });
+  // getRoom = async filter => {
+  async getRoom(filterObject) {
+    var service = new roomService();
+    let result = await service.getRooms(filterObject);
+    console.log("this is roomlist result:" + result);
+    this.setState({ rooms: result });
     this.setState({
       totalPage: 1,
       selectedItems: [],
-      totalItemCount: this.state.hosts.length,
+      totalItemCount: this.state.rooms.length,
       isLoading: true
     });
   }
-
   async getHostType() {
     var typeService = new hostService();
     let hostTypes = await typeService.getHostType();
@@ -301,9 +301,9 @@ class HostList extends Component {
         <div className="disable-text-selection">
           <Row>
             <Colxx xxs="12">
-              <div className="mb-2">
+              <div hidden className="mb-2">
                 <h1>
-                  <IntlMessages id="menu.host-list" />
+                  <IntlMessages id="menu.roomslist" />
                 </h1>
                 <BreadcrumbItems match={this.props.match} />
               </div>
@@ -506,42 +506,39 @@ class HostList extends Component {
             </Colxx>
           </Row>
           <Row>
-            {this.state.hosts &&
-              this.state.hosts.map((host, index) => {
+            {this.state.rooms &&
+              this.state.rooms.map((room, index) => {
                 if (this.state.displayMode === "imagelist") {
                   return (
-                    <Colxx sm="6" lg="4" xl="3" className="mb-3" key={host.id}>
+                    <Colxx sm="6" lg="4" xl="3" className="mb-3" key={room.id}>
                       <Card
-                        /*onClick={event =>
-                          this.handleCheckChange(event, host.id)
-                        }*/
-                        onClick={() => {
-                          this.props.history.push({
-                            pathname: "/app/hosts/hostpage",
-                            state: {
-                              hostInfo: host
-                            }
-                          });
-                        }}
+                        onClick={event =>
+                          this.handleCheckChange(event, room.id)
+                        }
                         className={classnames({
-                          active: this.state.selectedItems.includes(host.id)
+                          active: this.state.selectedItems.includes(room.id)
                         })}
                       >
                         <div className="position-relative">
-                          <CardImg
-                            top
-                            alt={host.name}
-                            src={serverConfig.fileBaseUrl + host.profileImg}
-                            width="100"
-                            height="250"
-                          />
-                          <Badge
-                            color="primary"
-                            pill
-                            className="position-absolute badge-top-right"
+                          <NavLink
+                            to={`?p=${room.id}`}
+                            className="w-40 w-sm-100"
                           >
-                            {host.residenceType}
-                          </Badge>
+                            <CardImg
+                              top
+                              alt={room.name}
+                              src={serverConfig.fileBaseUrl + room.profileImg}
+                              width="100"
+                              height="250"
+                            />
+                            <Badge
+                              color="primary"
+                              pill
+                              className="position-absolute badge-top-right"
+                            >
+                              {room.type}
+                            </Badge>
+                          </NavLink>
                         </div>
                         <CardBody>
                           <Row>
@@ -549,21 +546,21 @@ class HostList extends Component {
                               <CustomInput
                                 className="itemCheck mb-0"
                                 type="checkbox"
-                                id={`check_${host.id}`}
+                                id={`check_${room.id}`}
                                 checked={this.state.selectedItems.includes(
-                                  host.id
+                                  room.id
                                 )}
                                 onChange={() => {}}
                                 label=""
                               />
                             </Colxx>
                             <Colxx xxs="10" className="mb-3">
-                              <CardSubtitle>{host.name}</CardSubtitle>
+                              <CardSubtitle>{room.name}</CardSubtitle>
                               <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {host.address.ostanName}
+                                {room.type}
                               </CardText>
                               <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {host.address.shahrestanName}
+                                {room.services}
                               </CardText>
                             </Colxx>
                           </Row>
@@ -573,50 +570,52 @@ class HostList extends Component {
                   );
                 } else if (this.state.displayMode === "thumblist") {
                   return (
-                    <Colxx xxs="12" key={host.id} className="mb-3">
+                    <Colxx xxs="12" key={room.id} className="mb-3">
                       <Card
                         onClick={event =>
-                          this.handleCheckChange(event, host.id)
+                          this.handleCheckChange(event, room.id)
                         }
                         className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(host.id)
+                          active: this.state.selectedItems.includes(room.id)
                         })}
                       >
-                        <img
-                          alt={host.name}
-                          src={serverConfig.fileBaseUrl + host.profileImg}
-                          className="list-thumbnail responsive border-0"
-                          width="auto"
-                        />
+                        <NavLink to={`?p=${room.id}`} className="d-flex">
+                          <img
+                            alt={room.name}
+                            src={serverConfig.fileBaseUrl + room.profileImg}
+                            className="list-thumbnail responsive border-0"
+                            width="auto"
+                          />
+                        </NavLink>
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <p
-                              className="list-item-heading mb-1 truncate"
-                              onClick={() => {
-                                this.props.history.push({
-                                  pathname: "/app/hosts/hostpage",
-                                  state: {
-                                    hostInfo: host
-                                  }
-                                });
-                              }}
+                            <NavLink
+                              to={`?p=${room.id}`}
+                              className="w-40 w-sm-100"
                             >
-                              {host.name}
+                              <p className="list-item-heading mb-1 truncate">
+                                {room.name}
+                              </p>
+                            </NavLink>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-detail" />
+                              {": "}
+                              {room.description}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-type" />
+                              {": "}
+                              {room.type}
                             </p>
 
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {host.residenceType}
+                              <IntlMessages id="forms.room-capacity" />
+                              {": "}
+                              {room.capacity}
                             </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              استان:{host.address.ostanName}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              شهر:{host.address.shahrestanName}
-                            </p>
-                            <HostActions
-                              {...this.props}
-                              hostInfo={host}
-                              getHost={this.getHost}
+                            <RoomActions
+                              roomInfo={room}
+                              onGetRooms={this.getRoom}
                             />
                           </div>
                           <div
@@ -626,9 +625,9 @@ class HostList extends Component {
                             <CustomInput
                               className="itemCheck mb-0"
                               type="checkbox"
-                              id={`check_${host.id}`}
+                              id={`check_${room.id}`}
                               checked={this.state.selectedItems.includes(
-                                host.id
+                                room.id
                               )}
                               onChange={() => {}}
                               label=""
@@ -640,44 +639,45 @@ class HostList extends Component {
                   );
                 } else {
                   return (
-                    <Colxx xxs="12" key={host.id} className="mb-3">
+                    <Colxx xxs="12" key={room.id} className="mb-3">
                       <Card
                         onClick={event =>
-                          this.handleCheckChange(event, host.id)
+                          this.handleCheckChange(event, room.id)
                         }
                         className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(host.id)
+                          active: this.state.selectedItems.includes(room.id)
                         })}
                       >
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <p
-                              className="list-item-heading mb-1 truncate"
-                              onClick={() => {
-                                this.props.history.push({
-                                  pathname: "/app/hosts/hostpage",
-                                  state: {
-                                    hostInfo: host
-                                  }
-                                });
-                              }}
+                            <NavLink
+                              to={`?name=${room.name}`}
+                              className="w-40 w-sm-100"
                             >
-                              {host.name}
+                              <p className="list-item-heading mb-1 truncate">
+                                {room.name}
+                              </p>
+                            </NavLink>
+
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-detail" />
+                              {": "}
+                              {room.description}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-type" />
+                              {": "}
+                              {room.type}
                             </p>
 
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {host.residenceType}
+                              <IntlMessages id="forms.room-capacity" />
+                              {": "}
+                              {room.capacity}
                             </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              استان:{host.address.ostanName}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              شهر:{host.address.shahrestanName}
-                            </p>
-                            <HostActions
-                              {...this.props}
-                              hostInfo={host}
-                              getHost={this.getHost}
+                            <RoomActions
+                              roomInfo={room}
+                              onGetRooms={this.getRoom}
                             />
                           </div>
                         </div>
@@ -697,4 +697,4 @@ class HostList extends Component {
     );
   }
 }
-export default injectIntl(mouseTrap(HostList));
+export default injectIntl(mouseTrap(RoomList));

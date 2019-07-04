@@ -11,7 +11,7 @@ import OwnerForm from "./ownerForm";
 import HostForm from "./hostForm";
 import UploadForm from "./uploadForm";
 import AddressForm from "./addressForm";
-import RoomForm from "./add-room";
+import AddRoomWizard from "./add-room";
 
 import {
   Row,
@@ -49,7 +49,6 @@ class HostActions extends Component {
     super(props);
 
     this.handleOwnerUserId = this.handleOwnerUserId.bind(this);
-    //this.handleAttachId = this.handleAttachId.bind(this);
     this.handleGuId = this.handleGuId.bind(this);
     this.toggleOwnerModal = this.toggleOwnerModal.bind(this);
     this.toggleHostModal = this.toggleHostModal.bind(this);
@@ -103,16 +102,13 @@ class HostActions extends Component {
 
   handleOwnerUserId = userId => {
     this.setState({ ownerUserId: userId });
-    console.log(this.state.ownerUserId);
   };
 
   handleGuId = guid => {
     this.setState({ guid: guid });
-    console.log(this.state.guid);
   };
 
   render() {
-    console.log(this.props.hostInfo);
     return (
       <Fragment>
         <UncontrolledDropdown>
@@ -149,7 +145,11 @@ class HostActions extends Component {
             <IntlMessages id="host.action.edit-owner" />
           </ModalHeader>
           <ModalBody>
-            <OwnerForm ownerId={this.props.hostInfo.ownerUserId} />
+            <OwnerForm
+              ownerId={this.props.hostInfo.ownerUserId}
+              getHost={this.props.getHost}
+              onToggleModal={this.toggleOwnerModal}
+            />
           </ModalBody>
         </Modal>
         <Modal
@@ -164,6 +164,8 @@ class HostActions extends Component {
             <HostForm
               hostInfo={this.props.hostInfo}
               ownerUserId={this.props.hostInfo.ownerUserId}
+              getHost={this.props.getHost}
+              onToggleModal={this.toggleHostModal}
             />
           </ModalBody>
         </Modal>
@@ -179,6 +181,8 @@ class HostActions extends Component {
             <AddressForm
               guid={this.props.hostInfo.guid}
               addressInfo={this.props.hostInfo.address}
+              getHost={this.props.getHost}
+              onToggleModal={this.toggleAddressModal}
             />
           </ModalBody>
         </Modal>
@@ -191,7 +195,10 @@ class HostActions extends Component {
             <IntlMessages id="host.action.edit-hostpic" />
           </ModalHeader>
           <ModalBody>
-            <UploadForm />
+            <UploadForm
+              attachId={this.props.hostInfo.guid}
+              getHost={this.props.getHost}
+            />
           </ModalBody>
         </Modal>
         <Modal
@@ -203,7 +210,10 @@ class HostActions extends Component {
             <IntlMessages id="host.action.add-room" />
           </ModalHeader>
           <ModalBody>
-            <RoomForm />
+            <AddRoomWizard
+              roomInfo={{ residenceId: this.props.hostInfo.id }}
+              onToggleModal={this.toggleRoomModal}
+            />
           </ModalBody>
         </Modal>
       </Fragment>

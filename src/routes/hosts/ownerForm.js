@@ -62,7 +62,13 @@ class OwnerForm extends Component {
     model["password"] = this.state.codeMeli;
     model["nationalCode"] = this.state.codeMeli;
     let result = await usrService.addUser(model);
-    this.props.onHandleOwnerUserId(result.id);
+    if (result.status === 201) {
+      this.props.onHandleComplete && this.props.onHandleComplete();
+      this.props.onHandleOwnerUserId &&
+        this.props.onHandleOwnerUserId(result.data.id);
+      this.props.onToggleModal && this.props.onToggleModal();
+      this.props.getHost && this.props.getHost();
+    }
   }
 
   handleChangeFirstName(e) {
@@ -79,7 +85,7 @@ class OwnerForm extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.ownerId !== undefined) {
+    if (this.props.ownerId) {
       let srv = new userService();
       let user = await srv.getUsers("?id=" + this.props.ownerId);
       console.log(user[0].firsName);

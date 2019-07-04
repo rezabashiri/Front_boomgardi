@@ -54,6 +54,10 @@ class HostForm extends Component {
   }
   async componentDidMount() {
     this.getHostType();
+    //var service = new hostService();
+    //let result = await service.getHosts("?guid=" + this.props.guid);
+    //console.log("here");
+    //console.log(result);
     this.setState({
       hostTypeSelected: {
         value: this.props.hostInfo.residencyTypeId,
@@ -72,7 +76,6 @@ class HostForm extends Component {
     let newHostType = hostTypes.map(c => {
       return { label: c.name, value: c.id };
     });
-    console.log(newHostType);
     this.setState({
       hostType: newHostType
     });
@@ -85,11 +88,15 @@ class HostForm extends Component {
     model["tell"] = this.state.hostTell;
     model["residencyTypeId"] = this.state.hostTypeSelected.value;
     model["ownerUserId"] = this.props.ownerUserId;
+    model["guid"] = this.props.hostInfo.guid;
     //model["detail"] = this.state.detail;
     let result = await service.addHost(model);
-    console.log("this is addhost result");
-    console.log(result);
-    this.props.onHandleGuId(result.guid);
+    if (result.status === 201) {
+      this.props.onHandleComplete && this.props.onHandleComplete();
+      this.props.onHandleGuId && this.props.onHandleGuId(result.data.guid);
+      this.props.getHost && this.props.getHost();
+      this.props.onToggleModal && this.props.onToggleModal();
+    }
   }
 
   handleHostTellChange(e) {
@@ -148,7 +155,7 @@ class HostForm extends Component {
                         />
                       </AvGroup>
                       <AvFeedback>
-                        <IntlMessages id="message.hosttype-message" />
+                        <IntlMessages id="forms.host-type-message" />
                       </AvFeedback>
                     </Colxx>
                     <Colxx sm={4}>

@@ -171,3 +171,13 @@ td.MuiTableCell-root {
 .MuiTableHead-root .MuiTableCell-root {
   text-align: right !important;
 }
+
+.image-gallery-slide img {
+  width: 100%;
+  height: 400px;
+}
+.image-gallery-thumbnail img {
+  vertical-align: middle;
+  width: 100%;
+  height: 70px;
+}

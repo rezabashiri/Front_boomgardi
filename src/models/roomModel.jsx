@@ -1,29 +1,38 @@
-let roomName = Symbol("roomName");
-let roomTypeId = Symbol("roomTypeId");
-let hostId = Symbol("hostId");
+let name = Symbol("name");
+let residencyTypeId = Symbol("residencyTypeId");
+let residenceId = Symbol("residenceId");
+let description = Symbol("description");
+let capacity = Symbol("capacity");
+let guid = Symbol("guid");
 
-let roomDetail = Symbol("roomDetail");
-
-export default class hostModel {
-  set roomName(val) {
-    this[roomName] = val;
+export default class roomModel {
+  set name(val) {
+    this[name] = val;
   }
-  set roomTypeId(val) {
-    this[roomTypeId] = val;
+  set residencyTypeId(val) {
+    this[residencyTypeId] = val;
   }
-  set hostId(val) {
-    this[hostId] = val;
+  set residenceId(val) {
+    this[residenceId] = val;
   }
-  set roomDetail(val) {
-    this[roomDetail] = val;
+  set description(val) {
+    this[description] = val;
+  }
+  set capacity(val) {
+    this[capacity] = val;
+  }
+  set guid(val) {
+    this[guid] = val;
   }
 
   getData = () => {
     return {
-      roomName: this[roomName],
-      roomTypeId: this[roomTypeId],
-      hostId: this[hostId],
-      roomDetail: this[roomDetail]
+      name: this[name],
+      residencyTypeId: this[residencyTypeId],
+      residenceId: this[residenceId],
+      description: this[description],
+      capacity: this[capacity],
+      guid: this[guid]
     };
   };
 }

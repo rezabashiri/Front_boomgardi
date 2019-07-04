@@ -1,10 +1,26 @@
 import React, { Component, Fragment } from "react";
-import { Colxx } from "Components/CustomBootstrap";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepButton from "@material-ui/core/StepButton";
+//import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { injectIntl } from "react-intl";
+import { Colxx, Separator } from "Components/CustomBootstrap";
+//import BreadcrumbContainer from "Components/BreadcrumbContainer";
 import IntlMessages from "Util/IntlMessages";
-//import roomService from "../../services/roomService.jsx";
-//import roomModel from "../../models/roomModel.jsx";
+
+import "rc-switch/assets/index.css";
+import "rc-slider/assets/index.css";
+import "react-rater/lib/react-rater.css";
+import "react-fine-uploader/gallery/gallery.css";
+
+import RoomForm from "./roomForm";
+import RoomUploadForm from "./roomUploadForm";
+
 import {
   Row,
+  Button /*,
   Card,
   CardBody,
   Input,
@@ -12,215 +28,215 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
-  CardSubtitle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
+  CardSubtitle*/
 } from "reactstrap";
-import { serverConfig } from "../../constants/defaultValues";
-import FineUploaderTraditional from "fine-uploader-wrappers";
-import Gallery from "react-fine-uploader";
-//import Select from "react-select";
 
-import {
-  AvForm,
-  AvGroup,
-  AvInput,
-  AvFeedback
-} from "availity-reactstrap-validation";
-
+import "react-tagsinput/react-tagsinput.css";
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
-class RoomForm extends Component {
+const steps = ["ثبت اطلاعات پایه", "آپلود عکس"];
+
+class AddRoomWizard extends Component {
   constructor(props) {
     super(props);
+    this.handleNext = this.handleNext.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.handleStep = this.handleStep.bind(this);
+    //this.handleAttachId = this.handleAttachId.bind(this);
+    this.handleGuId = this.handleGuId.bind(this);
+
     this.state = {
-      roomName: null, //this.props.roomInfo.name,
-      hostId: null, //this.props.roomInfo.hostId,
-      roomDetail: null, //this.props.roomInfo.roomDetail,
-      roomType: null, //this.props.roomInfo.roomType,
-      roomCapacity: null //this.props.roomInfo.roomCapacity
+      selectedOption: "",
+      selectedOptionLabelOver: "",
+      selectedOptionLabelTop: "",
+      startDate: null,
+      startDateLabelOver: null,
+      startDateLabelTop: null,
+      startDateTime: null,
+      startDateRange: null,
+      endDateRange: null,
+      tags: [],
+      tagsLabelOver: [],
+      tagsLabelTop: [],
+      activeStep: 0,
+      completed: {},
+      attachId: null,
+      guid: null
     };
-    this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
-    this.addRoom = this.addRoom.bind(this);
-    this.handleRoomDetailChange = this.handleRoomDetailChange.bind(this);
-    this.handleRoomTypeChange = this.handleRoomTypeChange.bind(this);
-    this.handleRoomCapacityChange = this.handleRoomCapacityChange.bind(this);
-  }
-  async componentDidMount() {
-    this.setState({ hostId: 1051 /*this.props.roomInfo.hostId*/ });
   }
 
-  async addRoom() {
-    console.log("add room done");
-    /*
-    var service = new roomService();
-    var model = new roomModel();
-    model["roomName"] = this.state.roomName;
-    model["hostId"] = this.state.hostId;
-    model["roomDetail"] = this.state.roomDetail;
-    model["roomCapacity"] = this.props.roomCapacity;
-    model["roomType"] = this.props.roomType;
-    let result = await service.addRoom(model);
-    console.log("this is addroom result");
-    console.log(result);
-    */
-  }
-  roomUploader = new FineUploaderTraditional({
-    options: {
-      chunking: {
-        enabled: false
-      },
-      deleteFile: {
-        enabled: true,
-        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
-        params: { attachId: "8d6f56ac80ebc8e" /*this.props.attachId*/ }
-      },
-      request: {
-        endpoint: serverConfig.baseUrl + serverConfig.picUrl,
-        params: {
-          attachId: this.props.attachId,
-          attachType: { part: "room", type: "gallery" }
-        }
-      },
-      validation: {
-        allowedExtensions: ["jpg", "jpeg", "png", "gif", "bmp"],
-        allowEmpty: false,
-        sizeLimit: 20971520,
-        stopOnFirstInvalidFile: true
-      }
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return (
+          <RoomForm
+            onHandleGuId={this.handleGuId}
+            roomInfo={this.props.roomInfo}
+            onHandleComplete={this.handleComplete}
+            onGetRooms={this.props.onGetRooms}
+          />
+        );
+      case 1:
+        return (
+          <RoomUploadForm
+            attachId={this.state.guid}
+            onHandleComplete={this.handleComplete}
+          />
+        );
+      default:
+        return "مرحله تعریف نشده";
     }
-  });
-  handleRoomNameChange(e) {
-    this.setState({ roomName: e.target.value });
   }
-  handleRoomTypeChange(e) {
-    this.setState({ RoomType: e.target.value });
+
+  handleGuId = guid => {
+    this.setState({ guid: guid });
+  };
+
+  totalSteps() {
+    return steps.length;
   }
-  handleRoomDetailChange(e) {
-    this.setState({ roomDetail: e.target.value });
+
+  completedSteps() {
+    return Object.keys(this.state.completed).length;
   }
-  handleDetailChange(e) {
-    this.setState({ detail: e.target.value });
+
+  isLastStep() {
+    return this.state.activeStep === this.totalSteps() - 1;
   }
-  handleRoomCapacityChange(e) {
-    this.setState({ roomCapacity: e.target.value });
+
+  allStepsCompleted() {
+    return this.completedSteps() === this.totalSteps();
+  }
+
+  handleNext() {
+    const newActiveStep =
+      this.isLastStep() && !this.allStepsCompleted()
+        ? // It's the last step, but not all steps have been completed,
+          // find the first step that has been completed
+          steps.findIndex((step, i) => !(i in this.state.completed))
+        : this.state.activeStep + 1;
+    this.setState({ activeStep: newActiveStep });
+  }
+
+  handleBack() {
+    this.setState({ activeStep: this.state.activeStep - 1 });
+  }
+
+  handleStep = step => () => {
+    this.setState({ activeStep: step });
+  };
+
+  handleComplete() {
+    const newCompleted = this.state.completed;
+    newCompleted[this.state.activeStep] = true;
+    this.setState({ completed: newCompleted });
+    this.handleNext();
+  }
+
+  handleReset() {
+    this.setState({ activeStep: 0 });
+    this.setState({ completed: {} });
   }
 
   render() {
+    const classes = makeStyles(theme => ({
+      root: {
+        width: "90%"
+      },
+      button: {
+        marginRight: theme.spacing(1)
+      },
+      completed: {
+        display: "inline-block"
+      },
+      stepper: {
+        iconColor: "green"
+      },
+      instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1)
+      }
+    }));
     return (
       <Fragment>
-        <Row className="mb-4">
-          <Colxx xxs="12">
-            <Card>
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="menu.add-roomdata" />
-                </CardTitle>
-                <AvForm>
-                  <AvGroup row>
-                    <Colxx sm={4}>
-                      <AvGroup>
-                        <Label className="av-label" for="roomName">
-                          <IntlMessages id="forms.room-name" />
-                        </Label>
-                        <AvInput
-                          name="roomName"
-                          id="roomName"
-                          value={this.state.roomName}
-                          onChange={this.handleRoomNameChange}
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.roomname-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-                    <Colxx sm={4}>
-                      <AvGroup>
-                        <Label className="av-label">
-                          <IntlMessages id="forms.room-type" />
-                        </Label>
-                        <AvInput
-                          name="roomType"
-                          id="roomType"
-                          value={this.state.roomType}
-                          onChange={this.handleRoomTypeChange}
-                          required
-                        />
-                      </AvGroup>
-                      <AvFeedback>
-                        <IntlMessages id="forms.roomtype-message" />
-                      </AvFeedback>
-                    </Colxx>
-                    <Colxx sm={4}>
-                      <AvGroup>
-                        <Label className="av-label" for="roomDetail">
-                          <IntlMessages id="forms.room-detail" />
-                        </Label>
-                        <AvInput
-                          name="roomDetail"
-                          id="roomDetail"
-                          value={this.state.roomDetail}
-                          onChange={this.handleRoomDetailChange}
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.roomdetail-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-                    <Colxx sm={4}>
-                      <AvGroup>
-                        <Label className="av-label" for="roomCapacity">
-                          <IntlMessages id="forms.room-capacity" />
-                        </Label>
-                        <AvInput
-                          type="number"
-                          name="RoomCapacity"
-                          value={this.state.roomCapacity}
-                          onChange={this.handleRoomCapacityChange}
-                          id="roomCapacity"
-                          required
-                        />
-                        <AvFeedback>
-                          <IntlMessages id="forms.roomcapacity-message" />
-                        </AvFeedback>
-                      </AvGroup>
-                    </Colxx>
-                  </AvGroup>
-                </AvForm>
-                <Label className="av-label" for="roomPic">
-                  <IntlMessages id="form-components.upload-roompic" />
-                </Label>
-                <Gallery
-                  animationsDisabled={true}
-                  uploader={this.roomUploader}
-                  deleteButton-children={<span>حذف</span>}
-                  fileInput-children={<span />}
-                  id="roomPic"
+        <div className={classes.root}>
+          <Stepper className={classes} activeStep={this.state.activeStep}>
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepButton
+                  onClick={this.handleStep(index)}
+                  completed={this.state.completed[index]}
                 >
-                  <span className="react-fine-uploader-gallery-dropzone-content">
-                    <IntlMessages id="form-components.drop-files-here" />
-                  </span>
-                </Gallery>
-                <Button onClick={this.addRoom} color="primary">
-                  <IntlMessages id="layouts.submit" />
+                  {label}
+                </StepButton>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            {this.allStepsCompleted() ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  <IntlMessages id="room.action.all-completed" />
+                </Typography>
+                <Button onClick={this.handleReset}>
+                  <IntlMessages id="room.action.reset" />
                 </Button>
-              </CardBody>
-            </Card>
-          </Colxx>
-        </Row>
+              </div>
+            ) : (
+              <div>
+                {this.getStepContent(this.state.activeStep)}
+                <div>
+                  <Button
+                    hidden
+                    disabled={this.state.activeStep === 0}
+                    onClick={this.handleBack}
+                    className={classes.button}
+                  >
+                    <IntlMessages id="room.action.prev" />
+                  </Button>
+                  <Button
+                    hidden
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleNext}
+                    className={classes.button}
+                  >
+                    <IntlMessages id="room.action.next" />
+                  </Button>
+                  {this.state.activeStep !== steps.length &&
+                    (this.state.completed[this.state.activeStep] ? (
+                      <Typography
+                        variant="caption"
+                        className={classes.completed}
+                      >
+                        <IntlMessages id="room.action.completed" />
+                      </Typography>
+                    ) : (
+                      <Button
+                        hidden
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleComplete}
+                      >
+                        {this.completedSteps() === this.totalSteps() - 1
+                          ? "اتمام"
+                          : "تکمیل مرحله"}
+                      </Button>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </Fragment>
     );
   }
 }
-
-export default RoomForm;
+export default injectIntl(AddRoomWizard);

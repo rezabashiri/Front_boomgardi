@@ -154,9 +154,12 @@ class AddressForm extends Component {
     };
     model["guid"] = this.props.guid;
     let result = await service.addAddress(model);
-    console.log("this is save address result");
-    console.log(result);
-    //this.props.onHandleAttachId(result.attachId);
+    if (result.status === 201) {
+      this.props.onHandleComplete && this.props.onHandleComplete();
+      this.props.getHost && this.props.getHost();
+      this.props.onToggleModal && this.props.onToggleModal();
+    }
+    //this.props.onHandleAttachId(result.data.attachId);
   }
   async getOstanList() {
     let addrService = new addressService();
@@ -164,7 +167,6 @@ class AddressForm extends Component {
     let newOstan = ostanList.map(c => {
       return { label: c.name, value: c.id, lat: c.lat, lng: c.lng };
     });
-    console.log(newOstan);
     this.setState({
       ostan: newOstan
     });
@@ -175,7 +177,6 @@ class AddressForm extends Component {
     let newShahrestan = shahrestanList.map(c => {
       return { label: c.name, value: c.id };
     });
-    console.log(newShahrestan);
     this.setState({
       shahr: newShahrestan
     });
@@ -186,7 +187,6 @@ class AddressForm extends Component {
     let newBakhsh = bakhshList.map(c => {
       return { label: c.name, value: c.id };
     });
-    console.log(newBakhsh);
     this.setState({
       bakhsh: newBakhsh
     });
@@ -197,7 +197,6 @@ class AddressForm extends Component {
     let newDehestan = dehestanList.map(c => {
       return { label: c.name, value: c.id };
     });
-    console.log(newDehestan);
     this.setState({
       dehestan: newDehestan
     });
@@ -208,14 +207,12 @@ class AddressForm extends Component {
     let newRoosta = roostaList.map(c => {
       return { label: c.name, value: c.id };
     });
-    console.log(newRoosta);
     this.setState({
       roosta: newRoosta
     });
   }
 
   handleOstanChange = selectedOstan => {
-    console.log(selectedOstan);
     this.setState({ selectedOstan });
     this.setState({
       selectedBakhsh: null,
@@ -224,7 +221,6 @@ class AddressForm extends Component {
       selectedRoosta: null,
       centerPosition: [selectedOstan.lng, selectedOstan.lat]
     });
-    console.log(`ostan selected:`, selectedOstan.value);
     this.getShahrestanList(selectedOstan.value);
   };
   handleShahrChange = selectedShahr => {
@@ -234,7 +230,6 @@ class AddressForm extends Component {
       selectedDehestan: null,
       selectedRoosta: null
     });
-    console.log(`shahr selected:`, selectedShahr.value);
     this.getBakhshList(selectedShahr.value);
   };
   handleBakhshChange = selectedBakhsh => {
@@ -243,8 +238,6 @@ class AddressForm extends Component {
       selectedDehestan: null,
       selectedRoosta: null
     });
-    console.log(`bakhsh selected:`, selectedBakhsh.value);
-    console.log(selectedBakhsh);
     this.getDehestanList(selectedBakhsh.value);
   };
   handleDehestanChange = selectedDehestan => {
@@ -252,16 +245,13 @@ class AddressForm extends Component {
     this.setState({
       selectedRoosta: null
     });
-    console.log(`dehestan selected:`, selectedDehestan.value);
+
     this.getRoostaList(selectedDehestan.value);
   };
   handleRoostaChange = selectedRoosta => {
     this.setState({ selectedRoosta });
-    console.log(`roosta selected:`, selectedRoosta.value);
   };
   handleEndDrag(e) {
-    console.log(e.lngLat.lng);
-    console.log(e.lngLat.lat);
     this.setState({
       centerPosition: [e.lngLat.lng, e.lngLat.lat],
       postion: [e.lngLat.lng, e.lngLat.lat]
