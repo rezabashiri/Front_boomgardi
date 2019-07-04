@@ -5,12 +5,11 @@ import { userContext } from "../helpers/contextHelper";
 import { loginContext } from "../helpers/contextHelper";
 export default class userService {
   async getToken(userModel) {
-    try {
+ 
       let data = qs.stringify(userModel.getData());
-
       let response = await loginContext().post("/", data);
       setJwt(response.data.access_token);
-    } catch (e) {}
+   
   }
   async getUsers(filterParam) {
     try {

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
-import { Row, Card, CardTitle, Form, Label, Input, Button } from "reactstrap";
+import { Row, Card, CardTitle, Form, Label, Input } from "reactstrap";
+import Button from 'reactstrap-button-loader';
 import { NavLink } from "react-router-dom";
 
 import { Colxx } from "Components/CustomBootstrap";
@@ -18,7 +19,8 @@ class LoginLayout extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      loading:0
     };
   }
   /*
@@ -31,6 +33,9 @@ class LoginLayout extends Component {
 
   async onUserLogin(event) {
     event.preventDefault();
+    this.setState({
+      loading:1
+    })
     var srv = new userService();
 
     var user = new userModel();
@@ -38,13 +43,24 @@ class LoginLayout extends Component {
     data.forEach((value, key) => {
       user[key] = value;
     });
-
-    var t = await srv.getToken(user);
-
-    if (getJwt() !== null) this.props.history.push("app");
-    else {
-      swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
+    try
+    {
+        await srv.getToken(user);
+        if (getJwt() !== null) this.props.history.push("app");
+      
     }
+   catch(e)
+   {
+      console.log(e)
+      swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
+   }
+   finally
+   {
+     this.setState({
+       loading:0
+     })
+   }
+   
   }
 
   componentDidMount() {
@@ -95,6 +111,7 @@ class LoginLayout extends Component {
                           className="btn-shadow"
                           size="lg"
                           type="submit"
+                          loading={this.state.loading}
                         >
                           <IntlMessages id="user.login-button" />
                         </Button>

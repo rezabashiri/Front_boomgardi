@@ -59,7 +59,6 @@ class RegisterLayout extends Component {
     catch(e)
     {
       console.log(e);
-
       swal(
         "پیغام",
         "خطا : ثبت نام انجام نشد" + e.response.data.message,

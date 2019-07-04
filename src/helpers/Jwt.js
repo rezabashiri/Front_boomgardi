@@ -11,7 +11,7 @@ export const setJwt = token => {
 };
 export const getJwt = () => {
   let cookie = Cookies.get(key);
-  console.log(cookie);
+   
   return cookie;
   //return localStorage.getItem(key);
 };
