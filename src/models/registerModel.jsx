@@ -2,7 +2,7 @@
 let password = Symbol("password");
 let mobile = Symbol("mobile");
 let roles = Symbol("roles");
-let email = Symbol("email");
+let eMail = Symbol("eMail");
 let firstName = Symbol("firstname");
 let lastName = Symbol("lastname");
 let nationalCode = Symbol("nationalcode");
@@ -29,6 +29,10 @@ export default class registerModel {
   set confirmPassword(val){
     this[confirmPassword]=val;
   }
+  set eMail(val){
+ 
+    this[eMail]=val;
+  }
   get password(){
     return this[password];
   }
@@ -45,7 +49,7 @@ export default class registerModel {
       userName: this[userName],
       firstName: this[firstName],
       lastName: this[lastName],
-      email: this[email],
+      eMail: this[eMail],
       password: this[password],
       mobile: this[mobile],
       roles: this[roles],

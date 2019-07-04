@@ -33,11 +33,12 @@ export const serverConfig = {
 };
 
 const authConfig = {
-  serverUrl: "http://auth.moroorgaran.com/",
+  serverUrl: "http://localhost:1262",
   loginUrl: "login",
   registerUrl: "api/registers/",
   userUrl: "api/users/",
-  appKey: "5ED239940DBB2201427DF98038A1B56F1EC9D72DD62B8ACE6286F569C9280A4D"
+  appKey: "5ED239940DBB2201427DF98038A1B56F1EC9D72DD62B8ACE6286F569C9280A4D",
+  roleUrl:"api/roles/"
 };
 
 export default authConfig;
