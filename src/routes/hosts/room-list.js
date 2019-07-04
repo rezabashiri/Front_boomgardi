@@ -55,7 +55,7 @@ class RoomList extends Component {
     //this.getHostOstan = this.getHostOstan.bind(this);
 
     this.state = {
-      displayMode: "list",
+      displayMode: "thumblist",
       pageSizes: [10, 20, 30, 50, 100],
       selectedPageSize: 10,
       hostTypes: [],
@@ -97,21 +97,18 @@ class RoomList extends Component {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
   async filterByHostType(lable) {
-    /*
     let newfilter = this.state.filterParams;
     newfilter.residencyTypeId = lable;
     await this.setState({
       filterParams: newfilter
     });
-    var queryString = Object.keys(this.state.filterParams)
-      .map(key => key + "=" + this.state.filterParams[key])
-      .join("&");
+
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
       },
-      () => this.getHost("?" + queryString)
-    );*/
+      () => this.getRoom(this.state.filterParams)
+    );
   }
   async filterByOstan(lable) {
     /*
@@ -137,7 +134,7 @@ class RoomList extends Component {
         selectedPageSize: size,
         currentPage: 1
       },
-      () => this.getRoom()
+      () => this.getRoom(this.state.filterParams)
     );
   }
   changeDisplayMode(mode) {
@@ -151,7 +148,7 @@ class RoomList extends Component {
       {
         currentPage: page
       },
-      () => this.getRoom()
+      () => this.getRoom(this.state.filterParams)
     );
   }
 
@@ -159,10 +156,13 @@ class RoomList extends Component {
     if (e.key === "Enter") {
       let newfilter = this.state.filterParams;
       newfilter.name = e.target.value.toLowerCase();
-      await this.setState({
-        filterParams: newfilter
-      });
-      () => this.getRoom(this.state.filterParams);
+      await this.setState(
+        {
+          filterParams: newfilter
+        },
+        () => this.getRoom(this.state.filterParams)
+      );
+
       /*
       this.setState(
         {
@@ -179,10 +179,12 @@ class RoomList extends Component {
     if (e.target.value.toLowerCase() === "") {
       let newfilter = this.state.filterParams;
       newfilter.name = "";
-      await this.setState({
-        filterParams: newfilter
-      });
-      () => this.getRoom(this.state.filterParams);
+      await this.setState(
+        {
+          filterParams: newfilter
+        },
+        () => this.getRoom(this.state.filterParams)
+      );
     }
   }
 
@@ -251,13 +253,14 @@ class RoomList extends Component {
     return false;
   }
   async componentDidMount() {
-    this.getRoom();
+    this.getRoom(this.state.filterParams);
     this.getHostType();
-    this.getOstanList();
+    //this.getOstanList();
     //this.dataListRender();
   }
   // getRoom = async filter => {
   async getRoom(filterObject) {
+    console.log("this is get room method");
     var service = new roomService();
     let result = await service.getRooms(filterObject);
     console.log("this is roomlist result:" + result);
@@ -279,6 +282,7 @@ class RoomList extends Component {
       hostTypes: newHostType
     });
   }
+  /*
   async getOstanList() {
     let addrService = new addressService();
     let ostanList = await addrService.getOstan();
@@ -288,7 +292,7 @@ class RoomList extends Component {
     this.setState({
       ostanList: newOstan
     });
-  }
+  }*/
   render() {
     const startIndex =
       (this.state.currentPage - 1) * this.state.selectedPageSize;
@@ -441,7 +445,10 @@ class RoomList extends Component {
                         })}
                       </DropdownMenu>
                     </UncontrolledDropdown>
-                    <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
+                    <UncontrolledDropdown
+                      hidden
+                      className="mr-1 float-md-left btn-group mb-1"
+                    >
                       <DropdownToggle caret color="outline-dark" size="xs">
                         <IntlMessages id="layouts.filter.ostan" />
                         {this.state.ostanFilterOptions &&

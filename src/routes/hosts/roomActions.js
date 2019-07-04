@@ -51,6 +51,7 @@ class HostActions extends Component {
     this.handleGuId = this.handleGuId.bind(this);
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
     this.togglePicModal = this.togglePicModal.bind(this);
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -63,7 +64,8 @@ class HostActions extends Component {
       attachId: null,
       guid: null,
       roomModalOpen: false,
-      picModalOpen: false
+      picModalOpen: false,
+      confirmDeleteModalOpen: false
     };
   }
 
@@ -75,6 +77,12 @@ class HostActions extends Component {
   togglePicModal() {
     this.setState({
       picModalOpen: !this.state.picModalOpen
+    });
+  }
+
+  toggleDeleteModal() {
+    this.setState({
+      confirmDeleteModalOpen: !this.state.confirmDeleteModalOpen
     });
   }
 
@@ -91,8 +99,6 @@ class HostActions extends Component {
     let result = await service.deleteRoom(guid);
 
     if (result.status === 204) {
-      alert("اتاق حذف شد");
-      console.log(this.props);
       await this.props.onGetRooms();
     }
   }
@@ -117,7 +123,10 @@ class HostActions extends Component {
               <IntlMessages id="room.action.edit-roompic" />
             </DropdownItem>
             <DropdownItem
-              onClick={() => this.deleteRoom(this.props.roomInfo.guid)}
+              onClick={
+                /*() => this.deleteRoom(this.props.roomInfo.guid)*/ this
+                  .toggleDeleteModal
+              }
             >
               <IntlMessages id="room.action.delete" />
             </DropdownItem>
@@ -154,6 +163,29 @@ class HostActions extends Component {
               onGetRooms={this.props.onGetRooms}
             />
           </ModalBody>
+        </Modal>
+        <Modal
+          isOpen={this.state.confirmDeleteModalOpen}
+          toggle={this.toggleDeleteModal}
+          size="sm"
+        >
+          <ModalHeader toggle={this.toggleDeleteModal}>
+            <IntlMessages id="room.action.delete-room" />
+          </ModalHeader>
+          <ModalBody>
+            <IntlMessages id="room.action.confirm-delete" />
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              onClick={() => this.deleteRoom(this.props.roomInfo.guid)}
+            >
+              <IntlMessages id="room.action.confirm-yes" />
+            </Button>
+            <Button color="secondary" onClick={this.toggleDeleteModal}>
+              <IntlMessages id="room.action.confirm-no" />
+            </Button>
+          </ModalFooter>
         </Modal>
       </Fragment>
     );
