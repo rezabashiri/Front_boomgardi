@@ -14,6 +14,12 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
 class RoomUploadForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      attachId: this.props.attachId
+    };
+  }
   roomUploader = new FineUploaderTraditional({
     options: {
       chunking: {
@@ -58,6 +64,7 @@ class RoomUploadForm extends Component {
       }
     }
   });
+
   getRoomUploader() {
     this.roomUploader.options.request.params.attachId = this.props.attachId;
     this.roomUploader.options.deleteFile.params.attachId = this.props.attachId;

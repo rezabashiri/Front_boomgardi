@@ -159,8 +159,10 @@ module.exports = {
   "room.action.prev": "قبلی",
   "room.action.completed": "تکمیل شده",
   "room.action.reset": "شروع مجدد",
-  "room.action.delete-room": "حذف اتاق",
-
+  "room.action.delete-room": "حذف زیر واحد اقامتی",
+  "room.action.confirm-delete": "آیا از حذف زیر واحد اقامتی اطمینان دارید؟",
+  "room.action.confirm-yes": "بله",
+  "room.action.confirm-no": "خیر",
   /* 04.Dashboards */
   "dashboards.pending-orders": "سفارشات در انتظار تایید",
   "dashboards.completed-orders": "سفارشات تکمیل شده",

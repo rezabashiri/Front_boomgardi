@@ -133,7 +133,7 @@ class HostList extends Component {
         selectedPageSize: size,
         currentPage: 1
       },
-      () => this.getHost()
+      () => this.getHost(this.state.filterParams)
     );
   }
   changeDisplayMode(mode) {
@@ -147,7 +147,7 @@ class HostList extends Component {
       {
         currentPage: page
       },
-      () => this.getHost()
+      () => this.getHost(this.state.filterParams)
     );
   }
 

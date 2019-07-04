@@ -137,7 +137,7 @@ class RoomList extends Component {
         selectedPageSize: size,
         currentPage: 1
       },
-      () => this.getRoom()
+      () => this.getRoom(this.state.filterParams)
     );
   }
   changeDisplayMode(mode) {
@@ -151,7 +151,7 @@ class RoomList extends Component {
       {
         currentPage: page
       },
-      () => this.getRoom()
+      () => this.getRoom(this.state.filterParams)
     );
   }
 
@@ -159,10 +159,13 @@ class RoomList extends Component {
     if (e.key === "Enter") {
       let newfilter = this.state.filterParams;
       newfilter.name = e.target.value.toLowerCase();
-      await this.setState({
-        filterParams: newfilter
-      });
-      () => this.getRoom(this.state.filterParams);
+      await this.setState(
+        {
+          filterParams: newfilter
+        },
+        () => this.getRoom(this.state.filterParams)
+      );
+
       /*
       this.setState(
         {
@@ -179,10 +182,12 @@ class RoomList extends Component {
     if (e.target.value.toLowerCase() === "") {
       let newfilter = this.state.filterParams;
       newfilter.name = "";
-      await this.setState({
-        filterParams: newfilter
-      });
-      () => this.getRoom(this.state.filterParams);
+      await this.setState(
+        {
+          filterParams: newfilter
+        },
+        () => this.getRoom(this.state.filterParams)
+      );
     }
   }
 
@@ -251,13 +256,14 @@ class RoomList extends Component {
     return false;
   }
   async componentDidMount() {
-    this.getRoom();
+    this.getRoom(this.state.filterParams);
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
   }
   // getRoom = async filter => {
   async getRoom(filterObject) {
+    console.log("this is get room method");
     var service = new roomService();
     let result = await service.getRooms(filterObject);
     console.log("this is roomlist result:" + result);

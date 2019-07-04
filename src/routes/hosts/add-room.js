@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, lazy, Suspense } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -16,7 +16,8 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 
 import RoomForm from "./roomForm";
-import RoomUploadForm from "./roomUploadForm";
+//import RoomUploadForm from "./roomUploadForm";
+const RoomUploadForm = React.lazy(() => import("./roomUploadForm"));
 
 import {
   Row,
@@ -85,10 +86,12 @@ class AddRoomWizard extends Component {
         );
       case 1:
         return (
-          <RoomUploadForm
-            attachId={this.state.guid}
-            onHandleComplete={this.handleComplete}
-          />
+          <Suspense fallback={<div>کمی صبر کنید</div>}>
+            <RoomUploadForm
+              attachId={this.state.guid}
+              onHandleComplete={this.handleComplete}
+            />
+          </Suspense>
         );
       default:
         return "مرحله تعریف نشده";
@@ -144,7 +147,6 @@ class AddRoomWizard extends Component {
     this.setState({ activeStep: 0 });
     this.setState({ completed: {} });
   }
-
   render() {
     const classes = makeStyles(theme => ({
       root: {
