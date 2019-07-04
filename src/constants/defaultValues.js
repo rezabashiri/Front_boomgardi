@@ -33,7 +33,7 @@ export const serverConfig = {
 };
 
 const authConfig = {
-  serverUrl: "http://localhost:1262",
+  serverUrl: "http://auth.moroorgaran.com",
   loginUrl: "login",
   registerUrl: "api/registers/",
   userUrl: "api/users/",
