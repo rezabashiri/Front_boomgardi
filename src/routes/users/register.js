@@ -30,7 +30,6 @@ class RegisterLayout extends Component {
   */
   async submitRegister(event) {
     event.preventDefault();
-   
   }
 
   componentDidMount() {

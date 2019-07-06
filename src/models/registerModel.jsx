@@ -26,17 +26,18 @@ export default class registerModel {
   set nationalCode(val) {
     this[nationalCode] = val;
   }
-  set confirmPassword(val){
-    this[confirmPassword]=val;
+  set confirmPassword(val) {
+    this[confirmPassword] = val;
   }
-  set eMail(val){
- 
-    this[eMail]=val;
+  set eMail(val) {
+    this[eMail] = val;
   }
-  get password(){
+  get password() {
     return this[password];
   }
-  get confirmPassword () {return this[confirmPassword]}
+  get confirmPassword() {
+    return this[confirmPassword];
+  }
   set roles(val) {
     let array = [];
     if (this[roles]) array = this[roles];
