@@ -32,3 +32,27 @@ export const nameValidation = {
   minLength: { value: 3, errorMessage: "نام باید حداقل 3 کاراکتر باشد" },
   maxLength: { value: 30 }
 };
+
+export const passwordValidation = {
+  required: {
+    value: true,
+    errorMessage: "رمز عبور الزامی است"
+  },
+  minLength: {
+    value: 6,
+    errorMessage: "رمز عبور باید حداقل 6 کاراکتر باشد"
+  },
+  maxLength: { value: 30 }
+};
+
+export const confirmPasswordValidation = {
+  required: {
+    value: true,
+    errorMessage: "تکرار رمز عبور الزامی است"
+  },
+  minLength: {
+    value: 6,
+    errorMessage: "رمز عبور باید حداقل 6 کاراکتر باشد"
+  },
+  maxLength: { value: 30 }
+};

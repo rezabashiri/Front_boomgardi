@@ -10,7 +10,11 @@ import {
   AvFeedback,
   AvField
 } from "availity-reactstrap-validation";
-import { mobileValidation } from "../../constants/validations";
+import {
+  mobileValidation,
+  passwordValidation,
+  confirmPasswordValidation
+} from "../../constants/validations";
 
 import { Colxx } from "Components/CustomBootstrap";
 
@@ -52,10 +56,11 @@ class RegisterLayout extends Component {
       let model = new registerModel();
       let service = new registerService();
       //value.forEach((value, key) => (model[key] = value));
+      Object.keys(value).map(key => (model[key] = value[key]));
 
-      model["userName"] = value.userName;
-      model["password"] = value.password;
-      model["confirmPassword"] = value.confirmPassword;
+      //model["userName"] = value.userName;
+      //model["password"] = value.password;
+      //model["confirmPassword"] = value.confirmPassword;
       console.log(model);
       model["roles"] = "کاربر";
       if (model.password !== model.confirmPassword || model.password === "") {
@@ -131,17 +136,7 @@ class RegisterLayout extends Component {
                         <AvField
                           name="password"
                           id="password"
-                          validate={{
-                            required: {
-                              value: true,
-                              errorMessage: "رمز عبور الزامی است"
-                            },
-                            minLength: {
-                              value: 6,
-                              errorMessage: "رمز عبور باید حداقل 6 کاراکتر باشد"
-                            },
-                            maxLength: { value: 30 }
-                          }}
+                          validate={passwordValidation}
                           type="password"
                         />
                         <IntlMessages
@@ -153,17 +148,7 @@ class RegisterLayout extends Component {
                         <AvField
                           name="confirmPassword"
                           id="password"
-                          validate={{
-                            required: {
-                              value: true,
-                              errorMessage: "تکرار رمز عبور الزامی است"
-                            },
-                            minLength: {
-                              value: 6,
-                              errorMessage: "رمز عبور باید حداقل 6 کاراکتر باشد"
-                            },
-                            maxLength: { value: 30 }
-                          }}
+                          validate={confirmPasswordValidation}
                           type="password"
                         />
                         <IntlMessages id="user.password-confirm" />

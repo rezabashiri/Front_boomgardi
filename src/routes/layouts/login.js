@@ -13,6 +13,17 @@ import userService from "../../services/userService.jsx";
 import userModel from "../../models/userModel.jsx";
 import { getJwt } from "../../helpers/Jwt.js";
 import swal from "sweetalert";
+import {
+  AvForm,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvField
+} from "availity-reactstrap-validation";
+import {
+  mobileValidation,
+  passwordValidation
+} from "../../constants/validations";
 
 class LoginLayout extends Component {
   constructor(props) {
@@ -31,7 +42,7 @@ class LoginLayout extends Component {
   }
   */
 
-  async onUserLogin(event) {
+  async onUserLogin(event, value) {
     event.preventDefault();
     this.setState({
       loading: 1
@@ -39,10 +50,11 @@ class LoginLayout extends Component {
     var srv = new userService();
 
     var user = new userModel();
-    const data = new FormData(event.target);
+    /*const data = new FormData(event.target);
     data.forEach((value, key) => {
       user[key] = value;
-    });
+    });*/
+    Object.keys(value).map(key => (user[key] = value[key]));
 
     try {
       await srv.getToken(user);
@@ -84,13 +96,26 @@ class LoginLayout extends Component {
                     <CardTitle className="mb-4">
                       <IntlMessages id="user.login-title" />
                     </CardTitle>
-                    <Form onSubmit={e => this.onUserLogin(e)}>
+                    <AvForm
+                      onValidSubmit={async (e, v) =>
+                        await this.onUserLogin(e, v)
+                      }
+                    >
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="userName" />
+                        <AvField
+                          name="userName"
+                          id="userName"
+                          validate={mobileValidation}
+                        />
                         <IntlMessages id="forms.mobile" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="password" type="password" />
+                        <AvField
+                          name="password"
+                          id="password"
+                          validate={passwordValidation}
+                          type="password"
+                        />
                         <IntlMessages
                           id="user.password"
                           defaultValue={this.state.password}
@@ -115,7 +140,7 @@ class LoginLayout extends Component {
                           <IntlMessages id="user.register" />
                         </NavLink>
                       </div>
-                    </Form>
+                    </AvForm>
                   </div>
                 </Card>
               </Colxx>
