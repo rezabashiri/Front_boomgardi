@@ -493,7 +493,7 @@ module.exports = {
   "forms.host-type-message": "لطفا نوع اقامتگاه را وارد کنید",
   "forms.city-message": "لطفا یک شهر انتخاب کنید!",
   "forms.mobile": "موبایل",
-  "forms.mobile-message": "لطفا موبایل خود را وارد کنید!",
+  "forms.mobile-message": "موبایل را با فرمت 09--------- وارد کنید",
   "forms.phone": "تلفن",
   "forms.phone-message": "لطفا تلفن را وارد کنید!",
   "forms.state-message": "لطفا یک وضعیت انتخاب کنید!",

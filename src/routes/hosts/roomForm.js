@@ -28,8 +28,11 @@ import {
   AvForm,
   AvGroup,
   AvInput,
-  AvFeedback
+  AvFeedback,
+  AvField
 } from "availity-reactstrap-validation";
+
+import { nameValidation } from "../../constants/validations";
 
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
@@ -103,23 +106,20 @@ class RoomForm extends Component {
                 <CardTitle>
                   <IntlMessages id="menu.add-roomdata" />
                 </CardTitle>
-                <AvForm>
+                <AvForm onValidSubmit={this.addRoom}>
                   <AvGroup row>
                     <Colxx sm={4}>
                       <AvGroup>
                         <Label className="av-label" for="roomName">
                           <IntlMessages id="forms.room-name" />
                         </Label>
-                        <AvInput
+                        <AvField
                           name="roomName"
                           id="roomName"
                           value={this.state.roomName}
                           onChange={this.handleRoomNameChange}
-                          required
+                          validate={nameValidation}
                         />
-                        <AvFeedback>
-                          <IntlMessages id="forms.roomname-message" />
-                        </AvFeedback>
                       </AvGroup>
                     </Colxx>
                     <Colxx sm={4}>
@@ -176,7 +176,7 @@ class RoomForm extends Component {
                     </Colxx>
                   </AvGroup>
                 </AvForm>
-                <Button onClick={this.addRoom} color="primary">
+                <Button color="primary">
                   <IntlMessages id="layouts.submit" />
                 </Button>
               </CardBody>

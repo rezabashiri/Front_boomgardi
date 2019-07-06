@@ -29,7 +29,8 @@ import {
   AvForm,
   AvGroup,
   AvInput,
-  AvFeedback
+  AvFeedback,
+  AvField
 } from "availity-reactstrap-validation";
 
 import { tellValidation, nameValidation } from "../../constants/validations";
@@ -161,7 +162,7 @@ class HostForm extends Component {
                         <Label className="av-label" for="hostName">
                           <IntlMessages id="forms.host-name" />
                         </Label>
-                        <AvInput
+                        <AvField
                           name="hostName"
                           id="hostName"
                           value={this.state.hostName}
@@ -179,16 +180,13 @@ class HostForm extends Component {
                         <Label className="av-label">
                           <IntlMessages id="forms.phone" />
                         </Label>
-                        <AvInput
+                        <AvField
                           name="phone"
                           id="phone"
                           value={this.state.hostTell}
                           onChange={this.handleHostTellChange}
                           validate={tellValidation}
                         />
-                        <AvFeedback>
-                          <IntlMessages id="forms.hosttell-message" />
-                        </AvFeedback>
                       </AvGroup>
                       <AvFeedback>
                         <IntlMessages id="forms.host-type-message" />
@@ -204,6 +202,7 @@ class HostForm extends Component {
                           options={this.state.hostType}
                           onChange={this.handleHostTypeChange}
                           value={this.state.hostTypeSelected}
+                          required
                         />
                         <AvFeedback>
                           <IntlMessages id="forms.hosttype-message" />

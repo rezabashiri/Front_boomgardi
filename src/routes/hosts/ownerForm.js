@@ -23,7 +23,8 @@ import {
   AvForm,
   AvGroup,
   AvInput,
-  AvFeedback
+  AvFeedback,
+  AvField
 } from "availity-reactstrap-validation";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -118,7 +119,7 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="firstName">
                         <IntlMessages id="forms.firstname" />
                       </Label>
-                      <AvInput
+                      <AvField
                         className="form-control"
                         name="firstName"
                         id="firstName"
@@ -126,9 +127,6 @@ class OwnerForm extends Component {
                         value={this.state.firstName}
                         onChange={this.handleChangeFirstName}
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.firstname-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
 
@@ -137,17 +135,13 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="lastName">
                         <IntlMessages id="forms.lastname" />
                       </Label>
-
-                      <AvInput
+                      <AvField
                         name="lastName"
                         id="lastName"
                         value={this.state.lastName}
                         onChange={this.handleChangeLastName}
                         validate={nameValidation}
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.lastname-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
 
@@ -156,7 +150,7 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="mobile">
                         <IntlMessages id="forms.mobile" />
                       </Label>
-                      <AvInput
+                      <AvField
                         name="mobile"
                         id="mobile"
                         value={this.state.mobile}
@@ -164,9 +158,6 @@ class OwnerForm extends Component {
                         onChange={this.handleChangeMobile}
                         placeholder="به عنوان نام کاربری"
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.mobile-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
                   <Colxx sm={6}>
@@ -174,7 +165,7 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="codeMeli">
                         <IntlMessages id="forms.codemeli" />
                       </Label>
-                      <AvInput
+                      <AvField
                         name="codeMeli"
                         id="codeMeli"
                         value={this.state.codeMeli}
@@ -182,9 +173,6 @@ class OwnerForm extends Component {
                         validate={codeMeliValidation}
                         placeholder="به عنوان رمز عبور"
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.codemeli-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
 

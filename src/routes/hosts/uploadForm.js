@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Colxx } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
 import { serverConfig } from "../../constants/defaultValues";
-import { Row, Card, CardBody, CardTitle } from "reactstrap";
+import { Row, Card, CardBody, CardTitle, Button } from "reactstrap";
 import FineUploaderTraditional from "fine-uploader-wrappers";
 import Gallery from "react-fine-uploader";
 //import Thumbnail from "react-fine-uploader/thumbnail";
@@ -59,6 +59,12 @@ class UploadForm extends Component {
     }
   });
 
+  uploadCompleted() {
+    //this.props.onGetRooms && (await this.props.onGetRooms());
+    this.props.onHandleComplete && this.props.onHandleComplete();
+    this.props.onToggleModal && this.props.onToggleModal();
+  }
+
   render() {
     return (
       <Fragment>
@@ -101,6 +107,10 @@ class UploadForm extends Component {
               </CardBody>
             </Card>
           </Colxx>
+
+          <Button onClick={() => this.uploadCompleted()} color="primary">
+            <IntlMessages id="layouts.submit" />
+          </Button>
         </Row>
       </Fragment>
     );
