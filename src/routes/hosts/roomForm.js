@@ -12,7 +12,6 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
   CardSubtitle,
@@ -21,6 +20,7 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import Button from "reactstrap-button-loader";
 import { serverConfig } from "../../constants/defaultValues";
 //import Select from "react-select";
 
@@ -43,6 +43,7 @@ class RoomForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: 0,
       roomName: this.props.roomInfo.name,
       hostId: this.props.roomInfo.residenceId,
       roomDetail: this.props.roomInfo.description,
@@ -61,6 +62,10 @@ class RoomForm extends Component {
   }
 
   async addRoom() {
+    console.log("this is addroom");
+    this.setState({
+      loading: 1
+    });
     var service = new roomService();
     var model = new roomModel();
     model["name"] = this.state.roomName;
@@ -73,7 +78,9 @@ class RoomForm extends Component {
     let result = await service.addRoom(model);
 
     if (result.status === 201) {
-      console.log(result.data.guid);
+      this.setState({
+        loading: 0
+      });
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleGuId && this.props.onHandleGuId(result.data.guid);
       this.props.onToggleModal && this.props.onToggleModal();
@@ -175,10 +182,20 @@ class RoomForm extends Component {
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
+                  <Colxx sm={12}>
+                    <FormGroup>
+                      <Button
+                        color="primary"
+                        className="btn-shadow"
+                        size="lg"
+                        type="submit"
+                        loading={this.state.loading}
+                      >
+                        <IntlMessages id="layouts.submit" />
+                      </Button>
+                    </FormGroup>
+                  </Colxx>
                 </AvForm>
-                <Button color="primary">
-                  <IntlMessages id="layouts.submit" />
-                </Button>
               </CardBody>
             </Card>
           </Colxx>

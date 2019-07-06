@@ -12,12 +12,12 @@ import {
   CardTitle,
   FormGroup,
   Label,
-  Button,
   CustomInput,
   FormText,
   Form,
   CardSubtitle
 } from "reactstrap";
+import Button from "reactstrap-button-loader";
 
 import {
   AvForm,
@@ -46,7 +46,8 @@ class OwnerForm extends Component {
       firstName: null,
       lastName: null,
       mobile: null,
-      codeMeli: null
+      codeMeli: null,
+      loading: 0
     };
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
@@ -55,6 +56,9 @@ class OwnerForm extends Component {
     this.onOwnerSave = this.onOwnerSave.bind(this);
   }
   async onOwnerSave(event) {
+    this.setState({
+      loading: 1
+    });
     event.preventDefault();
     //let form = new FormData(event.target);
     let model = new userModel();
@@ -68,6 +72,9 @@ class OwnerForm extends Component {
     model["nationalCode"] = this.state.codeMeli;
     let result = await usrService.addUser(model);
     if (result.status === 201) {
+      this.setState({
+        loading: 0
+      });
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleOwnerUserId &&
         this.props.onHandleOwnerUserId(result.data.id);
@@ -178,7 +185,13 @@ class OwnerForm extends Component {
 
                   <Colxx sm={12}>
                     <FormGroup>
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        className="btn-shadow"
+                        size="lg"
+                        type="submit"
+                        loading={this.state.loading}
+                      >
                         <IntlMessages id="layouts.submit" />
                       </Button>
                     </FormGroup>

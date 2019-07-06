@@ -12,7 +12,6 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
   CardSubtitle,
@@ -21,6 +20,7 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import Button from "reactstrap-button-loader";
 import Select from "react-select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -72,6 +72,7 @@ class HostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: 0,
       hostName: this.props.hostInfo.name,
       hostTell: this.props.hostInfo.tell,
       hostType: [],
@@ -115,6 +116,9 @@ class HostForm extends Component {
   }
 
   async addHost() {
+    this.setState({
+      loading: 1
+    });
     var service = new hostService();
     var model = new hostModel();
     model["name"] = this.state.hostName;
@@ -125,6 +129,9 @@ class HostForm extends Component {
     model["description"] = this.state.hostInformation;
     let result = await service.addHost(model);
     if (result.status === 201) {
+      this.setState({
+        loading: 0
+      });
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleGuId && this.props.onHandleGuId(result.data.guid);
       this.props.getHost && this.props.getHost();
@@ -224,8 +231,13 @@ class HostForm extends Component {
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
-
-                  <Button color="primary">
+                  <Button
+                    color="primary"
+                    className="btn-shadow"
+                    size="lg"
+                    type="submit"
+                    loading={this.state.loading}
+                  >
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>

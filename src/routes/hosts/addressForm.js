@@ -13,7 +13,6 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
   CardSubtitle,
@@ -22,6 +21,7 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import Button from "reactstrap-button-loader";
 import Select from "react-select";
 
 import {
@@ -59,6 +59,7 @@ class AddressForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: 0,
       addressModal: false,
       ostan: [],
       shahr: [],
@@ -142,6 +143,9 @@ class AddressForm extends Component {
   }
 
   async addAddress() {
+    this.setState({
+      loading: 1
+    });
     var service = new hostService();
     var model = new hostModel();
     model["address"] = {
@@ -156,6 +160,9 @@ class AddressForm extends Component {
     model["guid"] = this.props.guid;
     let result = await service.addAddress(model);
     if (result.status === 201) {
+      this.setState({
+        loading: 0
+      });
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.getHost && this.props.getHost();
       this.props.onToggleModal && this.props.onToggleModal();
@@ -424,10 +431,20 @@ class AddressForm extends Component {
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
-
-                  <Button onClick={this.addAddress} color="primary">
-                    <IntlMessages id="layouts.submit" />
-                  </Button>
+                  <Colxx sm={12}>
+                    <FormGroup>
+                      <Button
+                        color="primary"
+                        className="btn-shadow"
+                        size="lg"
+                        type="submit"
+                        loading={this.state.loading}
+                        onClick={this.addAddress}
+                      >
+                        <IntlMessages id="layouts.submit" />
+                      </Button>
+                    </FormGroup>
+                  </Colxx>
                 </AvForm>
               </CardBody>
             </Card>
