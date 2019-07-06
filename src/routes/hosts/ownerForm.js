@@ -12,13 +12,12 @@ import {
   CardTitle,
   FormGroup,
   Label,
-  CustomInput,
   Button,
+  CustomInput,
   FormText,
   Form,
   CardSubtitle
 } from "reactstrap";
-import Select from "react-select";
 
 import {
   AvForm,
@@ -33,6 +32,11 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import registerService from "../../services/registerService.jsx";
+import {
+  mobileValidation,
+  codeMeliValidation,
+  nameValidation
+} from "../../constants/validations";
 
 class OwnerForm extends Component {
   constructor(props) {
@@ -108,7 +112,7 @@ class OwnerForm extends Component {
                   <IntlMessages id="menu.add-hostowner" />
                 </CardTitle>
 
-                <AvForm className="mb-5 row" onSubmit={this.onOwnerSave}>
+                <AvForm className="mb-5 row" onValidSubmit={this.onOwnerSave}>
                   <Colxx sm={6}>
                     <AvGroup>
                       <Label className="av-label" for="firstName">
@@ -118,7 +122,7 @@ class OwnerForm extends Component {
                         className="form-control"
                         name="firstName"
                         id="firstName"
-                        required
+                        validate={nameValidation}
                         value={this.state.firstName}
                         onChange={this.handleChangeFirstName}
                       />
@@ -139,7 +143,7 @@ class OwnerForm extends Component {
                         id="lastName"
                         value={this.state.lastName}
                         onChange={this.handleChangeLastName}
-                        required
+                        validate={nameValidation}
                       />
                       <AvFeedback>
                         <IntlMessages id="forms.lastname-message" />
@@ -156,8 +160,9 @@ class OwnerForm extends Component {
                         name="mobile"
                         id="mobile"
                         value={this.state.mobile}
+                        validate={mobileValidation}
                         onChange={this.handleChangeMobile}
-                        required
+                        placeholder="به عنوان نام کاربری"
                       />
                       <AvFeedback>
                         <IntlMessages id="forms.mobile-message" />
@@ -174,7 +179,8 @@ class OwnerForm extends Component {
                         id="codeMeli"
                         value={this.state.codeMeli}
                         onChange={this.handleChangeCodeMeli}
-                        required
+                        validate={codeMeliValidation}
+                        placeholder="به عنوان رمز عبور"
                       />
                       <AvFeedback>
                         <IntlMessages id="forms.codemeli-message" />

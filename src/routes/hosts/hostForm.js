@@ -32,6 +32,8 @@ import {
   AvFeedback
 } from "availity-reactstrap-validation";
 
+import { tellValidation, nameValidation } from "../../constants/validations";
+
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
@@ -74,6 +76,8 @@ class HostForm extends Component {
       hostType: [],
       hostTypeSelected: null,
       hostInformation: this.props.hostInfo.description
+        ? this.props.hostInfo.description
+        : ""
     };
     this.handleHostTellChange = this.handleHostTellChange.bind(this);
     this.addHost = this.addHost.bind(this);
@@ -150,7 +154,7 @@ class HostForm extends Component {
                 <CardTitle>
                   <IntlMessages id="menu.add-hostdata" />
                 </CardTitle>
-                <AvForm>
+                <AvForm onValidSubmit={this.addHost}>
                   <AvGroup row>
                     <Colxx sm={4}>
                       <AvGroup>
@@ -162,6 +166,7 @@ class HostForm extends Component {
                           id="hostName"
                           value={this.state.hostName}
                           onChange={this.handleHostNameChange}
+                          validate={nameValidation}
                           required
                         />
                         <AvFeedback>
@@ -179,8 +184,11 @@ class HostForm extends Component {
                           id="phone"
                           value={this.state.hostTell}
                           onChange={this.handleHostTellChange}
-                          required
+                          validate={tellValidation}
                         />
+                        <AvFeedback>
+                          <IntlMessages id="forms.hosttell-message" />
+                        </AvFeedback>
                       </AvGroup>
                       <AvFeedback>
                         <IntlMessages id="forms.host-type-message" />
@@ -218,7 +226,7 @@ class HostForm extends Component {
                     </Colxx>
                   </AvGroup>
 
-                  <Button onClick={this.addHost} color="primary">
+                  <Button color="primary">
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>

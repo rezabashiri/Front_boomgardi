@@ -28,7 +28,8 @@ import {
   AvForm,
   AvGroup,
   AvInput,
-  AvFeedback
+  AvFeedback,
+  AvField
 } from "availity-reactstrap-validation";
 
 import "react-datepicker/dist/react-datepicker.css";

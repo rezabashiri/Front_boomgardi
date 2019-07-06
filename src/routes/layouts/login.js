@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
 import { Row, Card, CardTitle, Form, Label, Input } from "reactstrap";
-import Button from 'reactstrap-button-loader';
+import Button from "reactstrap-button-loader";
 import { NavLink } from "react-router-dom";
 
 import { Colxx } from "Components/CustomBootstrap";
@@ -20,7 +20,7 @@ class LoginLayout extends Component {
     this.state = {
       email: "",
       password: "",
-      loading:0
+      loading: 0
     };
   }
   /*
@@ -34,8 +34,8 @@ class LoginLayout extends Component {
   async onUserLogin(event) {
     event.preventDefault();
     this.setState({
-      loading:1
-    })
+      loading: 1
+    });
     var srv = new userService();
 
     var user = new userModel();
@@ -43,24 +43,18 @@ class LoginLayout extends Component {
     data.forEach((value, key) => {
       user[key] = value;
     });
-    try
-    {
-        await srv.getToken(user);
-        if (getJwt() !== null) this.props.history.push("app");
-      
-    }
-   catch(e)
-   {
-      console.log(e)
+
+    try {
+      await srv.getToken(user);
+      if (getJwt() !== null) this.props.history.push("app");
+    } catch (e) {
+      console.log(e);
       swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
-   }
-   finally
-   {
-     this.setState({
-       loading:0
-     })
-   }
-   
+    } finally {
+      this.setState({
+        loading: 0
+      });
+    }
   }
 
   componentDidMount() {
