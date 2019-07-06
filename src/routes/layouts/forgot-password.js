@@ -4,6 +4,13 @@ import { Row, Card, CardTitle, Form, Label, Input, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
 import { Colxx } from "Components/CustomBootstrap";
+import {
+  AvForm,
+  AvGroup,
+  AvInput,
+  AvField
+} from "availity-reactstrap-validation";
+import { mobileValidation } from "../../constants/validations";
 
 class ForgotPasswordLayout extends Component {
   constructor(props) {
@@ -40,9 +47,13 @@ class ForgotPasswordLayout extends Component {
                     <CardTitle className="mb-4">
                       <IntlMessages id="user.forgot-password" />
                     </CardTitle>
-                    <Form>
+                    <AvForm>
                       <Label className="form-group has-float-label mb-4">
-                        <Input defaultValue={this.state.mobile} />
+                        <AvField
+                          name="userName"
+                          id="userName"
+                          validate={mobileValidation}
+                        />
                         <IntlMessages id="forms.mobile" />
                       </Label>
 
@@ -56,7 +67,7 @@ class ForgotPasswordLayout extends Component {
                           <IntlMessages id="user.reset-password-button" />
                         </Button>
                       </div>
-                    </Form>
+                    </AvForm>
                   </div>
                 </Card>
               </Colxx>
