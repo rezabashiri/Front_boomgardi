@@ -12,7 +12,6 @@ import registerService from "../../Services/registerService.jsx";
 import registerModel from "../../models/registerModel.jsx";
 import swal from "sweetalert";
 
-
 class RegisterLayout extends Component {
   constructor(props) {
     super(props);
@@ -32,32 +31,27 @@ class RegisterLayout extends Component {
   */
   async submitRegister(event) {
     event.preventDefault();
-    try
-    {
-    let form = new FormData(event.target);
-    let model = new registerModel();
-    let service = new registerService();
-    form.forEach((value, key) => (model[key] = value));
-    model["roles"] = "کاربر";
-    if (model.password !== model.confirmPassword || model.password === '') {
-      swal("پیغام", "رمز عبور با تایید رمز عبور برابر نیست", "warning");
-      return;
-    }
-    let response = await service.registerUser(model);
-    if (response.status >= 200 && response.status < 300 ) {
-      swal(
-        "پیغام",
-        "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
-        "success"
-      ).then( () =>{
-        this.props.history.push("login");
+    try {
+      let form = new FormData(event.target);
+      let model = new registerModel();
+      let service = new registerService();
+      form.forEach((value, key) => (model[key] = value));
+      model["roles"] = "کاربر";
+      if (model.password !== model.confirmPassword || model.password === "") {
+        swal("پیغام", "رمز عبور با تایید رمز عبور برابر نیست", "warning");
+        return;
       }
-      );
-    }
- 
-    }
-    catch(e)
-    {
+      let response = await service.registerUser(model);
+      if (response.status >= 200 && response.status < 300) {
+        swal(
+          "پیغام",
+          "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
+          "success"
+        ).then(() => {
+          this.props.history.push("login");
+        });
+      }
+    } catch (e) {
       console.log(e);
       swal(
         "پیغام",
@@ -107,7 +101,7 @@ class RegisterLayout extends Component {
                         />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" name="confirmPassword"  />
+                        <Input type="password" name="confirmPassword" />
                         <IntlMessages id="user.password-confirm" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">
