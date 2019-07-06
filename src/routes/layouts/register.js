@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
-import { Row, Card, CardTitle, Form, Label, Input, Button } from "reactstrap";
+import { Row, Card, CardTitle, Form, Label, Input } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import Button from "reactstrap-button-loader";
 
 import { Colxx } from "Components/CustomBootstrap";
 
@@ -16,9 +17,10 @@ class RegisterLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com",
-      password: "gogo123",
-      name: "Sarah Kortney"
+      email: "",
+      password: "",
+      name: "",
+      loading: 0
     };
   }
   /*
@@ -32,6 +34,9 @@ class RegisterLayout extends Component {
   async submitRegister(event) {
     event.preventDefault();
     try {
+      this.setState({
+        loading: 1
+      });
       let form = new FormData(event.target);
       let model = new registerModel();
       let service = new registerService();
@@ -58,6 +63,10 @@ class RegisterLayout extends Component {
         "خطا : ثبت نام انجام نشد" + e.response.data.message,
         "warning"
       );
+    } finally {
+      this.setState({
+        loading: 0
+      });
     }
   }
 
@@ -110,6 +119,7 @@ class RegisterLayout extends Component {
                           className="btn-shadow"
                           size="lg"
                           type="submit"
+                          loading={this.state.loading}
                         >
                           <IntlMessages id="user.register-button" />
                         </Button>
