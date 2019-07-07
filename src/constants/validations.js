@@ -29,7 +29,17 @@ export const nameValidation = {
     value: "^[A-Za-zا-ی ]+$",
     errorMessage: "نام فقط شامل کاراکتر است"
   },
-  minLength: { value: 3, errorMessage: "نام باید حداقل 3 کاراکتر باشد" },
+  minLength: { value: 2, errorMessage: "نام باید حداقل 2 کاراکتر باشد" },
+  maxLength: { value: 30 }
+};
+
+export const roomNameValidation = {
+  required: { value: true, errorMessage: "نام الزامی است" },
+  pattern: {
+    value: "^[0-9A-Za-zا-ی ]+$",
+    errorMessage: "نام فقط شامل کاراکتر است"
+  },
+  minLength: { value: 1, errorMessage: "نام باید حداقل 1 کاراکتر باشد" },
   maxLength: { value: 30 }
 };
 
