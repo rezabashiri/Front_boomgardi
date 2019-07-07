@@ -2,6 +2,7 @@
 import { serverConfig } from "../constants/defaultValues";
 import axios from "axios";
 import { getJwt } from "../helpers/Jwt";
+import { CreateNotification } from "./notification";
 
 export const userContext = () => {
   return axios.create({
@@ -23,4 +24,16 @@ export const apiContext = () => {
       Authorization: `Bearer ${getJwt()}`
     }
   });
+};
+
+export const postData = async (data, url) => {
+  let response = await apiContext().post(url, data);
+  CreateNotification(response);
+  return response;
+};
+
+export const deleteData = async url => {
+  let response = await apiContext().delete(url);
+  CreateNotification(response);
+  return response;
 };
