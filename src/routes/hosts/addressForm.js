@@ -153,9 +153,10 @@ class AddressForm extends Component {
       lng: this.state.postion[0],
       ostanId: this.state.selectedOstan.value,
       shahrestanId: this.state.selectedShahr.value,
-      bakhshId: this.state.selectedBakhsh.value,
-      dehestanId: this.state.selectedDehestan.value,
-      roostaId: this.state.selectedRoosta.value
+      bakhshId: this.state.selectedBakhsh && this.state.selectedBakhsh.value,
+      dehestanId:
+        this.state.selectedDehestan && this.state.selectedDehestan.value,
+      roostaId: this.state.selectedRoosta && this.state.selectedRoosta.value
     };
     model["guid"] = this.props.guid;
     let result = await service.addAddress(model);

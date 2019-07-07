@@ -99,7 +99,12 @@ class HostActions extends Component {
     let result = await service.deleteRoom(guid);
 
     if (result.status === 204) {
-      await this.props.onGetRooms();
+      this.toggleDeleteModal();
+      await this.props.onGetRooms({
+        residenceId: this.props.roomInfo
+          ? this.props.residenceId.residenceId
+          : ""
+      });
     }
   }
   render() {

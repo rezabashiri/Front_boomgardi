@@ -32,7 +32,7 @@ import {
   AvField
 } from "availity-reactstrap-validation";
 
-import { nameValidation } from "../../constants/validations";
+import { roomNameValidation } from "../../constants/validations";
 
 import "rc-switch/assets/index.css";
 import "rc-slider/assets/index.css";
@@ -125,7 +125,7 @@ class RoomForm extends Component {
                           id="roomName"
                           value={this.state.roomName}
                           onChange={this.handleRoomNameChange}
-                          validate={nameValidation}
+                          validate={roomNameValidation}
                         />
                       </AvGroup>
                     </Colxx>
