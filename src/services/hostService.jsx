@@ -1,5 +1,5 @@
 import { serverConfig } from "../constants/defaultValues";
-import { apiContext } from "../helpers/contextHelper";
+import { apiContext, postData, deleteData } from "../helpers/contextHelper";
 import QueryString from "./queryString.jsx";
 
 export default class hostService {
@@ -19,14 +19,6 @@ export default class hostService {
       return response.data;
     } catch (e) {}
   }
-  /*
-  async getHosts(filterParam) {
-    try {
-      let filter = filterParam === undefined ? "" : filterParam;
-      let response = await apiContext().get(serverConfig.hostUrl + filter);
-      return response.data;
-    } catch (e) {}
-  }*/
   async getHosts(filterObject) {
     try {
       let filter = filterObject === undefined ? "" : filterObject;
@@ -37,29 +29,34 @@ export default class hostService {
     } catch (e) {}
   }
   async addHost(model) {
-    console.log(model.getData());
     try {
-      let response = await apiContext().post(
+      /*let response = await apiContext().post(
         serverConfig.hostUrl,
         model.getData()
-      );
+      );*/
+      let response = postData(model.getData(), serverConfig.hostUrl);
       return response;
     } catch (e) {}
   }
   async addAddress(model) {
     try {
+      /*
       let response = await apiContext().post(
         serverConfig.hostUrl,
         model.getData()
       );
+      */
+      let response = postData(model.getData(), serverConfig.hostUrl);
       return response;
     } catch (e) {}
   }
   async deleteHost(guid) {
     try {
+      /*
       let response = await apiContext().delete(
         serverConfig.hostUrl + "/" + guid
-      );
+      );*/
+      let response = deleteData(serverConfig.hostUrl + "/" + guid);
       return response;
     } catch (e) {}
   }
