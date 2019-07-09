@@ -9,6 +9,7 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import RoomForm from "./roomForm";
 import RoomUploadForm from "./roomUploadForm";
+import HostPriceForm from "./hostPriceForm";
 import roomService from "../../services/roomService.jsx";
 
 import {
@@ -210,7 +211,7 @@ class HostActions extends Component {
             <IntlMessages id="room.action.price" />
           </ModalHeader>
           <ModalBody>
-            <div>comming soon...</div>
+            <HostPriceForm />
           </ModalBody>
         </Modal>
       </Fragment>

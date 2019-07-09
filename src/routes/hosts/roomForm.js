@@ -53,7 +53,9 @@ class RoomForm extends Component {
       roomTypeId: this.props.roomInfo.typeId,
       roomType: [],
       roomTypeSelected: null,
-      selectedServices: [], //this.props.roomInfo.serviceList?this.props.roomInfo.serviceList : [],
+      selectedServices: this.props.roomInfo.serviceList
+        ? this.props.roomInfo.serviceList
+        : [],
       roomServices: [],
       roomCapacity: this.props.roomInfo.capacity
     };

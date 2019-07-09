@@ -165,6 +165,17 @@ module.exports = {
   "room.action.confirm-delete": "آیا از حذف زیر واحد اقامتی اطمینان دارید؟",
   "room.action.confirm-yes": "بله",
   "room.action.confirm-no": "خیر",
+  "room.price": "اطلاعات پایه قیمت اتاق",
+  "room.price.perPerson": "قیمت نفر شب",
+  "room.price.off": "تخفیف روز عادی",
+  "room.price.offPicTime": "تخفیف روز پیک",
+  "room.price.notPicTime": "روز عادی",
+  "room.price.picTime": "روز پیک",
+  "room.price.perRoom": "قیمت اتاق شب",
+  "room.price.offPerRoom": "تخفیف اتاق شب",
+  "room.maxCapacity": "حداکثر ظرفیت",
+  "room.minCapacity": "حداقل ظرفیت",
+
   /* 04.Dashboards */
   "dashboards.pending-orders": "سفارشات در انتظار تایید",
   "dashboards.completed-orders": "سفارشات تکمیل شده",

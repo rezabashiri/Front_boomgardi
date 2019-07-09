@@ -77,7 +77,9 @@ class HostForm extends Component {
       hostName: this.props.hostInfo.name,
       hostTell: this.props.hostInfo.tell,
       hostType: [],
-      selectedServices: [], //this.props.hostInfo.serviceList?this.props.hostInfo.serviceList : [],
+      selectedServices: this.props.hostInfo.serviceList
+        ? this.props.hostInfo.serviceList
+        : [],
       hostServices: [],
       hostTypeSelected: null,
       hostInformation: this.props.hostInfo.description
