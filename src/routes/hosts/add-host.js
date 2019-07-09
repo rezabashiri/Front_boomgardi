@@ -108,7 +108,12 @@ class FormsUi extends Component {
           />
         );
       case 3:
-        return <UploadForm attachId={this.state.guid} />;
+        return (
+          <UploadForm
+            attachId={this.state.guid}
+            onHandleComplete={this.handleComplete}
+          />
+        );
       default:
         return "مرحله تعریف نشده";
     }

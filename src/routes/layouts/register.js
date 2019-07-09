@@ -3,6 +3,18 @@ import IntlMessages from "Util/IntlMessages";
 import { Row, Card, CardTitle, Form, Label, Input } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import Button from "reactstrap-button-loader";
+import {
+  AvForm,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvField
+} from "availity-reactstrap-validation";
+import {
+  mobileValidation,
+  passwordValidation,
+  confirmPasswordValidation
+} from "../../constants/validations";
 
 import { Colxx } from "Components/CustomBootstrap";
 
@@ -17,8 +29,9 @@ class RegisterLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      userName: "",
       password: "",
+      confirmPassword: "",
       name: "",
       loading: 0
     };
@@ -31,16 +44,24 @@ class RegisterLayout extends Component {
     }
   }
   */
-  async submitRegister(event) {
+  async submitRegister(event, value) {
+    console.log("event", event);
+    console.log("value", value);
     event.preventDefault();
     try {
       this.setState({
         loading: 1
       });
-      let form = new FormData(event.target);
+      //let form = new FormData(value);
       let model = new registerModel();
       let service = new registerService();
-      form.forEach((value, key) => (model[key] = value));
+      //value.forEach((value, key) => (model[key] = value));
+      Object.keys(value).map(key => (model[key] = value[key]));
+
+      //model["userName"] = value.userName;
+      //model["password"] = value.password;
+      //model["confirmPassword"] = value.confirmPassword;
+      console.log(model);
       model["roles"] = "کاربر";
       if (model.password !== model.confirmPassword || model.password === "") {
         swal("پیغام", "رمز عبور با تایید رمز عبور برابر نیست", "warning");
@@ -97,20 +118,39 @@ class RegisterLayout extends Component {
                     <CardTitle className="mb-4">
                       <IntlMessages id="user.register" />
                     </CardTitle>
-                    <Form onSubmit={e => this.submitRegister(e)}>
+
+                    <AvForm
+                      onValidSubmit={async (e, v) =>
+                        await this.submitRegister(e, v)
+                      }
+                    >
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="userName" />
+                        <AvField
+                          name="userName"
+                          id="userName"
+                          validate={mobileValidation}
+                        />
                         <IntlMessages id="forms.mobile" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" name="password" />
+                        <AvField
+                          name="password"
+                          id="password"
+                          validate={passwordValidation}
+                          type="password"
+                        />
                         <IntlMessages
                           id="user.password"
                           defaultValue={this.state.password}
                         />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input type="password" name="confirmPassword" />
+                        <AvField
+                          name="confirmPassword"
+                          id="password"
+                          validate={confirmPasswordValidation}
+                          type="password"
+                        />
                         <IntlMessages id="user.password-confirm" />
                       </Label>
                       <div className="d-flex justify-content-end align-items-center">
@@ -129,7 +169,7 @@ class RegisterLayout extends Component {
                           <IntlMessages id="user.login-title" />
                         </NavLink>
                       </div>
-                    </Form>
+                    </AvForm>
                   </div>
                 </Card>
               </Colxx>

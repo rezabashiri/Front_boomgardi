@@ -9,6 +9,7 @@ import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import RoomForm from "./roomForm";
 import RoomUploadForm from "./roomUploadForm";
+import HostPriceForm from "./hostPriceForm";
 import roomService from "../../services/roomService.jsx";
 
 import {
@@ -52,6 +53,7 @@ class HostActions extends Component {
     this.toggleRoomModal = this.toggleRoomModal.bind(this);
     this.togglePicModal = this.togglePicModal.bind(this);
     this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
+    this.togglePriceModal = this.togglePriceModal.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -65,7 +67,8 @@ class HostActions extends Component {
       guid: null,
       roomModalOpen: false,
       picModalOpen: false,
-      confirmDeleteModalOpen: false
+      confirmDeleteModalOpen: false,
+      priceModalOpen: false
     };
   }
 
@@ -85,6 +88,11 @@ class HostActions extends Component {
       confirmDeleteModalOpen: !this.state.confirmDeleteModalOpen
     });
   }
+  togglePriceModal() {
+    this.setState({
+      priceModalOpen: !this.state.priceModalOpen
+    });
+  }
 
   handleOwnerUserId = userId => {
     this.setState({ ownerUserId: userId });
@@ -99,7 +107,12 @@ class HostActions extends Component {
     let result = await service.deleteRoom(guid);
 
     if (result.status === 204) {
-      await this.props.onGetRooms();
+      this.toggleDeleteModal();
+      await this.props.onGetRooms({
+        residenceId: this.props.roomInfo
+          ? this.props.residenceId.residenceId
+          : ""
+      });
     }
   }
   render() {
@@ -109,7 +122,6 @@ class HostActions extends Component {
           <DropdownToggle
             caret
             color="primary"
-            size="lg"
             outline
             className="top-right-button top-right-button-single"
           >
@@ -121,6 +133,9 @@ class HostActions extends Component {
             </DropdownItem>
             <DropdownItem onClick={this.togglePicModal}>
               <IntlMessages id="room.action.edit-roompic" />
+            </DropdownItem>
+            <DropdownItem onClick={this.togglePriceModal}>
+              <IntlMessages id="room.action.edit-price" />
             </DropdownItem>
             <DropdownItem
               onClick={
@@ -186,6 +201,18 @@ class HostActions extends Component {
               <IntlMessages id="room.action.confirm-no" />
             </Button>
           </ModalFooter>
+        </Modal>
+        <Modal
+          isOpen={this.state.priceModalOpen}
+          toggle={this.togglePriceModal}
+          size="lg"
+        >
+          <ModalHeader toggle={this.togglePriceModal}>
+            <IntlMessages id="room.action.price" />
+          </ModalHeader>
+          <ModalBody>
+            <HostPriceForm />
+          </ModalBody>
         </Modal>
       </Fragment>
     );

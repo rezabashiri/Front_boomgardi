@@ -112,7 +112,7 @@ class HostActions extends Component {
     return (
       <Fragment>
         <UncontrolledDropdown>
-          <DropdownToggle caret color="secondary" outline>
+          <DropdownToggle caret color="primary" outline>
             <IntlMessages id="host.action" />
           </DropdownToggle>
           <DropdownMenu>
@@ -198,6 +198,7 @@ class HostActions extends Component {
             <UploadForm
               attachId={this.props.hostInfo.guid}
               getHost={this.props.getHost}
+              onToggleModal={this.togglePicModal}
             />
           </ModalBody>
         </Modal>

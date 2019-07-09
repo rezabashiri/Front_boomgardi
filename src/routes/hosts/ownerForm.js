@@ -13,18 +13,18 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
   CardSubtitle
 } from "reactstrap";
-import Select from "react-select";
+import Button from "reactstrap-button-loader";
 
 import {
   AvForm,
   AvGroup,
   AvInput,
-  AvFeedback
+  AvFeedback,
+  AvField
 } from "availity-reactstrap-validation";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -33,6 +33,11 @@ import "rc-slider/assets/index.css";
 import "react-rater/lib/react-rater.css";
 import "react-fine-uploader/gallery/gallery.css";
 import registerService from "../../services/registerService.jsx";
+import {
+  mobileValidation,
+  codeMeliValidation,
+  nameValidation
+} from "../../constants/validations";
 
 class OwnerForm extends Component {
   constructor(props) {
@@ -41,7 +46,8 @@ class OwnerForm extends Component {
       firstName: null,
       lastName: null,
       mobile: null,
-      codeMeli: null
+      codeMeli: null,
+      loading: 0
     };
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
@@ -50,6 +56,9 @@ class OwnerForm extends Component {
     this.onOwnerSave = this.onOwnerSave.bind(this);
   }
   async onOwnerSave(event) {
+    this.setState({
+      loading: 1
+    });
     event.preventDefault();
     //let form = new FormData(event.target);
     let model = new userModel();
@@ -63,6 +72,9 @@ class OwnerForm extends Component {
     model["nationalCode"] = this.state.codeMeli;
     let result = await usrService.addUser(model);
     if (result.status === 201) {
+      this.setState({
+        loading: 0
+      });
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleOwnerUserId &&
         this.props.onHandleOwnerUserId(result.data.id);
@@ -108,23 +120,20 @@ class OwnerForm extends Component {
                   <IntlMessages id="menu.add-hostowner" />
                 </CardTitle>
 
-                <AvForm className="mb-5 row" onSubmit={this.onOwnerSave}>
+                <AvForm className="mb-5 row" onValidSubmit={this.onOwnerSave}>
                   <Colxx sm={6}>
                     <AvGroup>
                       <Label className="av-label" for="firstName">
                         <IntlMessages id="forms.firstname" />
                       </Label>
-                      <AvInput
+                      <AvField
                         className="form-control"
                         name="firstName"
                         id="firstName"
-                        required
+                        validate={nameValidation}
                         value={this.state.firstName}
                         onChange={this.handleChangeFirstName}
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.firstname-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
 
@@ -133,17 +142,13 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="lastName">
                         <IntlMessages id="forms.lastname" />
                       </Label>
-
-                      <AvInput
+                      <AvField
                         name="lastName"
                         id="lastName"
                         value={this.state.lastName}
                         onChange={this.handleChangeLastName}
-                        required
+                        validate={nameValidation}
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.lastname-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
 
@@ -152,16 +157,14 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="mobile">
                         <IntlMessages id="forms.mobile" />
                       </Label>
-                      <AvInput
+                      <AvField
                         name="mobile"
                         id="mobile"
                         value={this.state.mobile}
+                        validate={mobileValidation}
                         onChange={this.handleChangeMobile}
-                        required
+                        placeholder="به عنوان نام کاربری"
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.mobile-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
                   <Colxx sm={6}>
@@ -169,22 +172,26 @@ class OwnerForm extends Component {
                       <Label className="av-label" for="codeMeli">
                         <IntlMessages id="forms.codemeli" />
                       </Label>
-                      <AvInput
+                      <AvField
                         name="codeMeli"
                         id="codeMeli"
                         value={this.state.codeMeli}
                         onChange={this.handleChangeCodeMeli}
-                        required
+                        validate={codeMeliValidation}
+                        placeholder="به عنوان رمز عبور"
                       />
-                      <AvFeedback>
-                        <IntlMessages id="forms.codemeli-message" />
-                      </AvFeedback>
                     </AvGroup>
                   </Colxx>
 
                   <Colxx sm={12}>
                     <FormGroup>
-                      <Button color="primary">
+                      <Button
+                        color="primary"
+                        className="btn-shadow"
+                        size="lg"
+                        type="submit"
+                        loading={this.state.loading}
+                      >
                         <IntlMessages id="layouts.submit" />
                       </Button>
                     </FormGroup>

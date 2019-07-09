@@ -12,7 +12,6 @@ import {
   FormGroup,
   Label,
   CustomInput,
-  Button,
   FormText,
   Form,
   CardSubtitle,
@@ -21,7 +20,9 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import Button from "reactstrap-button-loader";
 import Select from "react-select";
+import CustomSelectInput from "Components/CustomSelectInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -29,8 +30,11 @@ import {
   AvForm,
   AvGroup,
   AvInput,
-  AvFeedback
+  AvFeedback,
+  AvField
 } from "availity-reactstrap-validation";
+
+import { tellValidation, nameValidation } from "../../constants/validations";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-switch/assets/index.css";
@@ -69,22 +73,33 @@ class HostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: 0,
       hostName: this.props.hostInfo.name,
       hostTell: this.props.hostInfo.tell,
       hostType: [],
+      selectedServices: this.props.hostInfo.serviceList
+        ? this.props.hostInfo.serviceList
+        : [],
+      hostServices: [],
       hostTypeSelected: null,
       hostInformation: this.props.hostInfo.description
+        ? this.props.hostInfo.description
+        : ""
     };
     this.handleHostTellChange = this.handleHostTellChange.bind(this);
     this.addHost = this.addHost.bind(this);
+    this.getHostType = this.getHostType.bind(this);
+    this.getServices = this.getServices.bind(this);
     this.handleHostTypeChange = this.handleHostTypeChange.bind(this);
     this.handleHostNameChange = this.handleHostNameChange.bind(this);
     this.handleChangeHostInformation = this.handleChangeHostInformation.bind(
       this
     );
+    this.handleAddService = this.handleAddService.bind(this);
   }
   async componentDidMount() {
     this.getHostType();
+    this.getServices();
     this.setState({
       hostTypeSelected: {
         value: this.props.hostInfo.residencyTypeId,
@@ -93,11 +108,6 @@ class HostForm extends Component {
     });
   }
 
-  toggleAddressModal() {
-    this.setState({
-      addressModal: !this.state.addressModal
-    });
-  }
   async getHostType() {
     var typeService = new hostService();
     let hostTypes = await typeService.getHostType();
@@ -109,7 +119,21 @@ class HostForm extends Component {
     });
   }
 
+  async getServices() {
+    var typeService = new hostService();
+    let hostServices = await typeService.getServices("residency");
+    let newHostServices = hostServices.map((service, index) => {
+      return { label: service.name, value: service.id };
+    });
+    this.setState({
+      hostServices: newHostServices
+    });
+  }
+
   async addHost() {
+    this.setState({
+      loading: 1
+    });
     var service = new hostService();
     var model = new hostModel();
     model["name"] = this.state.hostName;
@@ -118,8 +142,17 @@ class HostForm extends Component {
     model["ownerUserId"] = this.props.ownerUserId;
     model["guid"] = this.props.hostInfo.guid;
     model["description"] = this.state.hostInformation;
+    /*
+    let services = this.state.selectedServices.map((service, index) => {
+      return { name: service.label, id: service.value };
+    });*/
+
+    model["serviceList"] = this.state.selectedServices;
     let result = await service.addHost(model);
     if (result.status === 201) {
+      this.setState({
+        loading: 0
+      });
       this.props.onHandleComplete && this.props.onHandleComplete();
       this.props.onHandleGuId && this.props.onHandleGuId(result.data.guid);
       this.props.getHost && this.props.getHost();
@@ -127,6 +160,9 @@ class HostForm extends Component {
     }
   }
 
+  handleAddService = selectedServices => {
+    this.setState({ selectedServices });
+  };
   handleHostTellChange(e) {
     this.setState({ hostTell: e.target.value });
   }
@@ -150,18 +186,19 @@ class HostForm extends Component {
                 <CardTitle>
                   <IntlMessages id="menu.add-hostdata" />
                 </CardTitle>
-                <AvForm>
+                <AvForm onValidSubmit={this.addHost}>
                   <AvGroup row>
                     <Colxx sm={4}>
                       <AvGroup>
                         <Label className="av-label" for="hostName">
                           <IntlMessages id="forms.host-name" />
                         </Label>
-                        <AvInput
+                        <AvField
                           name="hostName"
                           id="hostName"
                           value={this.state.hostName}
                           onChange={this.handleHostNameChange}
+                          validate={nameValidation}
                           required
                         />
                         <AvFeedback>
@@ -174,12 +211,12 @@ class HostForm extends Component {
                         <Label className="av-label">
                           <IntlMessages id="forms.phone" />
                         </Label>
-                        <AvInput
+                        <AvField
                           name="phone"
                           id="phone"
                           value={this.state.hostTell}
                           onChange={this.handleHostTellChange}
-                          required
+                          validate={tellValidation}
                         />
                       </AvGroup>
                       <AvFeedback>
@@ -196,10 +233,28 @@ class HostForm extends Component {
                           options={this.state.hostType}
                           onChange={this.handleHostTypeChange}
                           value={this.state.hostTypeSelected}
+                          required
                         />
                         <AvFeedback>
                           <IntlMessages id="forms.hosttype-message" />
                         </AvFeedback>
+                      </AvGroup>
+                    </Colxx>
+                    <Colxx sm={12}>
+                      <AvGroup>
+                        <Label className="av-label" for="hostServices">
+                          <IntlMessages id="forms.host-services" />
+                        </Label>
+                        <Select
+                          components={{ Input: CustomSelectInput }}
+                          className="react-select"
+                          classNamePrefix="react-select"
+                          isMulti
+                          name="form-field-name"
+                          value={this.state.selectedServices}
+                          onChange={this.handleAddService}
+                          options={this.state.hostServices}
+                        />
                       </AvGroup>
                     </Colxx>
                     <Colxx sm={12}>
@@ -217,8 +272,13 @@ class HostForm extends Component {
                       </AvGroup>
                     </Colxx>
                   </AvGroup>
-
-                  <Button onClick={this.addHost} color="primary">
+                  <Button
+                    color="primary"
+                    className="btn-shadow"
+                    size="lg"
+                    type="submit"
+                    loading={this.state.loading}
+                  >
                     <IntlMessages id="layouts.submit" />
                   </Button>
                 </AvForm>

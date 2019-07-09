@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
 import { Row, Card, CardTitle, Form, Label, Input } from "reactstrap";
-import Button from 'reactstrap-button-loader';
+import Button from "reactstrap-button-loader";
 import { NavLink } from "react-router-dom";
 
 import { Colxx } from "Components/CustomBootstrap";
@@ -13,6 +13,17 @@ import userService from "../../services/userService.jsx";
 import userModel from "../../models/userModel.jsx";
 import { getJwt } from "../../helpers/Jwt.js";
 import swal from "sweetalert";
+import {
+  AvForm,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvField
+} from "availity-reactstrap-validation";
+import {
+  mobileValidation,
+  passwordValidation
+} from "../../constants/validations";
 
 class LoginLayout extends Component {
   constructor(props) {
@@ -20,7 +31,7 @@ class LoginLayout extends Component {
     this.state = {
       email: "",
       password: "",
-      loading:0
+      loading: 0
     };
   }
   /*
@@ -31,36 +42,31 @@ class LoginLayout extends Component {
   }
   */
 
-  async onUserLogin(event) {
+  async onUserLogin(event, value) {
     event.preventDefault();
     this.setState({
-      loading:1
-    })
+      loading: 1
+    });
     var srv = new userService();
 
     var user = new userModel();
-    const data = new FormData(event.target);
+    /*const data = new FormData(event.target);
     data.forEach((value, key) => {
       user[key] = value;
-    });
-    try
-    {
-        await srv.getToken(user);
-        if (getJwt() !== null) this.props.history.push("app");
-      
-    }
-   catch(e)
-   {
-      console.log(e)
+    });*/
+    Object.keys(value).map(key => (user[key] = value[key]));
+
+    try {
+      await srv.getToken(user);
+      if (getJwt() !== null) this.props.history.push("app");
+    } catch (e) {
+      console.log(e);
       swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
-   }
-   finally
-   {
-     this.setState({
-       loading:0
-     })
-   }
-   
+    } finally {
+      this.setState({
+        loading: 0
+      });
+    }
   }
 
   componentDidMount() {
@@ -90,13 +96,26 @@ class LoginLayout extends Component {
                     <CardTitle className="mb-4">
                       <IntlMessages id="user.login-title" />
                     </CardTitle>
-                    <Form onSubmit={e => this.onUserLogin(e)}>
+                    <AvForm
+                      onValidSubmit={async (e, v) =>
+                        await this.onUserLogin(e, v)
+                      }
+                    >
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="userName" />
+                        <AvField
+                          name="userName"
+                          id="userName"
+                          validate={mobileValidation}
+                        />
                         <IntlMessages id="forms.mobile" />
                       </Label>
                       <Label className="form-group has-float-label mb-4">
-                        <Input name="password" type="password" />
+                        <AvField
+                          name="password"
+                          id="password"
+                          validate={passwordValidation}
+                          type="password"
+                        />
                         <IntlMessages
                           id="user.password"
                           defaultValue={this.state.password}
@@ -121,7 +140,7 @@ class LoginLayout extends Component {
                           <IntlMessages id="user.register" />
                         </NavLink>
                       </div>
-                    </Form>
+                    </AvForm>
                   </div>
                 </Card>
               </Colxx>
