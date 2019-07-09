@@ -167,12 +167,14 @@ export default class HostPage extends Component {
                             {this.state.hostInfo.serviceList &&
                               this.state.hostInfo.serviceList.map(
                                 (service, index) => {
-                                  <Badge
-                                    color="outline-secondary mb-1 mr-1"
-                                    pill
-                                  >
-                                    {service.label}
-                                  </Badge>;
+                                  return (
+                                    <Badge
+                                      color="outline-primary mb-1 mr-1"
+                                      pill
+                                    >
+                                      {service.label}
+                                    </Badge>
+                                  );
                                 }
                               )}
                           </p>
