@@ -11,6 +11,15 @@ export default class hostService {
       return response.data;
     } catch (e) {}
   }
+  async getServices(type) {
+    try {
+      let response = await apiContext().get(
+        serverConfig.servicesUrl + "?type=" + type
+      );
+      return response.data;
+    } catch (e) {}
+  }
+
   async getRoomType() {
     try {
       let response = await apiContext().get(

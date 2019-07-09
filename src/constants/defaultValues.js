@@ -29,7 +29,8 @@ export const serverConfig = {
   hostTypeUrl: "residency/residencytype",
   hostUrl: "residency/host",
   unitUrl: "residency/residencyunit",
-  picUrl: "common/Attachment"
+  picUrl: "common/Attachment",
+  servicesUrl: "common/PersisService"
 };
 
 const authConfig = {

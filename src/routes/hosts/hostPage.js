@@ -43,20 +43,7 @@ import { Colxx } from "Components/CustomBootstrap";
 import { BreadcrumbItems } from "Components/BreadcrumbContainer";
 
 import classnames from "classnames";
-const images = [
-  {
-    original:
-      "http://persis.moroorgaran.com//uploads/host/8d6fa288d0c2ab6/boomgardi-nayeb.jpg",
-    thumbnail:
-      "http://persis.moroorgaran.com//uploads/host/8d6fa288d0c2ab6/boomgardi-nayeb.jpg"
-  },
-  {
-    original:
-      "http://persis.moroorgaran.com//uploads/host/8d6fa288d0c2ab6/بدون عنوان.bmp",
-    thumbnail:
-      "http://persis.moroorgaran.com//uploads/host/8d6fa288d0c2ab6/بدون عنوان.bmp"
-  }
-];
+
 export default class HostPage extends Component {
   constructor(props) {
     super(props);
@@ -161,13 +148,6 @@ export default class HostPage extends Component {
                             __html: this.state.hostInfo.description
                           }}
                         />
-                        <p className="mb-3">
-                          اقامتگاه با محیطی دلنشین همراه با گشت جاذبه های دیدنی
-                          اطراف
-                          <br />
-                          <br /> گشت منطقه و سرویس ناهار و شام ارگانیک
-                        </p>
-
                         <p className="text-muted text-small mb-2">
                           <IntlMessages id="forms.address" />
                         </p>
@@ -184,18 +164,17 @@ export default class HostPage extends Component {
                         </p>
                         <div className="mb-3">
                           <p className="d-sm-inline-block mb-1">
-                            <Badge color="outline-secondary mb-1 mr-1" pill>
-                              بومگردی
-                            </Badge>
-                            <Badge color="outline-secondary mb-1 mr-1" pill>
-                              پارکینگ
-                            </Badge>
-                            <Badge color="outline-secondary mb-1 mr-1" pill>
-                              تورهای محلی
-                            </Badge>
-                            <Badge color="outline-secondary mb-1 mr-1" pill>
-                              غذای محلی
-                            </Badge>
+                            {this.state.hostInfo.serviceList &&
+                              this.state.hostInfo.serviceList.map(
+                                (service, index) => {
+                                  <Badge
+                                    color="outline-secondary mb-1 mr-1"
+                                    pill
+                                  >
+                                    {service.label}
+                                  </Badge>;
+                                }
+                              )}
                           </p>
                         </div>
                         <p className="text-muted text-small mb-2">

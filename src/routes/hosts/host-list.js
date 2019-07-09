@@ -540,7 +540,7 @@ class HostList extends Component {
                             pill
                             className="position-absolute badge-top-right"
                           >
-                            {host.residenceType}
+                            {host.type}
                           </Badge>
                         </div>
                         <CardBody>
@@ -591,7 +591,7 @@ class HostList extends Component {
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                             <p
-                              className="list-item-heading mb-1 truncate"
+                              className="list-item-heading mb-1 truncate w-15"
                               onClick={() => {
                                 this.props.history.push({
                                   pathname: "/app/hosts/hostpage",
@@ -603,9 +603,8 @@ class HostList extends Component {
                             >
                               {host.name}
                             </p>
-
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {host.residenceType}
+                              {host.type}
                             </p>
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               استان:{host.address.ostanName}
@@ -652,7 +651,7 @@ class HostList extends Component {
                         <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                             <p
-                              className="list-item-heading mb-1 truncate"
+                              className="list-item-heading mb-1 truncate w-15"
                               onClick={() => {
                                 this.props.history.push({
                                   pathname: "/app/hosts/hostpage",
@@ -666,7 +665,7 @@ class HostList extends Component {
                             </p>
 
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              {host.residenceType}
+                              {host.type}
                             </p>
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
                               استان:{host.address.ostanName}

@@ -52,14 +52,13 @@ class RoomList extends Component {
     this.toggleDisplayOptions = this.toggleDisplayOptions.bind(this);
     this.getIndex = this.getIndex.bind(this);
     this.getRoom = this.getRoom.bind(this);
-    //this.getHostOstan = this.getHostOstan.bind(this);
 
     this.state = {
       displayMode: "thumblist",
       pageSizes: [10, 20, 30, 50, 100],
       selectedPageSize: 10,
-      hostTypes: [],
-      hostTypesFilterOption: { column: "", label: "" },
+      roomTypes: [],
+      roomTypesFilterOption: { column: "", label: "" },
       ostanList: [],
       ostanFilterOptions: {},
       currentPage: 1,
@@ -96,8 +95,10 @@ class RoomList extends Component {
   toggleDisplayOptions() {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
-  async filterByHostType(lable) {
+  async filterByRoomType(lable) {
     let newfilter = this.state.filterParams;
+    console.log("lable", lable);
+    console.log("roomtypes", this.state.roomTypes);
     newfilter.residencyTypeId = lable;
     await this.setState({
       filterParams: newfilter
@@ -105,7 +106,7 @@ class RoomList extends Component {
 
     this.setState(
       {
-        hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
+        roomTypesFilterOption: this.state.roomTypes.find(x => x.lable === lable)
       },
       () => this.getRoom(this.state.filterParams)
     );
@@ -254,32 +255,32 @@ class RoomList extends Component {
   }
   async componentDidMount() {
     this.getRoom(this.state.filterParams);
-    this.getHostType();
+    this.getRoomType();
     //this.getOstanList();
     //this.dataListRender();
   }
   // getRoom = async filter => {
   async getRoom(filterObject) {
-    console.log("this is get room method");
     var service = new roomService();
     let result = await service.getRooms(filterObject);
-    console.log("this is roomlist result:" + result);
-    this.setState({ rooms: result });
-    this.setState({
-      totalPage: 1,
-      selectedItems: [],
-      totalItemCount: this.state.rooms.length,
-      isLoading: true
-    });
+    if (result !== undefined) {
+      this.setState({ rooms: result });
+      this.setState({
+        totalPage: 1,
+        selectedItems: [],
+        totalItemCount: this.state.rooms.length,
+        isLoading: true
+      });
+    }
   }
-  async getHostType() {
+  async getRoomType() {
     var typeService = new hostService();
-    let hostTypes = await typeService.getHostType();
-    let newHostType = hostTypes.map(c => {
-      return { column: c.name, lable: c.id };
+    let roomTypes = await typeService.getRoomType();
+    let newRoomType = roomTypes.map(c => {
+      return { label: c.name, value: c.id };
     });
     this.setState({
-      hostTypes: newHostType
+      roomTypes: newRoomType
     });
   }
   /*
@@ -421,25 +422,25 @@ class RoomList extends Component {
                     <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                       <DropdownToggle caret color="outline-dark" size="xs">
                         <IntlMessages id="layouts.filter.hosttype" />
-                        {this.state.hostTypesFilterOption &&
-                          this.state.hostTypesFilterOption.column}
+                        {this.state.roomTypesFilterOption &&
+                          this.state.roomTypesFilterOption.column}
                       </DropdownToggle>
                       <DropdownMenu down>
                         <DropdownItem
                           key="0"
-                          onClick={() => this.filterByHostType("")}
+                          onClick={() => this.filterByRoomType("")}
                         >
                           <IntlMessages id="layouts.filter.select" />
                         </DropdownItem>
-                        {this.state.hostTypes.map((hostType, index) => {
+                        {this.state.roomTypes.map((roomType, index) => {
                           return (
                             <DropdownItem
                               key={index + 1}
                               onClick={() =>
-                                this.filterByHostType(hostType.lable)
+                                this.filterByRoomType(roomType.value)
                               }
                             >
-                              {hostType.column}
+                              {roomType.label}
                             </DropdownItem>
                           );
                         })}
@@ -598,13 +599,18 @@ class RoomList extends Component {
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                             <NavLink
                               to={`?p=${room.id}`}
-                              className="w-40 w-sm-100"
+                              className="w-15 w-sm-100"
                             >
                               <p className="list-item-heading mb-1 truncate">
                                 {room.name}
                               </p>
                             </NavLink>
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-capacity" />
+                              {": "}
+                              {room.capacity}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-30 w-sm-100">
                               <IntlMessages id="forms.room-detail" />
                               {": "}
                               {room.description}
@@ -613,12 +619,6 @@ class RoomList extends Component {
                               <IntlMessages id="forms.room-type" />
                               {": "}
                               {room.type}
-                            </p>
-
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              <IntlMessages id="forms.room-capacity" />
-                              {": "}
-                              {room.capacity}
                             </p>
                             <RoomActions
                               roomInfo={room}
@@ -659,14 +659,18 @@ class RoomList extends Component {
                           <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                             <NavLink
                               to={`?name=${room.name}`}
-                              className="w-40 w-sm-100"
+                              className="w-15 w-sm-100"
                             >
                               <p className="list-item-heading mb-1 truncate">
                                 {room.name}
                               </p>
                             </NavLink>
-
                             <p className="mb-1 text-muted text-small w-15 w-sm-100">
+                              <IntlMessages id="forms.room-capacity" />
+                              {": "}
+                              {room.capacity}
+                            </p>
+                            <p className="mb-1 text-muted text-small w-30 w-sm-100">
                               <IntlMessages id="forms.room-detail" />
                               {": "}
                               {room.description}
@@ -675,12 +679,6 @@ class RoomList extends Component {
                               <IntlMessages id="forms.room-type" />
                               {": "}
                               {room.type}
-                            </p>
-
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              <IntlMessages id="forms.room-capacity" />
-                              {": "}
-                              {room.capacity}
                             </p>
                             <RoomActions
                               roomInfo={room}

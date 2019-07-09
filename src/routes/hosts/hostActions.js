@@ -112,7 +112,7 @@ class HostActions extends Component {
     return (
       <Fragment>
         <UncontrolledDropdown>
-          <DropdownToggle caret color="secondary" outline>
+          <DropdownToggle caret color="primary" outline>
             <IntlMessages id="host.action" />
           </DropdownToggle>
           <DropdownMenu>
