@@ -102,8 +102,8 @@ class HostForm extends Component {
     this.getServices();
     this.setState({
       hostTypeSelected: {
-        value: this.props.hostInfo.residencyTypeId,
-        label: this.props.hostInfo.residenceType
+        value: this.props.hostInfo.typeId,
+        label: this.props.hostInfo.type
       }
     });
   }
