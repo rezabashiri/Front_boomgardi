@@ -138,7 +138,7 @@ class HostForm extends Component {
     var model = new hostModel();
     model["name"] = this.state.hostName;
     model["tell"] = this.state.hostTell;
-    model["residencyTypeId"] = this.state.hostTypeSelected.value;
+    model["typeId"] = this.state.hostTypeSelected.value;
     model["ownerUserId"] = this.props.ownerUserId;
     model["guid"] = this.props.hostInfo.guid;
     model["description"] = this.state.hostInformation;

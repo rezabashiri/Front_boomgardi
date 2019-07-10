@@ -175,6 +175,8 @@ module.exports = {
   "room.price.offPerRoom": "تخفیف اتاق شب",
   "room.maxCapacity": "حداکثر ظرفیت",
   "room.minCapacity": "حداقل ظرفیت",
+  "room.action.edit-calendar": "ویرایش تقویم",
+  "room.action.calendar": "تقویم اتاق",
 
   /* 04.Dashboards */
   "dashboards.pending-orders": "سفارشات در انتظار تایید",

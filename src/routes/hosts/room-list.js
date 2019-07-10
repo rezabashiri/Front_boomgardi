@@ -567,8 +567,21 @@ class RoomList extends Component {
                               <CardText className="text-muted text-small mb-0 font-weight-light">
                                 {room.type}
                               </CardText>
-                              <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {room.services}
+                              <CardText
+                                hidden
+                                className="text-muted text-small mb-0 font-weight-light"
+                              >
+                                {room.serviceList &&
+                                  room.serviceList.map((service, index) => {
+                                    return (
+                                      <Badge
+                                        color="outline-primary mb-1 mr-1"
+                                        pill
+                                      >
+                                        {service.label}
+                                      </Badge>
+                                    );
+                                  })}
                               </CardText>
                             </Colxx>
                           </Row>
