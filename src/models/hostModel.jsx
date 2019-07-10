@@ -1,7 +1,7 @@
 let name = Symbol("name");
 let tell = Symbol("tell");
 let address = Symbol("address");
-let residencyTypeId = Symbol("residencyTypeId");
+let typeId = Symbol("typeId");
 let ownerUserId = Symbol("ownerUserId");
 let guid = Symbol("guid");
 let description = Symbol("description");
@@ -17,8 +17,8 @@ export default class hostModel {
   set address(val) {
     this[address] = val;
   }
-  set residencyTypeId(val) {
-    this[residencyTypeId] = val;
+  set typeId(val) {
+    this[typeId] = val;
   }
   set ownerUserId(val) {
     this[ownerUserId] = val;
@@ -38,7 +38,7 @@ export default class hostModel {
       name: this[name],
       tell: this[tell],
       address: this[address],
-      residencyTypeId: this[residencyTypeId],
+      typeId: this[typeId],
       ownerUserId: this[ownerUserId],
       guid: this[guid],
       description: this[description],
