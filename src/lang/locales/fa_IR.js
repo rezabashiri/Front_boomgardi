@@ -45,7 +45,7 @@ module.exports = {
   "user.email": "پست الکترونیک",
   "user.password": "رمز عبور",
   "user.password-confirm": "تکرار رمز عبور",
-  "user.forgot-password-question": "فراموشی رمز عبور؟",
+  "user.forgot-password-question": "بازیابی رمز عبور",
   "user.fullname": "نام کامل",
   "user.login-button": "ورود",
   "user.register-button": "ثبت نام",

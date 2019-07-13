@@ -34,7 +34,7 @@ export default class Register extends Component {
     };
   }
   async submitRegister(event, value) {
-    event.preventDefault();
+    event.persist();
     try {
       this.setState({
         loading: 1
@@ -58,11 +58,10 @@ export default class Register extends Component {
           "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
           "success"
         ).then(() => {
-          this.props.history.push("login");
+          this.props.onChangeView && this.props.onChangeView("login");
         });
       }
     } catch (e) {
-      console.log(e);
       swal(
         "پیغام",
         "خطا : ثبت نام انجام نشد" + e.response.data.message,
@@ -128,7 +127,12 @@ export default class Register extends Component {
                   </Button>
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
-                  <a onClick={() => this.props.onChangeView("login")}>
+                  <a
+                    onClick={() =>
+                      this.props.onChangeView &&
+                      this.props.onChangeView("login")
+                    }
+                  >
                     {" "}
                     <IntlMessages id="user.login-title" />
                   </a>

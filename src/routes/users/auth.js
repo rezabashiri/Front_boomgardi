@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import IntlMessages from "Util/IntlMessages";
+import { NavLink } from "react-router-dom";
 
 import Register from "./register";
 import Login from "./login";
@@ -19,18 +20,19 @@ export default class Auth extends Component {
   constructor(props) {
     super(props);
 
-    this.toggleRegisterModal = this.toggleRegisterModal.bind(this);
+    this.toggleAuthModal = this.toggleAuthModal.bind(this);
     this.changeView = this.changeView.bind(this);
 
     this.state = {
-      registerModalOpen: false,
+      authModalOpen: false,
       view: "login"
     };
   }
-  toggleRegisterModal() {
+  toggleAuthModal() {
     this.setState({
-      registerModalOpen: !this.state.registerModalOpen
+      authModalOpen: !this.state.authModalOpen
     });
+    console.log("we are hereee");
   }
   changeView(view) {
     this.setState({
@@ -45,26 +47,35 @@ export default class Auth extends Component {
           <a
             className="btn btn-outline-primary btn-sm mb-2 mr-3"
             target="_top"
-            onClick={this.toggleRegisterModal}
+            onClick={this.toggleAuthModal}
           >
             <IntlMessages id="user.register-login" />
           </a>
         </div>
         <Modal
-          isOpen={this.state.registerModalOpen}
-          toggle={this.toggleRegisterModal}
+          isOpen={this.state.authModalOpen}
+          toggle={this.toggleAuthModal}
           size="lg"
         >
-          <ModalHeader toggle={this.toggleRegisterModal} />
+          <ModalHeader toggle={this.toggleAuthModal} />
           <ModalBody>
             {this.state.view === "login" && (
-              <Login onChangeView={this.changeView} />
+              <Login
+                onChangeView={this.changeView}
+                onToggleModal={this.toggleAuthModal}
+              />
             )}
             {this.state.view === "register" && (
-              <Register onChangeView={this.changeView} />
+              <Register
+                onChangeView={this.changeView}
+                onToggleModal={this.toggleAuthModal}
+              />
             )}
             {this.state.view === "forgot" && (
-              <ForgotPassword onChangeView={this.changeView} />
+              <ForgotPassword
+                onChangeView={this.changeView}
+                onToggleModal={this.toggleAuthModal}
+              />
             )}
           </ModalBody>
         </Modal>

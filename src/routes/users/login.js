@@ -32,7 +32,7 @@ export default class Login extends Component {
     };
   }
   async onUserLogin(event, value) {
-    event.preventDefault();
+    event.persist();
     this.setState({
       loading: 1
     });
@@ -44,7 +44,10 @@ export default class Login extends Component {
 
     try {
       await srv.getToken(user);
-      if (getJwt() !== null) this.props.history.push("app");
+      if (getJwt() !== null) {
+        this.props.onToggleModal();
+      }
+      //this.props.history.push("app");
       else swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
     } catch (e) {
       console.log(e);
@@ -67,6 +70,7 @@ export default class Login extends Component {
               </CardTitle>
               <AvForm
                 onValidSubmit={async (e, v) => await this.onUserLogin(e, v)}
+                autoComplete="off"
               >
                 <Label className="form-group has-float-label mb-4">
                   <AvField
@@ -93,7 +97,12 @@ export default class Login extends Component {
                   className="d-flex justify-content-between align-items-center"
                 >
                   <div className="d-flex justify-content-between align-items-center">
-                    <a onClick={() => this.props.onChangeView("forgot")}>
+                    <a
+                      onClick={() =>
+                        this.props.onChangeView &&
+                        this.props.onChangeView("forgot")
+                      }
+                    >
                       {" "}
                       <IntlMessages id="user.forgot-password-question" />
                     </a>
@@ -110,7 +119,12 @@ export default class Login extends Component {
                   </Button>
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
-                  <a onClick={() => this.props.onChangeView("register")}>
+                  <a
+                    onClick={() =>
+                      this.props.onChangeView &&
+                      this.props.onChangeView("register")
+                    }
+                  >
                     {" "}
                     <IntlMessages id="user.register" />
                   </a>
