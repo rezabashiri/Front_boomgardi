@@ -40,6 +40,7 @@ module.exports = {
   /* 02.User Login, Logout, Register */
   "user.login-title": "ورود",
   "user.register": "ثبت نام",
+  "user.register-login": "ثبت نام/ورود",
   "user.forgot-password": "فراموشی رمز عبور",
   "user.email": "پست الکترونیک",
   "user.password": "رمز عبور",
@@ -48,7 +49,7 @@ module.exports = {
   "user.fullname": "نام کامل",
   "user.login-button": "ورود",
   "user.register-button": "ثبت نام",
-  "user.reset-password-button": "بازنشانی رمز عبور",
+  "user.reset-password-button": "بازیابی رمز عبور",
   "user.buy": "خرید",
   "user.username": "نام کاربری",
 
