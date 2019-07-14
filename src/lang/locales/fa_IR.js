@@ -670,26 +670,31 @@ module.exports = {
   "lp.menu.signin": "ثبت نام",
   "lp.menu.signup": "ثبت نام",
   "lp.menu.reviews": "بازنگری",
+  "lp.menu.home": "صفحه اصلی",
+  "lp.menu.hosts": "اقامتگاه‌ها",
+  "lp.menu.hosts.add": "ثبت اقامتگاه",
+  "lp.menu.hosts.list": "جستجو اقامتگاه",
+  "lp.menu.hosts.units": "زیرواحدهای اقامتی",
+  "lp.menu.tours": "تورها",
+  "lp.menu.tourleaders": "تورلیدرها",
+  "lp.menu.ajans": "آژانس‌ها",
 
-  "lp.hero.line-1": "جادو اینجاست",
-  "lp.hero.line-2": "در جزئیات",
-  "lp.hero.detail-line-1":
-    "Gogo ترکیبی از طراحی خوب، کد کیفیت و توجه به جزئیات است.",
-  "lp.hero.detail-line-2":
-    "ما از همان زبان طراحی برای اجزای، طرح بندی، برنامه ها و سایر قسمت های موضوع استفاده کردیم.",
-  "lp.hero.detail-line-3": "امیدواریم لذت ببرید!",
-  "lp.hero.register": "همین حالا ثبت نام کنید",
+  "lp.hero.line-1": "پرسیس تور",
+  "lp.hero.line-2": "ارائه دهنده انواع خدمات گردشگری ",
+  "lp.hero.detail-line-1": "اقامتگاه‌های بومگردی،تور، لیدر و ...",
+  "lp.hero.detail-line-2": "",
+  "lp.hero.detail-line-3": "",
+  "lp.hero.register": "جستجو اقامتگاه",
 
-  "lp.featurecarousel.title-1": "طراحی با شکوه",
-  "lp.featurecarousel.detail-1": "اصول تجربه کاربر در قلب فرآیند طراحی.",
+  "lp.featurecarousel.title-1": "تجربه سفرهای خاطره انگیز",
+  "lp.featurecarousel.detail-1": "بومگردی، عشایری، روستایی و کپری",
+
   "lp.featurecarousel.title-2": "نمودارهای فوق العاده",
-  "lp.featurecarousel.detail-2":
-    "نمودارها که به نظر می رسد با رنگ، کدورت، مرز و سایه خوب است.",
+  "lp.featurecarousel.detail-2": "انواع تورهای طبیعت گردی و هیجان انگیز",
   "lp.featurecarousel.title-3": "منو با دو پنل",
-  "lp.featurecarousel.detail-3":
-    "منوی دو بخش که خوب به نظر می رسد و کار خوبی هم می کند.",
+  "lp.featurecarousel.detail-3": "آژانس‌های مسافرتی در شهرهای مختلف",
   "lp.featurecarousel.title-4": "طرح بندی برای کاریابی",
-  "lp.featurecarousel.detail-4": "بسیاری از پوسته های مختلف برای وظایف مختلف.",
+  "lp.featurecarousel.detail-4": "انوع لیدرهای مجرب محلی و غیر محلی",
   "lp.featurecarousel.title-5": "فوق العاده ریسپانسیو",
   "lp.featurecarousel.detail-5":
     "تجربیات بهتر برای صفحه نمایش کوچک و بزرگ از طریق xxl و xxs.",
@@ -773,7 +778,8 @@ module.exports = {
   "lp.footer.menu-4-1": "امنیت",
   "lp.footer.menu-4-2": "حریم خصوصی",
   "lp.footer.menu-4-3": "کوکی ها",
-  "lp.footer.copyright": "2018 © SarinSoft",
+  "lp.footer.copyright":
+    "کلیه حقوق مادی و معنوی برای آژانس گردشگری پرسیس محفوظ است",
 
   "lp.blogsection.title": "آخرین های بلاگ",
   "lp.blogsection.detail":

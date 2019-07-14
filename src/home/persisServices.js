@@ -5,7 +5,7 @@ import IntlMessages from "Util/IntlMessages";
 import { Colxx } from "Components/CustomBootstrap";
 import ReactSiemaCarousel from "Components/ReactSiema/ReactSiemaCarousel";
 
-export default class SectionFeatureCarousel extends React.Component {
+export default class PersisServices extends React.Component {
   render() {
     return (
       <Row>

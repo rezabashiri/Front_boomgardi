@@ -4,7 +4,7 @@ import { Row } from "reactstrap";
 import IntlMessages from "Util/IntlMessages";
 import { Colxx } from "Components/CustomBootstrap";
 
-export default class SectionHeroHome extends React.Component {
+export default class SearchHost extends React.Component {
   constructor(props) {
     super(props);
   }
