@@ -252,7 +252,7 @@ class HostList extends Component {
     return false;
   }
   async componentDidMount() {
-    this.getHost();
+    this.getHost(this.state.filterParams);
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
@@ -301,7 +301,7 @@ class HostList extends Component {
         <div className="disable-text-selection">
           <Row>
             <Colxx xxs="12">
-              <div className="mb-2">
+              <div hidden className="mb-2">
                 <h1>
                   <IntlMessages id="menu.host-list" />
                 </h1>

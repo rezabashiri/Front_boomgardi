@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from "react";
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import { Container, Row } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { MenuMultipage, MenuMultipageMobile } from "./menu";
-import SearchHost from "./searchHost";
-import PersisServices from "./persisServices";
+import Home from "./home";
+//import HostList from "./../routes/hosts/host-list";
+import SearchHostResult from "./hostList";
 import Footer from "./footer";
 import Headroom from "react-headroom";
 import scrollToComponent from "react-scroll-to-component";
@@ -19,7 +21,7 @@ const mapStateToProps = ({ landingPage }) => {
   return { isMobileMenuOpen };
 };
 
-class Home extends Component {
+class LP extends Component {
   constructor(props) {
     super(props);
     this.onMenuClick = this.onMenuClick.bind(this);
@@ -52,6 +54,8 @@ class Home extends Component {
   }
 
   render() {
+    //const { match, containerClassnames } = this.props;
+    //console.log("url", match.url);
     return (
       <Fragment>
         <div
@@ -82,30 +86,11 @@ class Home extends Component {
                 this.home = x;
               }}
             >
-              <div className="section home">
-                <Container>
-                  <SearchHost />
-                  <PersisServices />
-                  <Row>
-                    <NavLink
-                      id="homeCircleButton"
-                      className="btn btn-circle btn-outline-semi-light hero-circle-button"
-                      to="#"
-                      onClick={event => this.onMenuClick("features", event)}
-                    >
-                      <i className="simple-icon-arrow-down" />
-                    </NavLink>
-                  </Row>
-                </Container>
-              </div>
-              <div
-                className="section"
-                ref={x => {
-                  this.features = x;
-                }}
-              >
-                <Container />
-              </div>
+              <Switch>
+                <Route path={`/home`} component={Home} />
+                <Route path={`/hosts`} component={SearchHostResult} />
+                <Redirect to="/error" />
+              </Switch>
               <div className="section footer mb-0">
                 <Footer onClick={this.onMenuClick} />
               </div>
@@ -119,4 +104,4 @@ class Home extends Component {
 export default connect(
   mapStateToProps,
   { landingPageMobileMenuToggle, landingPageMobileMenuClose }
-)(injectIntl(Home));
+)(injectIntl(LP));

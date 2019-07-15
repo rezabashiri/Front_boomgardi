@@ -26,7 +26,7 @@ export class MenuMultipage extends Component {
         </NavLink>
         <Nav className="navbar-nav d-none d-lg-flex flex-row">
           <NavItem className={window.location.pathname === "" ? "active" : ""}>
-            <NavLink to="/">
+            <NavLink to="/home">
               <IntlMessages id="lp.menu.home" />
             </NavLink>
           </NavItem>
@@ -44,14 +44,11 @@ export class MenuMultipage extends Component {
                 <IntlMessages id="lp.menu.hosts" />
               </DropdownToggle>
               <DropdownMenu>
-                <NavLink to="/" className="dropdown-item">
-                  <IntlMessages id="lp.menu.hosts.add" />
-                </NavLink>
-                <NavLink to="/" className="dropdown-item">
+                <NavLink to="/hosts" className="dropdown-item">
                   <IntlMessages id="lp.menu.hosts.list" />
                 </NavLink>
-                <NavLink to="/" className="dropdown-item">
-                  <IntlMessages id="lp.menu.hosts.units" />
+                <NavLink to="/hosts" className="dropdown-item">
+                  <IntlMessages id="lp.menu.hosts.add" />
                 </NavLink>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -59,7 +56,7 @@ export class MenuMultipage extends Component {
           <NavItem
             className={window.location.pathname === "/tours" ? "active" : ""}
           >
-            <NavLink to="/">
+            <NavLink to="/home">
               <IntlMessages id="lp.menu.tours" />
             </NavLink>
           </NavItem>
@@ -68,19 +65,19 @@ export class MenuMultipage extends Component {
               window.location.pathname === "/tourleaders" ? "active" : ""
             }
           >
-            <NavLink to="/">
+            <NavLink to="/home">
               <IntlMessages id="lp.menu.tourleaders" />
             </NavLink>
           </NavItem>
           <NavItem
             className={window.location.pathname === "/ajans" ? "active" : ""}
           >
-            <NavLink to="/">
+            <NavLink to="/home">
               <IntlMessages id="lp.menu.ajans" />
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/">
+            <NavLink to="/home">
               <Auth />
             </NavLink>
           </NavItem>
