@@ -72,14 +72,19 @@ class HostList extends Component {
       isLoading: false,
       hosts: [],
       filterParams: {
-        residencyTypeId: "",
+        typeId: "",
         ostanId: "",
+        shahrestanId: "",
         name: ""
       }
     };
   }
 
   componentWillMount() {
+    /*if (this.props.location.state) {
+      this.setState({ filterParams: this.props.location.state.filterParams });
+    }*/
+
     this.props.bindShortcut(["ctrl+a", "command+a"], () =>
       this.handleChangeSelectAll(false)
     );
@@ -96,17 +101,10 @@ class HostList extends Component {
   }
   async filterByHostType(lable) {
     let newfilter = this.state.filterParams;
-    newfilter.residencyTypeId = lable;
+    newfilter.typeId = lable;
     await this.setState({
       filterParams: newfilter
     });
-    //let queryService = new QueryString();
-    //let queryString = queryService.buildQuery(this.state.filterParams);
-    /*
-    var queryString = Object.keys(this.state.filterParams)
-      .map(key => key + "=" + this.state.filterParams[key])
-      .join("&");
-*/
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
@@ -252,7 +250,12 @@ class HostList extends Component {
     return false;
   }
   async componentDidMount() {
-    this.getHost(this.state.filterParams);
+    if (this.props.location.state) {
+      this.getHost(this.props.location.state.filterParams);
+    } else {
+      this.getHost();
+    }
+
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
@@ -264,7 +267,7 @@ class HostList extends Component {
     this.setState({
       totalPage: 1,
       selectedItems: [],
-      totalItemCount: this.state.hosts.length,
+      totalItemCount: this.state.hosts ? this.state.hosts.length : 0,
       isLoading: true
     });
   }

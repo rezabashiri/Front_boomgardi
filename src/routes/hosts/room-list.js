@@ -72,7 +72,7 @@ class RoomList extends Component {
       hosts: [],
       rooms: [],
       filterParams: {
-        residencyTypeId: "",
+        typeId: "",
         //ostanId: "",
         name: "",
         residenceId: this.props.residenceId ? this.props.residenceId : ""
@@ -99,7 +99,7 @@ class RoomList extends Component {
     let newfilter = this.state.filterParams;
     console.log("lable", lable);
     console.log("roomtypes", this.state.roomTypes);
-    newfilter.residencyTypeId = lable;
+    newfilter.typeId = lable;
     await this.setState({
       filterParams: newfilter
     });

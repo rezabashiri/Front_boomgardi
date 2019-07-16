@@ -20,7 +20,7 @@ class HostCard extends Component {
   render() {
     <Fragment>
       <Row>
-        if (this.props.displayMode === "imagelist"){" "}
+        if (this.props.displayMode === "imagelist")
         {
           <Colxx sm="6" lg="4" xl="3" className="mb-3" key={this.props.host.id}>
             <Card
@@ -80,7 +80,7 @@ class HostCard extends Component {
             </Card>
           </Colxx>
         }
-        if (this.props.displayMode === "thumblist"){" "}
+        if (this.props.displayMode === "thumblist")
         {
           <Colxx xxs="12" key={this.props.host.id} className="mb-3">
             <Card
@@ -143,8 +143,8 @@ class HostCard extends Component {
               </div>
             </Card>
           </Colxx>
-        }{" "}
-        else{" "}
+        }
+        else
         {
           <Colxx xxs="12" key={host.id} className="mb-3">
             <Card
@@ -188,11 +188,6 @@ class HostCard extends Component {
             </Card>
           </Colxx>
         }
-        <Pagination
-          currentPage={this.state.currentPage}
-          totalPage={this.state.totalPage}
-          onChangePage={i => this.onChangePage(i)}
-        />
       </Row>
     </Fragment>;
   }

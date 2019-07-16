@@ -29,7 +29,7 @@ class Home extends Component {
       <Fragment>
         <div className="section home">
           <Container>
-            <SearchHost {...this.props} />
+            <SearchHost filter={false} {...this.props} />
             <Row>
               <NavLink
                 id="homeCircleButton"

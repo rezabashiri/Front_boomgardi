@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import List from "./../routes/hosts/host-list";
 import scrollToComponent from "react-scroll-to-component";
 import SearchHost from "./searchHost";
 import HostList from "./../routes/hosts/host-list";
+import { Colxx } from "Components/CustomBootstrap";
 
 class SearchHostResult extends Component {
   constructor(props) {
@@ -12,17 +12,18 @@ class SearchHostResult extends Component {
   }
 
   render() {
-    console.log("props", this.props);
     return (
       <Fragment>
-        <div className="section home">
+        <div className="section host">
           <Container>
-            <SearchHost {...this.props} />
-          </Container>
-        </div>
-        <div className="section">
-          <Container>
-            <HostList {...this.props} />
+            <Row>
+              <Colxx lg="4" xl="2">
+                <SearchHost filter={false} {...this.props} />
+              </Colxx>
+              <Colxx lg="20" xl="10">
+                <HostList {...this.props} />
+              </Colxx>
+            </Row>
           </Container>
         </div>
       </Fragment>

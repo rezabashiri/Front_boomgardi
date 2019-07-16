@@ -86,11 +86,14 @@ class LP extends Component {
                 this.home = x;
               }}
             >
-              <Switch>
-                <Route path={`/home`} component={Home} />
-                <Route path={`/hosts`} component={SearchHostResult} />
-                <Redirect to="/error" />
-              </Switch>
+              <div className="section root">
+                <Switch>
+                  <Route path={`/home`} component={Home} />
+                  <Route path={`/hosts`} component={SearchHostResult} />
+                  <Redirect to="/error" />
+                </Switch>
+              </div>
+
               <div className="section footer mb-0">
                 <Footer onClick={this.onMenuClick} />
               </div>

@@ -1,26 +1,9 @@
 import React, { Fragment } from "react";
-import { NavLink } from "react-router-dom";
 import IntlMessages from "Util/IntlMessages";
 import { Colxx } from "Components/CustomBootstrap";
 import hostService from "./../services/hostService.jsx";
 import addressService from "./../services/addressService.jsx";
-import {
-  Row,
-  Card,
-  CardBody,
-  Input,
-  CardTitle,
-  FormGroup,
-  Label,
-  CustomInput,
-  FormText,
-  Form,
-  CardSubtitle,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from "reactstrap";
+import { Row, Input, Label } from "reactstrap";
 
 import Button from "reactstrap-button-loader";
 import Select from "react-select";
@@ -38,15 +21,14 @@ export default class SearchHost extends React.Component {
       ostanList: [],
       shahrList: [],
       filterParams: {
-        residencyTypeId: "",
+        typeId: "",
         ostanId: "",
-        shahrId: "",
+        shahrestanId: "",
         name: ""
       }
     };
   }
   handleHostNameChange(e) {
-    console.log(e.target.value);
     let newfilter = this.state.filterParams;
     newfilter.name = e.target.value;
     this.setState({
@@ -82,7 +64,7 @@ export default class SearchHost extends React.Component {
   };
   handleShahrChange = selectedShahr => {
     let newfilter = this.state.filterParams;
-    newfilter.shahrId = selectedShahr.value;
+    newfilter.shahrestanId = selectedShahr.value;
     this.setState({
       filterParams: newfilter,
       selectedShahr: selectedShahr
@@ -94,6 +76,7 @@ export default class SearchHost extends React.Component {
     let newOstan = ostanList.map(c => {
       return { label: c.name, value: c.id };
     });
+    //let newOstan = [{ label: "استان را انتخاب کنید" }, ...newOstan];
     this.setState({
       ostanList: newOstan
     });
@@ -116,85 +99,82 @@ export default class SearchHost extends React.Component {
   onResizeLandingPage() {
     var rowOffestHome = document.querySelector(".home-row").offsetLeft;
     document.querySelector(
-      ".landing-page .section.home"
+      ".landing-page .section.root"
     ).style.backgroundPositionX = rowOffestHome - 252 + "px";
   }
 
   render() {
-    return (
-      <Fragment>
-        <Row className="home-row">
-          <Colxx xxs="12" className="d-block d-md-none">
-            <img
-              alt="mobile hero"
-              className="mobile-hero"
-              src="/assets/img/landing-page/home-hero-mobile.png"
-            />
-          </Colxx>
+    console.log("render");
+    if (this.props.filter === false) {
+      return (
+        <Fragment>
+          <Row className="home-row">
+            <Colxx xxs="12" className="d-block d-md-none">
+              <img
+                alt="mobile hero"
+                className="mobile-hero"
+                src="/assets/img/landing-page/home-hero-mobile.png"
+              />
+            </Colxx>
 
-          <div className="home-text">
-            <div className="display-1">
-              <IntlMessages id="lp.hero.line-1" />
-              <br />
-              <br />
-              <IntlMessages id="lp.hero.line-2" />
+            <div className="home-text">
+              <div className="display-1">
+                <IntlMessages id="lp.hero.line-1" />
+                <br />
+                <br />
+                <IntlMessages id="lp.hero.line-2" />
+              </div>
             </div>
-          </div>
-        </Row>
-        <Row className="align-center">
-          <Colxx sm={2}>
-            <Label>
-              <IntlMessages id="forms.state" />
-            </Label>
-            <Select
-              onChange={this.handleOstanChange}
-              options={this.state.ostanList}
-              value={this.state.selectedOstan}
-              placeholder="انتخاب کنید"
-            />
-          </Colxx>
-          <Colxx sm={2}>
-            <Label>
-              <IntlMessages id="forms.city" />
-            </Label>
-            <Select
-              onChange={this.handleShahrChange}
-              options={this.state.shahrList}
-              value={this.state.selectedShahr}
-              placeholder="انتخاب کنید"
-            />
-          </Colxx>
-          <Colxx sm={2}>
-            <Label
-              for="hostName"
-              onClick={() => {
-                this.props.history.push({
-                  pathname: "/hosts",
-                  state: { filterParams: this.state.filterParams }
-                });
-              }}
-            >
-              <IntlMessages id="forms.host-name" />
-            </Label>
-            <Input onChange={this.handleHostNameChange} />
-          </Colxx>
-          <Colxx sm={2}>
-            <Label for="searchButton" />
-            <NavLink
-              to="hosts"
-              className="btn btn-outline-semi-light btn-xl"
-              onClick={() => {
-                this.props.history.push({
-                  pathname: "/hosts",
-                  state: { filterParams: this.state.filterParams }
-                });
-              }}
-            >
-              <IntlMessages id="lp.hero.register" />
-            </NavLink>
-          </Colxx>
-        </Row>
-      </Fragment>
-    );
+          </Row>
+          <Row className="align-center">
+            <Colxx sm={2}>
+              <Label>
+                <IntlMessages id="forms.state" />
+              </Label>
+              <Select
+                onChange={this.handleOstanChange}
+                options={this.state.ostanList}
+                value={this.state.selectedOstan}
+                placeholder="انتخاب کنید"
+              />
+            </Colxx>
+            <Colxx sm={2}>
+              <Label>
+                <IntlMessages id="forms.city" />
+              </Label>
+              <Select
+                onChange={this.handleShahrChange}
+                options={this.state.shahrList}
+                value={this.state.selectedShahr}
+                placeholder="انتخاب کنید"
+              />
+            </Colxx>
+            <Colxx sm={2}>
+              <Label for="hostName">
+                <IntlMessages id="forms.host-name" />
+              </Label>
+              <Input onChange={this.handleHostNameChange} />
+            </Colxx>
+            <Colxx sm={2}>
+              <Label for="searchButton" />
+              <Button
+                className="btn btn-outline-semi-light btn-xl"
+                onClick={() => {
+                  this.props.history.push({
+                    pathname: "/hosts",
+                    state: { filterParams: this.state.filterParams }
+                  });
+                }}
+              >
+                <IntlMessages id="lp.hero.register" />
+              </Button>
+            </Colxx>
+          </Row>
+        </Fragment>
+      );
+    } else {
+      console.log(this.props.filter);
+      return null;
+    }
   }
 }
