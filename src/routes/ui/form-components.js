@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { injectIntl} from 'react-intl';
+import { injectIntl } from "react-intl";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import BreadcrumbContainer from "Components/BreadcrumbContainer";
 import IntlMessages from "Util/IntlMessages";
@@ -197,7 +197,7 @@ class FormsUi extends Component {
   }
 
   render() {
-    const {messages} = this.props.intl;
+    const { messages } = this.props.intl;
     return (
       <Fragment>
         <Row>
@@ -607,4 +607,4 @@ class FormsUi extends Component {
     );
   }
 }
-export default injectIntl(FormsUi)
+export default injectIntl(FormsUi);

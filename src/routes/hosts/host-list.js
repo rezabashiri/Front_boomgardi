@@ -96,6 +96,19 @@ class HostList extends Component {
     });
   }
 
+ /*componentDidUpdate(prevProps,prevState) {
+   console.log("componentDidUpdate props",this.props.filterParams);
+   console.log("componentDidUpdate prevprops",prevProps.filterParams);
+   if(prevProps.filterParams !== this.props.filterParams)
+   {
+     this.getHost(this.props.filterParams);
+   }
+  }*/
+  componentWillReceiveProps(newProps){
+    console.log("props recived",newProps.filterParams);
+    this.getHost(newProps.filterParams);
+  }
+
   toggleDisplayOptions() {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
@@ -250,12 +263,15 @@ class HostList extends Component {
     return false;
   }
   async componentDidMount() {
-    if (this.props.location.state) {
-      this.getHost(this.props.location.state.filterParams);
-    } else {
+    if (this.props.filterParams) {
+      console.log("this is host-list did mount2",this.props.filterParams);
+      this.setState({filterParams: this.props.filterParams});
+      this.getHost(this.props.filterParams);
+    }
+    else {
       this.getHost();
     }
-
+    
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
