@@ -77,7 +77,8 @@ class App extends Component {
 							authUser={user}
 							component={MainRoute}
 						/>
-							<Route exact path={`/`} component={Home} />
+							<Route exact path={`/home`} component={Home} />
+							<Route exact path={`/hosts`} component={Home} />
 							<Route path={`/multipage-home`} component={MultipageHome} />
         					<Route path={`/singlepage-home`} component={SinglepageHome} />
         					<Route path={`/about`} component={About} />

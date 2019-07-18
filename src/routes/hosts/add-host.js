@@ -166,6 +166,7 @@ class FormsUi extends Component {
   };
 
   handleComplete() {
+    console.log("step completed");
     const newCompleted = this.state.completed;
     newCompleted[this.state.activeStep] = true;
     this.setState({ completed: newCompleted });

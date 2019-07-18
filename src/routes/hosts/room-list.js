@@ -72,7 +72,7 @@ class RoomList extends Component {
       hosts: [],
       rooms: [],
       filterParams: {
-        residencyTypeId: "",
+        typeId: "",
         //ostanId: "",
         name: "",
         residenceId: this.props.residenceId ? this.props.residenceId : ""
@@ -99,7 +99,7 @@ class RoomList extends Component {
     let newfilter = this.state.filterParams;
     console.log("lable", lable);
     console.log("roomtypes", this.state.roomTypes);
-    newfilter.residencyTypeId = lable;
+    newfilter.typeId = lable;
     await this.setState({
       filterParams: newfilter
     });
@@ -567,8 +567,21 @@ class RoomList extends Component {
                               <CardText className="text-muted text-small mb-0 font-weight-light">
                                 {room.type}
                               </CardText>
-                              <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {room.services}
+                              <CardText
+                                hidden
+                                className="text-muted text-small mb-0 font-weight-light"
+                              >
+                                {room.serviceList &&
+                                  room.serviceList.map((service, index) => {
+                                    return (
+                                      <Badge
+                                        color="outline-primary mb-1 mr-1"
+                                        pill
+                                      >
+                                        {service.label}
+                                      </Badge>
+                                    );
+                                  })}
                               </CardText>
                             </Colxx>
                           </Row>

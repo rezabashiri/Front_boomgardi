@@ -10,7 +10,7 @@ export default class SectionHeroHome extends React.Component {
   }
 
   componentDidMount() {
-    this.onResizeLandingPage()
+    this.onResizeLandingPage();
     window.addEventListener("resize", this.onResizeLandingPage, true);
   }
 
@@ -20,9 +20,11 @@ export default class SectionHeroHome extends React.Component {
 
   onResizeLandingPage() {
     var rowOffestHome = document.querySelector(".home-row").offsetLeft;
-    document.querySelector(".landing-page .section.home").style.backgroundPositionX=rowOffestHome - 252 + "px";
+    document.querySelector(
+      ".landing-page .section.home"
+    ).style.backgroundPositionX = rowOffestHome - 252 + "px";
   }
- 
+
   render() {
     return (
       <Row className="home-row">
@@ -39,16 +41,12 @@ export default class SectionHeroHome extends React.Component {
             <div className="display-1">
               <IntlMessages id="lp.hero.line-1" />
               <br />
+              <br />
               <IntlMessages id="lp.hero.line-2" />
             </div>
             <p className="white mb-5">
               <IntlMessages id="lp.hero.detail-line-1" />
               <br />
-              <br />
-              <IntlMessages id="lp.hero.detail-line-2" />
-              <br />
-              <br />
-              <IntlMessages id="lp.hero.detail-line-3" />
             </p>
             <NavLink
               to="/auth-register"
@@ -57,16 +55,6 @@ export default class SectionHeroHome extends React.Component {
               <IntlMessages id="lp.hero.register" />
             </NavLink>
           </div>
-        </Colxx>
-
-        <Colxx
-          xxs="12"
-          xl={{ size: 7, offset: 1 }}
-          md="6"
-          lg="7"
-          className="d-none d-md-block"
-        >
-          <img alt="hero" src="/assets/img/landing-page/home-hero.png" />
         </Colxx>
       </Row>
     );

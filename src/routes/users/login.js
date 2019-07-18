@@ -1,8 +1,15 @@
 import React, { Component, Fragment } from "react";
 import IntlMessages from "Util/IntlMessages";
 import { Row, Card, CardTitle, Form, Label, Input } from "reactstrap";
-import { NavLink } from "react-router-dom";
 import Button from "reactstrap-button-loader";
+import { NavLink } from "react-router-dom";
+
+import { Colxx } from "Components/CustomBootstrap";
+
+import userService from "../../services/userService.jsx";
+import userModel from "../../models/userModel.jsx";
+import { getJwt } from "../../helpers/Jwt.js";
+import swal from "sweetalert";
 import {
   AvForm,
   AvGroup,
@@ -12,67 +19,46 @@ import {
 } from "availity-reactstrap-validation";
 import {
   mobileValidation,
-  passwordValidation,
-  confirmPasswordValidation
+  passwordValidation
 } from "../../constants/validations";
 
-import { Colxx } from "Components/CustomBootstrap";
-
-import registerService from "../../Services/registerService.jsx";
-import registerModel from "../../models/registerModel.jsx";
-import swal from "sweetalert";
-
-export default class Register extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
+      email: "",
       password: "",
-      confirmPassword: "",
-      name: "",
       loading: 0
     };
   }
-  async submitRegister(event, value) {
+  async onUserLogin(event, value) {
     event.persist();
+    this.setState({
+      loading: 1
+    });
+    var srv = new userService();
+
+    var user = new userModel();
+
+    Object.keys(value).map(key => (user[key] = value[key]));
+
     try {
-      this.setState({
-        loading: 1
-      });
-      //let form = new FormData(value);
-      let model = new registerModel();
-      let service = new registerService();
-
-      Object.keys(value).map(key => (model[key] = value[key]));
-
-      console.log(model);
-      model["roles"] = "کاربر";
-      if (model.password !== model.confirmPassword || model.password === "") {
-        swal("پیغام", "رمز عبور با تایید رمز عبور برابر نیست", "warning");
-        return;
+      await srv.getToken(user);
+      if (getJwt() !== null) {
+        this.props.onToggleModal();
       }
-      let response = await service.registerUser(model);
-      if (response.status >= 200 && response.status < 300) {
-        swal(
-          "پیغام",
-          "ثبت نام صورت پذیرفت لطفا از صفحه لاگین وارد شوید",
-          "success"
-        ).then(() => {
-          this.props.onChangeView && this.props.onChangeView("login");
-        });
-      }
+      //this.props.history.push("app");
+      else swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
     } catch (e) {
-      swal(
-        "پیغام",
-        "خطا : ثبت نام انجام نشد" + e.response.data.message,
-        "warning"
-      );
+      console.log(e);
+      swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
     } finally {
       this.setState({
         loading: 0
       });
     }
   }
+
   render() {
     return (
       <Fragment>
@@ -80,11 +66,11 @@ export default class Register extends Component {
           <Colxx xxs="12" md="10" className="mx-auto my-auto">
             <div className="form-side">
               <CardTitle className="mb-4">
-                <IntlMessages id="user.register" />
+                <IntlMessages id="user.login-title" />
               </CardTitle>
-
               <AvForm
-                onValidSubmit={async (e, v) => await this.submitRegister(e, v)}
+                onValidSubmit={async (e, v) => await this.onUserLogin(e, v)}
+                autoComplete="off"
               >
                 <Label className="form-group has-float-label mb-4">
                   <AvField
@@ -106,16 +92,22 @@ export default class Register extends Component {
                     defaultValue={this.state.password}
                   />
                 </Label>
-                <Label className="form-group has-float-label mb-4">
-                  <AvField
-                    name="confirmPassword"
-                    id="password"
-                    validate={confirmPasswordValidation}
-                    type="password"
-                  />
-                  <IntlMessages id="user.password-confirm" />
-                </Label>
-                <div className="d-flex justify-content-end align-items-center">
+                <div
+                  hidden
+                  className="d-flex justify-content-between align-items-center"
+                >
+                  <div className="d-flex justify-content-between align-items-center">
+                    <a
+                      onClick={() =>
+                        this.props.onChangeView &&
+                        this.props.onChangeView("forgot")
+                      }
+                    >
+                      {" "}
+                      <IntlMessages id="user.forgot-password-question" />
+                    </a>
+                  </div>
+
                   <Button
                     color="primary"
                     className="btn-shadow"
@@ -123,18 +115,18 @@ export default class Register extends Component {
                     type="submit"
                     loading={this.state.loading}
                   >
-                    <IntlMessages id="user.register-button" />
+                    <IntlMessages id="user.login-button" />
                   </Button>
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                   <a
                     onClick={() =>
                       this.props.onChangeView &&
-                      this.props.onChangeView("login")
+                      this.props.onChangeView("register")
                     }
                   >
                     {" "}
-                    <IntlMessages id="user.login-title" />
+                    <IntlMessages id="user.register" />
                   </a>
                 </div>
               </AvForm>

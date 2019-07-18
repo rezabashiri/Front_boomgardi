@@ -9,7 +9,7 @@ import {
   Button
 } from "reactstrap";
 import IntlMessages from "Util/IntlMessages";
-
+import Auth from "../../routes/users/auth";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 import { NavLink } from "react-router-dom";
@@ -281,15 +281,7 @@ class TopNav extends Component {
 
         <div className="mr-auto">
           <div className="header-icons d-inline-block align-middle">
-            <div className="position-relative d-none d-none d-lg-inline-block">
-              <a
-                className="btn btn-outline-primary btn-sm mb-2 mr-3"
-                target="_top"
-                href=""
-              >
-                <IntlMessages id="user.buy" />
-              </a>
-            </div>
+            <Auth />
             <div className="position-relative d-none d-sm-inline-block">
               <UncontrolledDropdown className="dropdown-menu-right">
                 <DropdownToggle className="header-icon" color="empty">

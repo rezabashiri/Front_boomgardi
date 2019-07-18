@@ -10,6 +10,7 @@ import "react-fine-uploader/gallery/gallery.css";
 import RoomForm from "./roomForm";
 import RoomUploadForm from "./roomUploadForm";
 import HostPriceForm from "./hostPriceForm";
+import HostCalendar from "./hostCalendar";
 import roomService from "../../services/roomService.jsx";
 
 import {
@@ -54,6 +55,7 @@ class HostActions extends Component {
     this.togglePicModal = this.togglePicModal.bind(this);
     this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
     this.togglePriceModal = this.togglePriceModal.bind(this);
+    this.toggleCalendarModal = this.toggleCalendarModal.bind(this);
 
     this.state = {
       selectedOption: "",
@@ -68,7 +70,8 @@ class HostActions extends Component {
       roomModalOpen: false,
       picModalOpen: false,
       confirmDeleteModalOpen: false,
-      priceModalOpen: false
+      priceModalOpen: false,
+      calendarModalOpen: false
     };
   }
 
@@ -91,6 +94,11 @@ class HostActions extends Component {
   togglePriceModal() {
     this.setState({
       priceModalOpen: !this.state.priceModalOpen
+    });
+  }
+  toggleCalendarModal() {
+    this.setState({
+      calendarModalOpen: !this.state.calendarModalOpen
     });
   }
 
@@ -136,6 +144,9 @@ class HostActions extends Component {
             </DropdownItem>
             <DropdownItem onClick={this.togglePriceModal}>
               <IntlMessages id="room.action.edit-price" />
+            </DropdownItem>
+            <DropdownItem onClick={this.toggleCalendarModal}>
+              <IntlMessages id="room.action.edit-calendar" />
             </DropdownItem>
             <DropdownItem
               onClick={
@@ -212,6 +223,18 @@ class HostActions extends Component {
           </ModalHeader>
           <ModalBody>
             <HostPriceForm />
+          </ModalBody>
+        </Modal>
+        <Modal
+          isOpen={this.state.calendarModalOpen}
+          toggle={this.toggleCalendarModal}
+          size="lg"
+        >
+          <ModalHeader toggle={this.toggleCalendarModal}>
+            <IntlMessages id="room.action.calendar" />
+          </ModalHeader>
+          <ModalBody>
+            <HostCalendar />
           </ModalBody>
         </Modal>
       </Fragment>

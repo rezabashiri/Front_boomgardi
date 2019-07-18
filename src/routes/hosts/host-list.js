@@ -72,14 +72,19 @@ class HostList extends Component {
       isLoading: false,
       hosts: [],
       filterParams: {
-        residencyTypeId: "",
+        typeId: "",
         ostanId: "",
+        shahrestanId: "",
         name: ""
       }
     };
   }
 
   componentWillMount() {
+    /*if (this.props.location.state) {
+      this.setState({ filterParams: this.props.location.state.filterParams });
+    }*/
+
     this.props.bindShortcut(["ctrl+a", "command+a"], () =>
       this.handleChangeSelectAll(false)
     );
@@ -91,22 +96,28 @@ class HostList extends Component {
     });
   }
 
+ /*componentDidUpdate(prevProps,prevState) {
+   console.log("componentDidUpdate props",this.props.filterParams);
+   console.log("componentDidUpdate prevprops",prevProps.filterParams);
+   if(prevProps.filterParams !== this.props.filterParams)
+   {
+     this.getHost(this.props.filterParams);
+   }
+  }*/
+  componentWillReceiveProps(newProps){
+    console.log("props recived",newProps.filterParams);
+    this.getHost(newProps.filterParams);
+  }
+
   toggleDisplayOptions() {
     this.setState({ displayOptionsIsOpen: !this.state.displayOptionsIsOpen });
   }
   async filterByHostType(lable) {
     let newfilter = this.state.filterParams;
-    newfilter.residencyTypeId = lable;
+    newfilter.typeId = lable;
     await this.setState({
       filterParams: newfilter
     });
-    //let queryService = new QueryString();
-    //let queryString = queryService.buildQuery(this.state.filterParams);
-    /*
-    var queryString = Object.keys(this.state.filterParams)
-      .map(key => key + "=" + this.state.filterParams[key])
-      .join("&");
-*/
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
@@ -252,7 +263,15 @@ class HostList extends Component {
     return false;
   }
   async componentDidMount() {
-    this.getHost();
+    if (this.props.filterParams) {
+      console.log("this is host-list did mount2",this.props.filterParams);
+      this.setState({filterParams: this.props.filterParams});
+      this.getHost(this.props.filterParams);
+    }
+    else {
+      this.getHost();
+    }
+    
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
@@ -264,7 +283,7 @@ class HostList extends Component {
     this.setState({
       totalPage: 1,
       selectedItems: [],
-      totalItemCount: this.state.hosts.length,
+      totalItemCount: this.state.hosts ? this.state.hosts.length : 0,
       isLoading: true
     });
   }
@@ -301,7 +320,7 @@ class HostList extends Component {
         <div className="disable-text-selection">
           <Row>
             <Colxx xxs="12">
-              <div className="mb-2">
+              <div hidden className="mb-2">
                 <h1>
                   <IntlMessages id="menu.host-list" />
                 </h1>

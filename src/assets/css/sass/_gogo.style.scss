@@ -43,6 +43,10 @@ Table of Contents
 
 /* 00.Variables and Imports */
 @import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700");
+//@import './fontsgoogleapi.css';
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+
 
 html,
 body {
@@ -6417,7 +6421,7 @@ input:-webkit-autofill {
     top: 0;
     position: fixed;
     width: 100%;
-    background: transparent;
+    background: $theme-color-1;
     box-shadow: initial;
     transition: transform 0.5s;
 
@@ -6652,12 +6656,22 @@ input:-webkit-autofill {
       padding-top: 60px;
     }
 
+    &.host {
+      margin-top: 0px;
+      position: relative;
+
+      @include respond-below(xs) {
+        background-position-y: -100px;
+        height: 1340px;
+      }
+    }
+
     &.home {
       background: url($lpBackgroundHome);
       background-repeat: no-repeat;
       background-position-y: 0;
       background-color: transparent;
-      height: 1440px;
+      height: 800px;
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
@@ -6713,6 +6727,7 @@ input:-webkit-autofill {
       background-color: $foreground-color;
       background-repeat: no-repeat;
       padding-bottom: 0;
+      height: 800px;
     }
   }
 
