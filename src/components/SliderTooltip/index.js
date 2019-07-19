@@ -9,7 +9,7 @@ const sliderHandle = props => {
   };
   return (
     <Fragment key={index}>
-      <div className="rc-slider-tooltip" style={positionStyle}>
+      <div hidden className="rc-slider-tooltip" style={positionStyle}>
         {value + " تومان"}
       </div>
       <Slider.Handle value={value} offset={offset} {...restProps} />
@@ -24,7 +24,7 @@ const sliderHandleCapacity = props => {
   };
   return (
     <Fragment key={index}>
-      <div className="rc-slider-tooltip" style={positionStyle}>
+      <div hidden className="rc-slider-tooltip" style={positionStyle}>
         {value + " نفر"}
       </div>
       <Slider.Handle value={value} offset={offset} {...restProps} />

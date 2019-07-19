@@ -59,7 +59,7 @@ class App extends Component {
 	render() {
 		const { location, match, user, locale } = this.props;
 		const currentAppLocale = AppLocale[locale];
-		if ( location.pathname==='/app'|| location.pathname==='/app/' || location.pathname==='/') {
+		if ( location.pathname==='/app'|| location.pathname==='/app/') {
 			return (<Redirect to={defaultStartPath} />);
 		}
 		return (
@@ -77,8 +77,9 @@ class App extends Component {
 							authUser={user}
 							component={MainRoute}
 						/>
-							<Route exact path={`/home`} component={Home} />
+							<Route exact path={`/`} component={Home} />
 							<Route exact path={`/hosts`} component={Home} />
+							<Route exact path={`/hostpage`} component={Home} />
 							<Route path={`/multipage-home`} component={MultipageHome} />
         					<Route path={`/singlepage-home`} component={SinglepageHome} />
         					<Route path={`/about`} component={About} />

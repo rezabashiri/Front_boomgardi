@@ -96,7 +96,10 @@ export default class PersisServices extends React.Component {
                       <IntlMessages id="lp.featurecarousel.detail-1" />
                     </p>
                   </div>
-                  <NavLink className="btn btn-link font-weight-semibold" to="/">
+                  <NavLink
+                    className="btn btn-link font-weight-semibold"
+                    to="/hosts"
+                  >
                     <IntlMessages id="lp.featurecarousel.view" />
                   </NavLink>
                 </CardBody>

@@ -124,121 +124,131 @@ class HostActions extends Component {
     }
   }
   render() {
-    return (
-      <Fragment>
-        <UncontrolledDropdown>
-          <DropdownToggle
-            caret
-            color="primary"
-            outline
-            className="top-right-button top-right-button-single"
-          >
-            <IntlMessages id="room.action" />
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={this.toggleRoomModal}>
-              <IntlMessages id="room.action.edit-roominfo" />
-            </DropdownItem>
-            <DropdownItem onClick={this.togglePicModal}>
-              <IntlMessages id="room.action.edit-roompic" />
-            </DropdownItem>
-            <DropdownItem onClick={this.togglePriceModal}>
-              <IntlMessages id="room.action.edit-price" />
-            </DropdownItem>
-            <DropdownItem onClick={this.toggleCalendarModal}>
-              <IntlMessages id="room.action.edit-calendar" />
-            </DropdownItem>
-            <DropdownItem
-              onClick={
-                /*() => this.deleteRoom(this.props.roomInfo.guid)*/ this
-                  .toggleDeleteModal
-              }
+    switch (this.props.role) {
+      case "admin":
+        return (
+          <Fragment>
+            <UncontrolledDropdown>
+              <DropdownToggle
+                caret
+                color="primary"
+                outline
+                className="top-right-button top-right-button-single"
+              >
+                <IntlMessages id="room.action" />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={this.toggleRoomModal}>
+                  <IntlMessages id="room.action.edit-roominfo" />
+                </DropdownItem>
+                <DropdownItem onClick={this.togglePicModal}>
+                  <IntlMessages id="room.action.edit-roompic" />
+                </DropdownItem>
+                <DropdownItem onClick={this.togglePriceModal}>
+                  <IntlMessages id="room.action.edit-price" />
+                </DropdownItem>
+                <DropdownItem onClick={this.toggleCalendarModal}>
+                  <IntlMessages id="room.action.edit-calendar" />
+                </DropdownItem>
+                <DropdownItem
+                  onClick={
+                    /*() => this.deleteRoom(this.props.roomInfo.guid)*/ this
+                      .toggleDeleteModal
+                  }
+                >
+                  <IntlMessages id="room.action.delete" />
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            <Modal
+              isOpen={this.state.roomModalOpen}
+              toggle={this.toggleRoomModal}
+              size="lg"
             >
-              <IntlMessages id="room.action.delete" />
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-        <Modal
-          isOpen={this.state.roomModalOpen}
-          toggle={this.toggleRoomModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.toggleRoomModal}>
-            <IntlMessages id="host.action.add-room" />
-          </ModalHeader>
-          <ModalBody>
-            <RoomForm
-              roomInfo={this.props.roomInfo}
-              onToggleModal={this.toggleRoomModal}
-              onGetRooms={this.props.onGetRooms}
-            />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.picModalOpen}
-          toggle={this.togglePicModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.togglePicModal}>
-            <IntlMessages id="room.action.edit-roompic" />
-          </ModalHeader>
-          <ModalBody>
-            <RoomUploadForm
-              attachId={this.props.roomInfo.guid}
-              onToggleModal={this.togglePicModal}
-              onGetRooms={this.props.onGetRooms}
-            />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.confirmDeleteModalOpen}
-          toggle={this.toggleDeleteModal}
-          size="sm"
-        >
-          <ModalHeader toggle={this.toggleDeleteModal}>
-            <IntlMessages id="room.action.delete-room" />
-          </ModalHeader>
-          <ModalBody>
-            <IntlMessages id="room.action.confirm-delete" />
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              color="primary"
-              onClick={() => this.deleteRoom(this.props.roomInfo.guid)}
+              <ModalHeader toggle={this.toggleRoomModal}>
+                <IntlMessages id="host.action.add-room" />
+              </ModalHeader>
+              <ModalBody>
+                <RoomForm
+                  roomInfo={this.props.roomInfo}
+                  onToggleModal={this.toggleRoomModal}
+                  onGetRooms={this.props.onGetRooms}
+                />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.picModalOpen}
+              toggle={this.togglePicModal}
+              size="lg"
             >
-              <IntlMessages id="room.action.confirm-yes" />
-            </Button>
-            <Button color="secondary" onClick={this.toggleDeleteModal}>
-              <IntlMessages id="room.action.confirm-no" />
-            </Button>
-          </ModalFooter>
-        </Modal>
-        <Modal
-          isOpen={this.state.priceModalOpen}
-          toggle={this.togglePriceModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.togglePriceModal}>
-            <IntlMessages id="room.action.price" />
-          </ModalHeader>
-          <ModalBody>
-            <HostPriceForm />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.calendarModalOpen}
-          toggle={this.toggleCalendarModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.toggleCalendarModal}>
-            <IntlMessages id="room.action.calendar" />
-          </ModalHeader>
-          <ModalBody>
-            <HostCalendar />
-          </ModalBody>
-        </Modal>
-      </Fragment>
-    );
+              <ModalHeader toggle={this.togglePicModal}>
+                <IntlMessages id="room.action.edit-roompic" />
+              </ModalHeader>
+              <ModalBody>
+                <RoomUploadForm
+                  attachId={this.props.roomInfo.guid}
+                  onToggleModal={this.togglePicModal}
+                  onGetRooms={this.props.onGetRooms}
+                />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.confirmDeleteModalOpen}
+              toggle={this.toggleDeleteModal}
+              size="sm"
+            >
+              <ModalHeader toggle={this.toggleDeleteModal}>
+                <IntlMessages id="room.action.delete-room" />
+              </ModalHeader>
+              <ModalBody>
+                <IntlMessages id="room.action.confirm-delete" />
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="primary"
+                  onClick={() => this.deleteRoom(this.props.roomInfo.guid)}
+                >
+                  <IntlMessages id="room.action.confirm-yes" />
+                </Button>
+                <Button color="secondary" onClick={this.toggleDeleteModal}>
+                  <IntlMessages id="room.action.confirm-no" />
+                </Button>
+              </ModalFooter>
+            </Modal>
+            <Modal
+              isOpen={this.state.priceModalOpen}
+              toggle={this.togglePriceModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.togglePriceModal}>
+                <IntlMessages id="room.action.price" />
+              </ModalHeader>
+              <ModalBody>
+                <HostPriceForm />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.calendarModalOpen}
+              toggle={this.toggleCalendarModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.toggleCalendarModal}>
+                <IntlMessages id="room.action.calendar" />
+              </ModalHeader>
+              <ModalBody>
+                <HostCalendar />
+              </ModalBody>
+            </Modal>
+          </Fragment>
+        );
+        break;
+      case "user":
+        return null;
+        break;
+      default:
+        return <div>no role</div>;
+        break;
+    }
   }
 }
 export default injectIntl(HostActions);

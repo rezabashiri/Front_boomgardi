@@ -10,7 +10,8 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardText
+  CardText,
+  Collapse
 } from "reactstrap";
 import Button from "reactstrap-button-loader";
 import Select from "react-select";
@@ -18,6 +19,7 @@ import CustomSelectInput from "Components/CustomSelectInput";
 import { RangeTooltip, RangeTooltipCapacity } from "Components/SliderTooltip";
 
 import "rc-slider/assets/index.css";
+import { Container } from "@material-ui/core";
 
 export default class SearchHost extends React.Component {
   constructor(props) {
@@ -26,7 +28,9 @@ export default class SearchHost extends React.Component {
     this.getShahrestanList = this.getShahrestanList.bind(this);
     this.handleHostNameChange = this.handleHostNameChange.bind(this);
     this.handleAddService = this.handleAddService.bind(this);
+    this.toggleAccordion = this.toggleAccordion.bind(this);
     this.state = {
+      accordion: [true, true, false],
       selectedOstan: null,
       selectedShahr: null,
       hostTypeSelected: [],
@@ -43,6 +47,13 @@ export default class SearchHost extends React.Component {
         name: ""
       }
     };
+  }
+  toggleAccordion(tab) {
+    const prevState = this.state.accordion;
+    const state = prevState.map((x, index) => (tab === index ? !x : false));
+    this.setState({
+      accordion: state
+    });
   }
   handleHostNameChange(e) {
     let newfilter = this.state.filterParams;
@@ -218,97 +229,137 @@ export default class SearchHost extends React.Component {
         break;
       case "sideBarFilter":
         return (
-          <Row className="mr-0">
-            <Colxx sm={12} className="mb-3">
-              <Label>
-                <IntlMessages id="forms.host-type" />
-              </Label>
-              <Select
-                components={{ Input: CustomSelectInput }}
-                className="react-select"
-                classNamePrefix="react-select"
-                isMulti
-                name="form-field-name"
-                value={this.state.selectedHostType}
-                onChange={this.handleHostTypeChange}
-                options={this.state.hostTypes}
-                placeholder="انتخاب کنید"
-              />
-            </Colxx>
-            <Colxx sm={12} className="mb-3">
-              <Label className="av-label" for="hostServices">
-                <IntlMessages id="forms.host-services" />
-              </Label>
-              <Select
-                components={{ Input: CustomSelectInput }}
-                className="react-select"
-                classNamePrefix="react-select"
-                isMulti
-                name="form-field-name"
-                value={this.state.selectedServices}
-                onChange={this.handleAddService}
-                options={this.state.hostServices}
-                placeholder="انتخاب کنید"
-              />
-            </Colxx>
-            <Colxx sm={12} className="mb-3">
-              <Label>
-                <IntlMessages id="layouts.filter.ostan" />
-              </Label>
-              <Select
-                onChange={this.handleOstanChange}
-                options={this.state.ostanList}
-                value={this.state.selectedOstan}
-                placeholder="انتخاب کنید"
-              />
-            </Colxx>
-            <Colxx sm={12} className="mb-3">
-              <Label>
-                <IntlMessages id="layouts.filter.shahr" />
-              </Label>
-              <Select
-                onChange={this.handleShahrChange}
-                options={this.state.shahrList}
-                value={this.state.selectedShahr}
-                placeholder="انتخاب کنید"
-              />
-            </Colxx>
-            <Colxx sm={12} className="mb-3">
-              <Label for="hostName">
-                <IntlMessages id="forms.host-name" />
-              </Label>
-              <Input onChange={this.handleHostNameChange} />
-            </Colxx>
-            <Colxx sm={12} className="mb-3">
-              <label>
-                <IntlMessages id="layouts.price" />
-              </label>
-              <RangeTooltip
-                min={10000}
-                max={100000}
-                className="mb-5"
-                defaultValue={[15000, 50000]}
-                allowCross={false}
-                pushable={1000}
-              />
-            </Colxx>
-            <Colxx sm={12} className="mb-3">
-              <label>
-                <IntlMessages id="forms.room-capacity" />
-              </label>
-              <RangeTooltipCapacity
-                min={1}
-                max={15}
-                className="mb-5"
-                defaultValue={[1, 10]}
-                allowCross={false}
-                pushable={1}
-              />
-            </Colxx>
-            <Colxx sm={12} className="mb-3 mt-1">
+          <Fragment>
+            <div className="border">
+              <Button
+                block
+                color="link"
+                className="text-left"
+                onClick={() => this.toggleAccordion(0)}
+                aria-expanded={this.state.accordion[0]}
+              >
+                آدرس
+              </Button>
+              <Collapse isOpen={this.state.accordion[0]}>
+                <Row className="mr-0">
+                  <Colxx sm={12} className="mb-3">
+                    <Label>
+                      <IntlMessages id="layouts.filter.ostan" />
+                    </Label>
+                    <Select
+                      onChange={this.handleOstanChange}
+                      options={this.state.ostanList}
+                      value={this.state.selectedOstan}
+                      placeholder="انتخاب کنید"
+                    />
+                  </Colxx>
+                  <Colxx sm={12} className="mb-3">
+                    <Label>
+                      <IntlMessages id="layouts.filter.shahr" />
+                    </Label>
+                    <Select
+                      onChange={this.handleShahrChange}
+                      options={this.state.shahrList}
+                      value={this.state.selectedShahr}
+                      placeholder="انتخاب کنید"
+                    />
+                  </Colxx>
+                </Row>
+              </Collapse>
+            </div>
+            <div className="border">
+              <Button
+                block
+                color="link"
+                className="text-left"
+                onClick={() => this.toggleAccordion(1)}
+                aria-expanded={this.state.accordion[1]}
+              >
+                مشخصات اقامتگاه
+              </Button>
+              <Collapse isOpen={this.state.accordion[1]}>
+                <Colxx sm={12} className="mb-3">
+                  <Label>
+                    <IntlMessages id="forms.host-type" />
+                  </Label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    isMulti
+                    name="form-field-name"
+                    value={this.state.selectedHostType}
+                    onChange={this.handleHostTypeChange}
+                    options={this.state.hostTypes}
+                    placeholder="انتخاب کنید"
+                  />
+                </Colxx>
+                <Colxx sm={12} className="mb-3">
+                  <Label className="av-label" for="hostServices">
+                    <IntlMessages id="forms.host-services" />
+                  </Label>
+                  <Select
+                    components={{ Input: CustomSelectInput }}
+                    className="react-select"
+                    classNamePrefix="react-select"
+                    isMulti
+                    name="form-field-name"
+                    value={this.state.selectedServices}
+                    onChange={this.handleAddService}
+                    options={this.state.hostServices}
+                    placeholder="انتخاب کنید"
+                  />
+                </Colxx>
+                <Colxx sm={12} className="mb-3">
+                  <Label for="hostName">
+                    <IntlMessages id="forms.host-name" />
+                  </Label>
+                  <Input onChange={this.handleHostNameChange} />
+                </Colxx>
+              </Collapse>
+            </div>
+            <div className="border">
+              <Button
+                block
+                color="link"
+                className="text-left"
+                onClick={() => this.toggleAccordion(2)}
+                aria-expanded={this.state.accordion[2]}
+              >
+                قیمت و ظرفیت
+              </Button>
+              <Collapse isOpen={this.state.accordion[2]}>
+                <Colxx sm={12} className="mb-3">
+                  <label>
+                    <IntlMessages id="forms.room-capacity" />
+                  </label>
+                  <RangeTooltipCapacity
+                    min={1}
+                    max={15}
+                    className="mb-5"
+                    defaultValue={[1, 10]}
+                    allowCross={false}
+                    pushable={1}
+                  />
+                </Colxx>
+                <Colxx sm={12} className="mb-3">
+                  <label>
+                    <IntlMessages id="layouts.price" />
+                  </label>
+                  <RangeTooltip
+                    min={10000}
+                    max={100000}
+                    className="mb-5"
+                    defaultValue={[15000, 50000]}
+                    allowCross={false}
+                    pushable={1000}
+                  />
+                </Colxx>
+              </Collapse>
+            </div>
+            <Colxx sm={12} className="mt-3">
               <Button
                 onClick={() => {
-              
                   var params = this.state.filterParams;
                   this.props.onHandleFilterParams(params);
                   /*this.props.history.push({
@@ -320,7 +371,7 @@ export default class SearchHost extends React.Component {
                 <IntlMessages id="lp.hero.register" />
               </Button>
             </Colxx>
-          </Row>
+          </Fragment>
         );
         break;
       default:

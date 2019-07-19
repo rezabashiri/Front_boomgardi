@@ -109,116 +109,126 @@ class HostActions extends Component {
   };
 
   render() {
-    return (
-      <Fragment>
-        <UncontrolledDropdown>
-          <DropdownToggle caret color="primary" outline>
-            <IntlMessages id="host.action" />
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem onClick={this.toggleOwnerModal}>
-              <IntlMessages id="host.action.edit-owner" />
-            </DropdownItem>
-            <DropdownItem onClick={this.toggleHostModal}>
-              <IntlMessages id="host.action.edit-hostinfo" />
-            </DropdownItem>
-            <DropdownItem onClick={this.toggleAddressModal}>
-              <IntlMessages id="host.action.edit-address" />
-            </DropdownItem>
-            <DropdownItem onClick={this.togglePicModal}>
-              <IntlMessages id="host.action.edit-hostpic" />
-            </DropdownItem>
-            <DropdownItem onClick={this.toggleRoomModal}>
-              <IntlMessages id="host.action.add-room" />
-            </DropdownItem>
-            <DropdownItem hidden>
-              <IntlMessages id="host.action.delete-host" />
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-        <Modal
-          isOpen={this.state.ownerModalOpen}
-          toggle={this.toggleOwnerModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.toggleOwnerModal}>
-            <IntlMessages id="host.action.edit-owner" />
-          </ModalHeader>
-          <ModalBody>
-            <OwnerForm
-              ownerId={this.props.hostInfo.ownerUserId}
-              getHost={this.props.getHost}
-              onToggleModal={this.toggleOwnerModal}
-            />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.hostModalOpen}
-          toggle={this.toggleHostModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.toggleHostModal}>
-            <IntlMessages id="host.action.edit-hostinfo" />
-          </ModalHeader>
-          <ModalBody>
-            <HostForm
-              hostInfo={this.props.hostInfo}
-              ownerUserId={this.props.hostInfo.ownerUserId}
-              getHost={this.props.getHost}
-              onToggleModal={this.toggleHostModal}
-            />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.addressModalOpen}
-          toggle={this.toggleAddressModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.toggleAddressModal}>
-            <IntlMessages id="host.action.edit-address" />
-          </ModalHeader>
-          <ModalBody>
-            <AddressForm
-              guid={this.props.hostInfo.guid}
-              addressInfo={this.props.hostInfo.address}
-              getHost={this.props.getHost}
-              onToggleModal={this.toggleAddressModal}
-            />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.picModalOpen}
-          toggle={this.togglePicModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.togglePicModal}>
-            <IntlMessages id="host.action.edit-hostpic" />
-          </ModalHeader>
-          <ModalBody>
-            <UploadForm
-              attachId={this.props.hostInfo.guid}
-              getHost={this.props.getHost}
-              onToggleModal={this.togglePicModal}
-            />
-          </ModalBody>
-        </Modal>
-        <Modal
-          isOpen={this.state.roomModalOpen}
-          toggle={this.toggleRoomModal}
-          size="lg"
-        >
-          <ModalHeader toggle={this.toggleRoomModal}>
-            <IntlMessages id="host.action.add-room" />
-          </ModalHeader>
-          <ModalBody>
-            <AddRoomWizard
-              roomInfo={{ residenceId: this.props.hostInfo.id }}
-              onToggleModal={this.toggleRoomModal}
-            />
-          </ModalBody>
-        </Modal>
-      </Fragment>
-    );
+    switch (this.props.role) {
+      case "admin":
+        return (
+          <Fragment>
+            <UncontrolledDropdown>
+              <DropdownToggle caret color="primary" outline>
+                <IntlMessages id="host.action" />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={this.toggleOwnerModal}>
+                  <IntlMessages id="host.action.edit-owner" />
+                </DropdownItem>
+                <DropdownItem onClick={this.toggleHostModal}>
+                  <IntlMessages id="host.action.edit-hostinfo" />
+                </DropdownItem>
+                <DropdownItem onClick={this.toggleAddressModal}>
+                  <IntlMessages id="host.action.edit-address" />
+                </DropdownItem>
+                <DropdownItem onClick={this.togglePicModal}>
+                  <IntlMessages id="host.action.edit-hostpic" />
+                </DropdownItem>
+                <DropdownItem onClick={this.toggleRoomModal}>
+                  <IntlMessages id="host.action.add-room" />
+                </DropdownItem>
+                <DropdownItem hidden>
+                  <IntlMessages id="host.action.delete-host" />
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            <Modal
+              isOpen={this.state.ownerModalOpen}
+              toggle={this.toggleOwnerModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.toggleOwnerModal}>
+                <IntlMessages id="host.action.edit-owner" />
+              </ModalHeader>
+              <ModalBody>
+                <OwnerForm
+                  ownerId={this.props.hostInfo.ownerUserId}
+                  getHost={this.props.getHost}
+                  onToggleModal={this.toggleOwnerModal}
+                />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.hostModalOpen}
+              toggle={this.toggleHostModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.toggleHostModal}>
+                <IntlMessages id="host.action.edit-hostinfo" />
+              </ModalHeader>
+              <ModalBody>
+                <HostForm
+                  hostInfo={this.props.hostInfo}
+                  ownerUserId={this.props.hostInfo.ownerUserId}
+                  getHost={this.props.getHost}
+                  onToggleModal={this.toggleHostModal}
+                />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.addressModalOpen}
+              toggle={this.toggleAddressModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.toggleAddressModal}>
+                <IntlMessages id="host.action.edit-address" />
+              </ModalHeader>
+              <ModalBody>
+                <AddressForm
+                  guid={this.props.hostInfo.guid}
+                  addressInfo={this.props.hostInfo.address}
+                  getHost={this.props.getHost}
+                  onToggleModal={this.toggleAddressModal}
+                />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.picModalOpen}
+              toggle={this.togglePicModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.togglePicModal}>
+                <IntlMessages id="host.action.edit-hostpic" />
+              </ModalHeader>
+              <ModalBody>
+                <UploadForm
+                  attachId={this.props.hostInfo.guid}
+                  getHost={this.props.getHost}
+                  onToggleModal={this.togglePicModal}
+                />
+              </ModalBody>
+            </Modal>
+            <Modal
+              isOpen={this.state.roomModalOpen}
+              toggle={this.toggleRoomModal}
+              size="lg"
+            >
+              <ModalHeader toggle={this.toggleRoomModal}>
+                <IntlMessages id="host.action.add-room" />
+              </ModalHeader>
+              <ModalBody>
+                <AddRoomWizard
+                  roomInfo={{ residenceId: this.props.hostInfo.id }}
+                  onToggleModal={this.toggleRoomModal}
+                />
+              </ModalBody>
+            </Modal>
+          </Fragment>
+        );
+        break;
+      case "user":
+        return null;
+        break;
+      default:
+        return <div>no role</div>;
+        break;
+    }
   }
 }
 export default injectIntl(HostActions);

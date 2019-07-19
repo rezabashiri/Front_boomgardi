@@ -46,7 +46,9 @@ export default class Login extends Component {
       await srv.getToken(user);
       if (getJwt() !== null) {
         this.props.onToggleModal();
+        this.props.history.push("app");
       }
+      //this.props.onToggleModal();
       //this.props.history.push("app");
       else swal("خطا", "نام کاربری یا رمز عبور معتبر نیست", "warning");
     } catch (e) {

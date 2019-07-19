@@ -22,30 +22,23 @@ class SearchHostResult extends Component {
     };
   }
   componentWillMount() {
-    console.log("will mount");
-    if (this.props.location.state) 
-    {
-      console.log("this is hostList will mount1");
+    if (this.props.location.state) {
       this.setState({
         filterParams: this.props.location.state.filterParams
       });
-    }
-    else if(this.props.filterParams)
-    {
-      console.log("this is hostList will mount2",this.props.filterParams);
+    } else if (this.props.filterParams) {
       this.setState({
         filterParams: this.props.filterParams
       });
     }
   }
-    handleFilterParams= async filterParams=> {
+  handleFilterParams = async filterParams => {
     console.log("filters changed", filterParams);
     await this.setState({
       filterParams: filterParams
     });
   };
   render() {
-    console.log("rendering",this.state.filterParams);
     return (
       <Fragment>
         <div className="section host">
@@ -61,6 +54,7 @@ class SearchHostResult extends Component {
               <HostList
                 {...this.props}
                 filterParams={this.state.filterParams}
+                role="user"
               />
             </Colxx>
           </Row>

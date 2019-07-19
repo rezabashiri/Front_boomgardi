@@ -52,14 +52,24 @@ export default class HostPage extends Component {
     this.getHostPics = this.getHostPics.bind(this);
     this.state = {
       activeFirstTab: "1",
-      hostInfo: this.props.location.state.hostInfo,
+      hostInfo: this.props.hostInfo
+        ? this.props.hostInfo
+        : this.props.location.state.hostInfo,
       hostPics: [],
-      itemsUrl: []
+      itemsUrl: [],
+      role: "admin"
     };
   }
 
   componentDidMount() {
     this.getHostPics(this.state.hostInfo.guid);
+    if (this.props.role) {
+      this.setState({ role: this.props.role });
+    } else {
+      {
+        this.setState({ role: this.props.location.state.role });
+      }
+    }
   }
   toggleTab(tab) {
     if (this.state.activeTab !== tab) {
@@ -94,7 +104,11 @@ export default class HostPage extends Component {
         <Row>
           <Colxx xxs="12">
             <div className="float-sm-left mb-2">
-              <HostActions {...this.props} hostInfo={this.state.hostInfo} />
+              <HostActions
+                {...this.props}
+                hostInfo={this.state.hostInfo}
+                role={this.state.role}
+              />
             </div>
 
             <BreadcrumbItems match={this.props.match} />
@@ -203,6 +217,7 @@ export default class HostPage extends Component {
                         <RoomList
                           residenceId={this.state.hostInfo.id}
                           {...this.props}
+                          role={this.state.role}
                         />
                       </Colxx>
                     </Row>

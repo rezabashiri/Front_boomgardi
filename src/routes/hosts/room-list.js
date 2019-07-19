@@ -71,6 +71,7 @@ class RoomList extends Component {
       isLoading: false,
       hosts: [],
       rooms: [],
+      role: "admin",
       filterParams: {
         typeId: "",
         //ostanId: "",
@@ -256,6 +257,9 @@ class RoomList extends Component {
   async componentDidMount() {
     this.getRoom(this.state.filterParams);
     this.getRoomType();
+    if (this.props.role) {
+      this.setState({ role: this.props.role });
+    }
     //this.getOstanList();
     //this.dataListRender();
   }
@@ -636,6 +640,7 @@ class RoomList extends Component {
                             <RoomActions
                               roomInfo={room}
                               onGetRooms={this.getRoom}
+                              role={this.state.role}
                             />
                           </div>
                           <div
@@ -696,6 +701,7 @@ class RoomList extends Component {
                             <RoomActions
                               roomInfo={room}
                               onGetRooms={this.getRoom}
+                              role={this.state.role}
                             />
                           </div>
                         </div>

@@ -32,7 +32,6 @@ export default class Auth extends Component {
     this.setState({
       authModalOpen: !this.state.authModalOpen
     });
-    console.log("we are hereee");
   }
   changeView(view) {
     this.setState({
@@ -63,6 +62,7 @@ export default class Auth extends Component {
               <Login
                 onChangeView={this.changeView}
                 onToggleModal={this.toggleAuthModal}
+                {...this.props}
               />
             )}
             {this.state.view === "register" && (

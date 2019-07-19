@@ -6,6 +6,7 @@ import { MenuMultipage, MenuMultipageMobile } from "./menu";
 import Home from "./home";
 //import HostList from "./../routes/hosts/host-list";
 import SearchHostResult from "./hostList";
+import hostPage from "./hostPage";
 import Footer from "./footer";
 import Headroom from "react-headroom";
 import scrollToComponent from "react-scroll-to-component";
@@ -67,6 +68,7 @@ class LP extends Component {
         >
           <MenuMultipageMobile
             onUnmountingMenu={() => this.onUnmountingMobileMenu()}
+            {...this.props}
           />
           <div className="main-container">
             <Headroom
@@ -77,6 +79,7 @@ class LP extends Component {
             >
               <MenuMultipage
                 onMobileMenuToggle={() => this.onMobileMenuToggle()}
+                {...this.props}
               />
             </Headroom>
 
@@ -88,8 +91,9 @@ class LP extends Component {
             >
               <div className="section root">
                 <Switch>
-                  <Route path={`/home`} component={Home} />
                   <Route path={`/hosts`} component={SearchHostResult} />
+                  <Route path={`/hostpage`} component={hostPage} />
+                  <Route path={`/`} component={Home} />
                   <Redirect to="/error" />
                 </Switch>
               </div>

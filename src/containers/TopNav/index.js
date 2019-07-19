@@ -171,7 +171,7 @@ class TopNav extends Component {
   handleLogout = () => {
     //this.props.logoutUser(this.props.history);
     rmJwt();
-    this.props.history.push("/login");
+    this.props.history.push("/");
   };
 
   menuButtonClick(e, menuClickCount, containerClassnames) {

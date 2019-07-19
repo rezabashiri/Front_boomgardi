@@ -71,6 +71,7 @@ class HostList extends Component {
       displayOptionsIsOpen: false,
       isLoading: false,
       hosts: [],
+      role: "admin",
       filterParams: {
         typeId: "",
         ostanId: "",
@@ -96,7 +97,7 @@ class HostList extends Component {
     });
   }
 
- /*componentDidUpdate(prevProps,prevState) {
+  /*componentDidUpdate(prevProps,prevState) {
    console.log("componentDidUpdate props",this.props.filterParams);
    console.log("componentDidUpdate prevprops",prevProps.filterParams);
    if(prevProps.filterParams !== this.props.filterParams)
@@ -104,8 +105,8 @@ class HostList extends Component {
      this.getHost(this.props.filterParams);
    }
   }*/
-  componentWillReceiveProps(newProps){
-    console.log("props recived",newProps.filterParams);
+  componentWillReceiveProps(newProps) {
+    //console.log("props recived",newProps.filterParams);
     this.getHost(newProps.filterParams);
   }
 
@@ -264,14 +265,14 @@ class HostList extends Component {
   }
   async componentDidMount() {
     if (this.props.filterParams) {
-      console.log("this is host-list did mount2",this.props.filterParams);
-      this.setState({filterParams: this.props.filterParams});
+      //console.log("this is host-list did mount2",this.props.filterParams);
+      this.setState({ role: this.props.role });
+      this.setState({ filterParams: this.props.filterParams });
       this.getHost(this.props.filterParams);
-    }
-    else {
+    } else {
       this.getHost();
     }
-    
+
     this.getHostType();
     this.getOstanList();
     //this.dataListRender();
@@ -536,9 +537,10 @@ class HostList extends Component {
                         }*/
                         onClick={() => {
                           this.props.history.push({
-                            pathname: "/app/hosts/hostpage",
+                            pathname: "hostpage",
                             state: {
-                              hostInfo: host
+                              hostInfo: host,
+                              role: this.state.role
                             }
                           });
                         }}
@@ -613,9 +615,10 @@ class HostList extends Component {
                               className="list-item-heading mb-1 truncate w-15"
                               onClick={() => {
                                 this.props.history.push({
-                                  pathname: "/app/hosts/hostpage",
+                                  pathname: "hostpage",
                                   state: {
-                                    hostInfo: host
+                                    hostInfo: host,
+                                    role:this.state.role
                                   }
                                 });
                               }}
@@ -635,6 +638,7 @@ class HostList extends Component {
                               {...this.props}
                               hostInfo={host}
                               getHost={this.getHost}
+                              role={this.state.role}
                             />
                           </div>
                           <div
@@ -673,9 +677,10 @@ class HostList extends Component {
                               className="list-item-heading mb-1 truncate w-15"
                               onClick={() => {
                                 this.props.history.push({
-                                  pathname: "/app/hosts/hostpage",
+                                  pathname: "hostpage",
                                   state: {
-                                    hostInfo: host
+                                    hostInfo: host,
+                                    role: this.state.role
                                   }
                                 });
                               }}
@@ -696,6 +701,7 @@ class HostList extends Component {
                               {...this.props}
                               hostInfo={host}
                               getHost={this.getHost}
+                              role={this.state.role}
                             />
                           </div>
                         </div>
