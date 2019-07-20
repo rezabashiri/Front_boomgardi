@@ -110,7 +110,7 @@ export default class SearchHost extends React.Component {
   };
   handleHostTypeChange = selectedHostType => {
     let newfilter = this.state.filterParams;
-    newfilter.typeId = selectedHostType;
+    newfilter.typeId = selectedHostType.map(type => type.value);
     this.setState({
       filterParams: newfilter
     });
@@ -119,7 +119,7 @@ export default class SearchHost extends React.Component {
     this.setState({ selectedServices: selectedService });
 
     let newfilter = this.state.filterParams;
-    newfilter.selectedServices = selectedService;
+    newfilter.selectedServices = selectedService.map(service => service.value);
     this.setState({
       filterParams: newfilter
     });

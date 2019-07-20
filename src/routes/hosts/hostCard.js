@@ -18,9 +18,12 @@ import HostActions from "./hostActions";
 class HostCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      role: "admin"
+    };
   }
   render() {
+    console.log("role in hostCard", this.props.role);
     switch (this.props.displayMode) {
       case "imagelist":
         return (
@@ -35,9 +38,13 @@ class HostCard extends Component {
               <Card
                 onClick={() => {
                   this.props.history.push({
-                    pathname: "/app/hosts/hostpage",
+                    pathname:
+                      this.props.role === "admin"
+                        ? "/app/hosts/hostpage"
+                        : "/hostpage",
                     state: {
-                      hostInfo: this.props.host
+                      hostInfo: this.props.host,
+                      role: this.props.role
                     }
                   });
                 }}
@@ -102,10 +109,12 @@ class HostCard extends Component {
                       className="list-item-heading mb-1 truncate w-15"
                       onClick={() => {
                         this.props.history.push({
-                          pathname: "/app/hosts/hostpage",
+                          pathname: this.props.role === "admin"
+                          ? "/app/hosts/hostpage"
+                          : "/hostpage",
                           state: {
                             hostInfo: this.props.host,
-                            role: this.state.role
+                            role: this.props.role
                           }
                         });
                       }}
@@ -156,10 +165,12 @@ class HostCard extends Component {
                       className="list-item-heading mb-1 truncate w-15"
                       onClick={() => {
                         this.props.history.push({
-                          pathname: "/app/hosts/hostpage",
+                          pathname: this.props.role === "admin"
+                          ? "/app/hosts/hostpage"
+                          : "/hostpage",
                           state: {
                             hostInfo: this.props.host,
-                            role: this.state.role
+                            role: this.props.role
                           }
                         });
                       }}

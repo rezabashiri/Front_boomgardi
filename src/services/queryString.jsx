@@ -1,3 +1,4 @@
+import QueryBulider from "query-string";
 export default class QueryString {
   buildQuery(queryObject) {
     let queryString =
@@ -7,7 +8,9 @@ export default class QueryString {
           Object.keys(queryObject)
             .map(key => key + "=" + queryObject[key])
             .join("&");
-
+    let newq = QueryBulider.stringify(queryObject);
+    console.log("newqqqq", newq);
+    console.log("query", queryString);
     return queryString;
   }
 
