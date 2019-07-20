@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
 import roomService from "../../services/roomService.jsx";
+import RoomCard from "./roomCard";
 import roomModel from "../../models/roomModel.jsx";
 import addressService from "../../services/addressService.jsx";
 //import hostModel from "../../models/hostModel.jsx";
@@ -520,195 +521,14 @@ class RoomList extends Component {
           <Row>
             {this.state.rooms &&
               this.state.rooms.map((room, index) => {
-                if (this.state.displayMode === "imagelist") {
-                  return (
-                    <Colxx sm="6" lg="4" xl="3" className="mb-3" key={room.id}>
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, room.id)
-                        }
-                        className={classnames({
-                          active: this.state.selectedItems.includes(room.id)
-                        })}
-                      >
-                        <div className="position-relative">
-                          <NavLink
-                            to={`?p=${room.id}`}
-                            className="w-40 w-sm-100"
-                          >
-                            <CardImg
-                              top
-                              alt={room.name}
-                              src={serverConfig.fileBaseUrl + room.profileImg}
-                              width="100"
-                              height="250"
-                            />
-                            <Badge
-                              color="primary"
-                              pill
-                              className="position-absolute badge-top-right"
-                            >
-                              {room.type}
-                            </Badge>
-                          </NavLink>
-                        </div>
-                        <CardBody>
-                          <Row>
-                            <Colxx xxs="2">
-                              <CustomInput
-                                className="itemCheck mb-0"
-                                type="checkbox"
-                                id={`check_${room.id}`}
-                                checked={this.state.selectedItems.includes(
-                                  room.id
-                                )}
-                                onChange={() => {}}
-                                label=""
-                              />
-                            </Colxx>
-                            <Colxx xxs="10" className="mb-3">
-                              <CardSubtitle>{room.name}</CardSubtitle>
-                              <CardText className="text-muted text-small mb-0 font-weight-light">
-                                {room.type}
-                              </CardText>
-                              <CardText
-                                hidden
-                                className="text-muted text-small mb-0 font-weight-light"
-                              >
-                                {room.serviceList &&
-                                  room.serviceList.map((service, index) => {
-                                    return (
-                                      <Badge
-                                        color="outline-primary mb-1 mr-1"
-                                        pill
-                                      >
-                                        {service.label}
-                                      </Badge>
-                                    );
-                                  })}
-                              </CardText>
-                            </Colxx>
-                          </Row>
-                        </CardBody>
-                      </Card>
-                    </Colxx>
-                  );
-                } else if (this.state.displayMode === "thumblist") {
-                  return (
-                    <Colxx xxs="12" key={room.id} className="mb-3">
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, room.id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(room.id)
-                        })}
-                      >
-                        <NavLink to={`?p=${room.id}`} className="d-flex">
-                          <img
-                            alt={room.name}
-                            src={serverConfig.fileBaseUrl + room.profileImg}
-                            className="list-thumbnail responsive border-0"
-                            width="auto"
-                          />
-                        </NavLink>
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?p=${room.id}`}
-                              className="w-15 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {room.name}
-                              </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              <IntlMessages id="forms.room-capacity" />
-                              {": "}
-                              {room.capacity}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-30 w-sm-100">
-                              <IntlMessages id="forms.room-detail" />
-                              {": "}
-                              {room.description}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              <IntlMessages id="forms.room-type" />
-                              {": "}
-                              {room.type}
-                            </p>
-                            <RoomActions
-                              roomInfo={room}
-                              onGetRooms={this.getRoom}
-                              role={this.state.role}
-                            />
-                          </div>
-                          <div
-                            hidden
-                            className="custom-control custom-checkbox pr-1 align-self-center pl-4"
-                          >
-                            <CustomInput
-                              className="itemCheck mb-0"
-                              type="checkbox"
-                              id={`check_${room.id}`}
-                              checked={this.state.selectedItems.includes(
-                                room.id
-                              )}
-                              onChange={() => {}}
-                              label=""
-                            />
-                          </div>
-                        </div>
-                      </Card>
-                    </Colxx>
-                  );
-                } else {
-                  return (
-                    <Colxx xxs="12" key={room.id} className="mb-3">
-                      <Card
-                        onClick={event =>
-                          this.handleCheckChange(event, room.id)
-                        }
-                        className={classnames("d-flex flex-row", {
-                          active: this.state.selectedItems.includes(room.id)
-                        })}
-                      >
-                        <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                          <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                            <NavLink
-                              to={`?name=${room.name}`}
-                              className="w-15 w-sm-100"
-                            >
-                              <p className="list-item-heading mb-1 truncate">
-                                {room.name}
-                              </p>
-                            </NavLink>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              <IntlMessages id="forms.room-capacity" />
-                              {": "}
-                              {room.capacity}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-30 w-sm-100">
-                              <IntlMessages id="forms.room-detail" />
-                              {": "}
-                              {room.description}
-                            </p>
-                            <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                              <IntlMessages id="forms.room-type" />
-                              {": "}
-                              {room.type}
-                            </p>
-                            <RoomActions
-                              roomInfo={room}
-                              onGetRooms={this.getRoom}
-                              role={this.state.role}
-                            />
-                          </div>
-                        </div>
-                      </Card>
-                    </Colxx>
-                  );
-                }
+                return (
+                  <RoomCard
+                    room={room}
+                    displayMode={this.state.displayMode}
+                    role={this.state.role}
+                    {...this.props}
+                  />
+                );
               })}
             <Pagination
               currentPage={this.state.currentPage}

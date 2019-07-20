@@ -124,6 +124,7 @@ class HostActions extends Component {
     }
   }
   render() {
+    console.log("role in roomaction", this.props.role);
     switch (this.props.role) {
       case "admin":
         return (
