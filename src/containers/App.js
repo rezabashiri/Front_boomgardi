@@ -79,7 +79,7 @@ class App extends Component {
 						/>
 							<Route exact path={`/`} component={Home} />
 							<Route exact path={`/hosts`} component={Home} />
-							<Route exact path={`/hostpage`} component={Home} />
+							<Route exact path={`/hostpage/:hostId`} component={Home} />
 							<Route path={`/multipage-home`} component={MultipageHome} />
         					<Route path={`/singlepage-home`} component={SinglepageHome} />
         					<Route path={`/about`} component={About} />

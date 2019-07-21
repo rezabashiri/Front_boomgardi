@@ -3,6 +3,7 @@ import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
 import addressService from "../../services/addressService.jsx";
 import QueryString from "../../services/queryString.jsx";
+import Query from "query-string";
 //import hostModel from "../../models/hostModel.jsx";
 import HostActions from "./hostActions";
 import HostCard from "./hostCard";
@@ -74,7 +75,7 @@ class HostList extends Component {
       hosts: [],
       role: "admin",
       filterParams: {
-        typeId: "",
+        typeIds: "",
         ostanId: "",
         shahrestanId: "",
         name: ""
@@ -107,8 +108,7 @@ class HostList extends Component {
    }
   }*/
   componentWillReceiveProps(newProps) {
-    //console.log("props recived",newProps.filterParams);
-    this.getHost(newProps.filterParams);
+    this.getHost(Query.parse(newProps.location.search));
   }
 
   toggleDisplayOptions() {
@@ -116,7 +116,7 @@ class HostList extends Component {
   }
   async filterByHostType(lable) {
     let newfilter = this.state.filterParams;
-    newfilter.typeId = lable;
+    newfilter.typeIds = lable;
     await this.setState({
       filterParams: newfilter
     });
@@ -266,17 +266,18 @@ class HostList extends Component {
   }
   async componentDidMount() {
     if (this.props.filterParams) {
-      //console.log("this is host-list did mount2",this.props.filterParams);
       this.setState({ role: this.props.role });
-      this.setState({ filterParams: this.props.filterParams });
-      this.getHost(this.props.filterParams);
+      //this.setState({ filterParams: this.props.filterParams });
+      await this.setState({
+        filterParams: Query.parse(this.props.location.search)
+      });
+      //this.getHost(this.props.filterParams);
+      this.getHost(this.state.filterParams);
     } else {
       this.getHost();
     }
-
     this.getHostType();
     this.getOstanList();
-    //this.dataListRender();
   }
   async getHost(filterObject) {
     var service = new hostService();

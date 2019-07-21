@@ -8,20 +8,16 @@ export default class QueryString {
           Object.keys(queryObject)
             .map(key => key + "=" + queryObject[key])
             .join("&");
-    let newq = QueryBulider.stringify(queryObject);
-    console.log("newqqqq", newq);
-    console.log("query", queryString);
     return queryString;
   }
 
-  /*buildParam(object) {
-    var parameters = [];
-    for (var property in object) {
-      if (object.hasOwnProperty(property)) {
-        parameters.push(encodeURI(property + "=" + object[property]));
-      }
-    }
-
-    return parameters.join("&");
-  }*/
+  makeQuery(queryObject) {
+    let newQuery = Object.keys(queryObject).map(key =>
+      queryObject[key] !== "" ? key : null
+    );
+    console.log("newquery", newQuery);
+    let queryString =
+      queryObject === "" ? "" : "?" + QueryBulider.stringify(queryObject);
+    return queryString;
+  }
 }

@@ -40,8 +40,8 @@ class HostCard extends Component {
                   this.props.history.push({
                     pathname:
                       this.props.role === "admin"
-                        ? "/app/hosts/hostpage"
-                        : "/hostpage",
+                        ? "/app/hosts/hostpage/" + this.props.host.guid
+                        : "/hostpage/" + this.props.host.guid,
                     state: {
                       hostInfo: this.props.host,
                       role: this.props.role
@@ -109,9 +109,10 @@ class HostCard extends Component {
                       className="list-item-heading mb-1 truncate w-15"
                       onClick={() => {
                         this.props.history.push({
-                          pathname: this.props.role === "admin"
-                          ? "/app/hosts/hostpage"
-                          : "/hostpage",
+                          pathname:
+                            this.props.role === "admin"
+                              ? "/app/hosts/hostpage/" + this.props.host.guid
+                              : "/hostpage/" + this.props.host.guid,
                           state: {
                             hostInfo: this.props.host,
                             role: this.props.role
@@ -165,9 +166,10 @@ class HostCard extends Component {
                       className="list-item-heading mb-1 truncate w-15"
                       onClick={() => {
                         this.props.history.push({
-                          pathname: this.props.role === "admin"
-                          ? "/app/hosts/hostpage"
-                          : "/hostpage",
+                          pathname:
+                            this.props.role === "admin"
+                              ? "/app/hosts/hostpage/" + this.props.host.guid
+                              : "/hostpage/" + this.props.host.guid,
                           state: {
                             hostInfo: this.props.host,
                             role: this.props.role

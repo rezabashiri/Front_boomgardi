@@ -3,6 +3,7 @@ import IntlMessages from "Util/IntlMessages";
 import { Colxx } from "Components/CustomBootstrap";
 import hostService from "./../services/hostService.jsx";
 import addressService from "./../services/addressService.jsx";
+import Query from "query-string";
 import {
   Row,
   Input,
@@ -41,7 +42,7 @@ export default class SearchHost extends React.Component {
       filterParams: {
         hostTypeSelected: [],
         selectedServices: [],
-        typeId: [],
+        typeIds: [],
         ostanId: "",
         shahrestanId: "",
         name: ""
@@ -93,6 +94,7 @@ export default class SearchHost extends React.Component {
   handleOstanChange = selectedOstan => {
     let newfilter = this.state.filterParams;
     newfilter.ostanId = selectedOstan.value;
+    newfilter.shahestanId = "";
     this.setState({
       filterParams: newfilter,
       selectedOstan: selectedOstan,
@@ -110,7 +112,7 @@ export default class SearchHost extends React.Component {
   };
   handleHostTypeChange = selectedHostType => {
     let newfilter = this.state.filterParams;
-    newfilter.typeId = selectedHostType.map(type => type.value);
+    newfilter.typeIds = selectedHostType.map(type => type.value);
     this.setState({
       filterParams: newfilter
     });
@@ -214,9 +216,11 @@ export default class SearchHost extends React.Component {
                 <Button
                   className="btn btn-outline-semi-light btn-xl"
                   onClick={() => {
+                    let searchQueryString =
+                      "?" + Query.stringify(this.state.filterParams);
                     this.props.history.push({
                       pathname: "/hosts",
-                      state: { filterParams: this.state.filterParams }
+                      search: searchQueryString
                     });
                   }}
                 >
@@ -360,12 +364,14 @@ export default class SearchHost extends React.Component {
             <Colxx sm={12} className="mt-3">
               <Button
                 onClick={() => {
-                  var params = this.state.filterParams;
-                  this.props.onHandleFilterParams(params);
-                  /*this.props.history.push({
+                  //var params = this.state.filterParams;
+                  //this.props.onHandleFilterParams(params);
+                  let searchQueryString =
+                    "?" + Query.stringify(this.state.filterParams);
+                  this.props.history.push({
                     pathname: "/hosts",
-                    state: { filterParams: this.state.filterParams }
-                  });*/
+                    search: searchQueryString
+                  });
                 }}
               >
                 <IntlMessages id="lp.hero.register" />

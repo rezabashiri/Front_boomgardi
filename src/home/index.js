@@ -92,7 +92,7 @@ class LP extends Component {
               <div className="section root">
                 <Switch>
                   <Route path={`/hosts`} component={SearchHostResult} />
-                  <Route path={`/hostpage`} component={hostPage} />
+                  <Route path={`/hostpage/:hostId`} component={hostPage} />
                   <Route path={`/`} component={Home} />
                   <Redirect to="/error" />
                 </Switch>

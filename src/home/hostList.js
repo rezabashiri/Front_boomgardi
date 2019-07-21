@@ -5,6 +5,7 @@ import scrollToComponent from "react-scroll-to-component";
 import SearchHost from "./searchHost";
 import HostList from "./../routes/hosts/host-list";
 import { Colxx } from "Components/CustomBootstrap";
+import Query from "query-string";
 
 class SearchHostResult extends Component {
   constructor(props) {
@@ -14,17 +15,17 @@ class SearchHostResult extends Component {
       filterParams: {
         hostTypeSelected: [],
         selectedServices: [],
-        typeId: [],
+        typeIds: [],
         ostanId: "",
         shahrestanId: "",
         name: ""
       }
     };
   }
-  componentWillMount() {
-    if (this.props.location.state) {
+  componentDidMount() {
+    if (this.props.location.search) {
       this.setState({
-        filterParams: this.props.location.state.filterParams
+        filterParams: Query.parse(this.props.location.search)
       });
     } else if (this.props.filterParams) {
       this.setState({
@@ -32,23 +33,18 @@ class SearchHostResult extends Component {
       });
     }
   }
-  handleFilterParams = async filterParams => {
-    console.log("filters changed", filterParams);
+  /*handleFilterParams = async filterParams => {
     await this.setState({
       filterParams: filterParams
     });
-  };
+  };*/
   render() {
     return (
       <Fragment>
         <div className="section host">
           <Row className="ml-4">
             <Colxx lg="4" xl="2">
-              <SearchHost
-                viewType="sideBarFilter"
-                onHandleFilterParams={this.handleFilterParams}
-                {...this.props}
-              />
+              <SearchHost viewType="sideBarFilter" {...this.props} />
             </Colxx>
             <Colxx lg="20" xl="10">
               <HostList

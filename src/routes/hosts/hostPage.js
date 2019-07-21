@@ -71,6 +71,9 @@ export default class HostPage extends Component {
       }
     }
   }
+  componentWillReceiveProps(nextProp) {
+    this.setState({ hostInfo: nextProp.hostInfo });
+  }
   toggleTab(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
