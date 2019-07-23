@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
+import IntlMessages from "Util/IntlMessages";
 import { injectIntl } from "react-intl";
+import Rating from "Components/Rating";
 import { Colxx, Separator } from "Components/CustomBootstrap";
 import { serverConfig } from "../../constants/defaultValues.js";
 import classnames from "classnames";
@@ -14,6 +16,7 @@ import {
   CardText,
   Badge
 } from "reactstrap";
+import { NavLink } from "react-router-dom";
 import HostActions from "./hostActions";
 class HostCard extends Component {
   constructor(props) {
@@ -23,7 +26,6 @@ class HostCard extends Component {
     };
   }
   render() {
-    console.log("role in hostCard", this.props.role);
     switch (this.props.displayMode) {
       case "imagelist":
         return (
@@ -67,21 +69,17 @@ class HostCard extends Component {
                 </div>
                 <CardBody>
                   <Row>
-                    <Colxx xxs="2">
-                      <CustomInput
-                        className="itemCheck mb-0"
-                        type="checkbox"
-                        id={`check_${this.props.host.id}`}
-                        onChange={() => {}}
-                        label=""
-                      />
-                    </Colxx>
                     <Colxx xxs="10" className="mb-3">
-                      <CardSubtitle>{this.props.host.name}</CardSubtitle>
+                      <p className="list-item-heading mb-1">
+                        <IntlMessages id="forms.host-name" />:
+                        {this.props.host.name}
+                        <Rating total={5} rating={4} interactive={false} />
+                      </p>
+
+                      <Separator className="mb-1" />
                       <CardText className="text-muted text-small mb-0 font-weight-light">
-                        {this.props.host.address.ostanName}
-                      </CardText>
-                      <CardText className="text-muted text-small mb-0 font-weight-light">
+                        <i className="simple-icon-location-pin" />
+                        {this.props.host.address.ostanName} -
                         {this.props.host.address.shahrestanName}
                       </CardText>
                     </Colxx>
@@ -97,98 +95,63 @@ class HostCard extends Component {
           <Fragment>
             <Colxx xxs="12" key={this.props.host.id} className="mb-3">
               <Card className={classnames("d-flex flex-row")}>
-                <img
-                  alt={this.props.host.name}
-                  src={serverConfig.fileBaseUrl + this.props.host.profileImg}
-                  className="list-thumbnail responsive border-0"
-                  width="auto"
-                />
-                <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-                  <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                    <p
-                      className="list-item-heading mb-1 truncate w-15"
-                      onClick={() => {
-                        this.props.history.push({
-                          pathname:
-                            this.props.role === "admin"
-                              ? "/app/hosts/hostpage/" + this.props.host.guid
-                              : "/hostpage/" + this.props.host.guid,
-                          state: {
-                            hostInfo: this.props.host,
-                            role: this.props.role
-                          }
-                        });
-                      }}
-                    >
-                      {this.props.host.name}
-                    </p>
-                    <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                      {this.props.host.type}
-                    </p>
-                    <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                      استان:{this.props.host.address.ostanName}
-                    </p>
-                    <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                      شهر:{this.props.host.address.shahrestanName}
-                    </p>
-                    <HostActions
-                      {...this.props}
-                      hostInfo={this.props.host}
-                      getHost={this.getHost}
-                    />
-                  </div>
-                  <div
-                    hidden
-                    className="custom-control custom-checkbox pr-1 align-self-center pl-4"
+                <div>
+                  <img
+                    alt={this.props.host.name}
+                    src={serverConfig.fileBaseUrl + this.props.host.profileImg}
+                    className="list-thumbnail responsive border-0"
+                    width="auto"
+                  />
+                  <Badge
+                    color="primary"
+                    pill
+                    className="position-absolute badge-top-right"
                   >
-                    <CustomInput
-                      className="itemCheck mb-0"
-                      type="checkbox"
-                      id={`check_${this.props.host.id}`}
-                      onChange={() => {}}
-                      label=""
-                    />
-                  </div>
+                    {this.props.host.type}
+                  </Badge>
                 </div>
-              </Card>
-            </Colxx>
-          </Fragment>
-        );
-        break;
-      case "list":
-        return (
-          <Fragment>
-            <Colxx xxs="12" key={this.props.host.id} className="mb-3">
-              <Card className={classnames("d-flex flex-row")}>
+
                 <div className="pl-2 d-flex flex-grow-1 min-width-zero">
                   <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                    <p
-                      className="list-item-heading mb-1 truncate w-15"
-                      onClick={() => {
-                        this.props.history.push({
-                          pathname:
-                            this.props.role === "admin"
-                              ? "/app/hosts/hostpage/" + this.props.host.guid
-                              : "/hostpage/" + this.props.host.guid,
-                          state: {
-                            hostInfo: this.props.host,
-                            role: this.props.role
-                          }
-                        });
-                      }}
-                    >
-                      {this.props.host.name}
-                    </p>
+                    <Colxx xxs="4" className="mb-3">
+                      <p className="list-item-heading mb-1">
+                        <IntlMessages id="forms.host-name" />:
+                        <NavLink to={"/hostpage/" + this.props.host.guid}>
+                          {this.props.host.name}
+                        </NavLink>
+                      </p>
+                      <Rating total={5} rating={4} interactive={false} />
+                      <Separator className="mb-2" />
+                      <p
+                        className="mb-0 text-muted text-small w-sm-100 mh-10"
+                        dangerouslySetInnerHTML={{
+                          __html: this.props.host.description
+                        }}
+                      />
+                    </Colxx>
+                    <Colxx xxs="2" className="mb-3">
+                      <IntlMessages id="forms.hostaddress" />:
+                      <p className="mb-1 text-muted text-small w-sm-100">
+                        <br />
+                        <i className="simple-icon-location-pin" />
+                        {this.props.host.address.ostanName}-
+                        {this.props.host.address.shahrestanName}
+                      </p>
+                    </Colxx>
+                    <Colxx xxs="4" className="mb-3">
+                      <IntlMessages id="menu.hostservices" />:
+                      {this.props.host.serviceList &&
+                        this.props.host.serviceList.map((service, index) => {
+                          return (
+                            <div>
+                              <Badge color="outline-primary mb-1 mr-1" pill>
+                                {service.label}
+                              </Badge>
+                            </div>
+                          );
+                        })}
+                    </Colxx>
 
-                    <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                      {this.props.host.type}
-                    </p>
-                    <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                      استان:{this.props.host.address.ostanName}
-                    </p>
-                    <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                      شهر:{this.props.host.address.shahrestanName}
-                    </p>
                     <HostActions
                       {...this.props}
                       hostInfo={this.props.host}

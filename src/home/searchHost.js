@@ -94,7 +94,7 @@ export default class SearchHost extends React.Component {
   handleOstanChange = selectedOstan => {
     let newfilter = this.state.filterParams;
     newfilter.ostanId = selectedOstan.value;
-    newfilter.shahestanId = "";
+    newfilter.shahrestanId = "";
     this.setState({
       filterParams: newfilter,
       selectedOstan: selectedOstan,

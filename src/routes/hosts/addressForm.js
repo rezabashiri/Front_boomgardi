@@ -88,6 +88,7 @@ class AddressForm extends Component {
     await this.setState({
       //centerPosition: [this.props.addressInfo.lng, this.props.addressInfo.lat],
       postion: [this.props.addressInfo.lng, this.props.addressInfo.lat],
+      centerPosition: [this.props.addressInfo.lng, this.props.addressInfo.lat],
       selectedOstan: {
         value: this.props.addressInfo.ostanId,
         label: this.props.addressInfo.ostanName,
@@ -228,7 +229,8 @@ class AddressForm extends Component {
       selectedShahr: null,
       selectedDehestan: null,
       selectedRoosta: null,
-      centerPosition: [selectedOstan.lng, selectedOstan.lat]
+      centerPosition: [selectedOstan.lng, selectedOstan.lat],
+      position: [selectedOstan.lng, selectedOstan.lat]
     });
     this.getShahrestanList(selectedOstan.value);
   };

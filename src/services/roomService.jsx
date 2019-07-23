@@ -15,7 +15,7 @@ export default class roomService {
     try {
       let filter = filterObject === undefined ? "" : filterObject;
       let queryService = new QueryString();
-      let queryString = queryService.buildQuery(filter);
+      let queryString = queryService.makeQuery(filter);
       let response = await apiContext().get(serverConfig.unitUrl + queryString);
       return response.data;
     } catch (e) {}

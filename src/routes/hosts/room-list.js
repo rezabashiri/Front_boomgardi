@@ -334,6 +334,7 @@ class RoomList extends Component {
                 >
                   <span className="ml-3 mb-2 d-inline-block float-md-right">
                     <a
+                      hidden
                       className={`mr-2 view-icon ${
                         this.state.displayMode === "list" ? "active" : ""
                       }`}

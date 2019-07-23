@@ -138,6 +138,7 @@ module.exports = {
   "menu.videos": "ویدئوها",
   /* host actions */
   "host.action": "عملیات",
+  "host.detail": "مشاهده جزئیات",
   "host.action.edit-owner": "ویرایش مالک",
   "host.action.edit-address": "ویرایش آدرس",
   "host.action.edit-hostinfo": "ویرایش اقامتگاه",
@@ -491,6 +492,7 @@ module.exports = {
   "forms.state-u": "وضعیت",
   "forms.grid": "گرید فرم",
   "forms.address": "آدرس",
+  "forms.hostaddress": "آدرس اقامتگاه",
   "forms.addressOnMap": "آدرس روی نقشه*",
   "forms.addressDetail": "پلاک و دیگر توضیحات آدرس",
   "forms.codemeli": "کدملی",

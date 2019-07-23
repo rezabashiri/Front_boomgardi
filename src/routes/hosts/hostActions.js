@@ -223,7 +223,28 @@ class HostActions extends Component {
         );
         break;
       case "user":
-        return null;
+        return (
+          <div
+            onClick={() => {
+              this.props.history.push({
+                pathname:
+                  this.props.role === "admin"
+                    ? "/app/hosts/hostpage/" + this.props.hostInfo.guid
+                    : "/hostpage/" + this.props.hostInfo.guid,
+                state: {
+                  hostInfo: this.props.hostInfo,
+                  role: this.props.role
+                }
+              });
+            }}
+          >
+            <UncontrolledDropdown>
+              <DropdownToggle caret color="primary" outline>
+                <IntlMessages id="host.detail" />
+              </DropdownToggle>
+            </UncontrolledDropdown>
+          </div>
+        );
         break;
       default:
         return <div>no role</div>;

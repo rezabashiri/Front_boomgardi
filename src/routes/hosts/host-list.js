@@ -2,10 +2,8 @@ import React, { Component, Fragment } from "react";
 import { injectIntl } from "react-intl";
 import hostService from "../../services/hostService.jsx";
 import addressService from "../../services/addressService.jsx";
-import QueryString from "../../services/queryString.jsx";
 import Query from "query-string";
 //import hostModel from "../../models/hostModel.jsx";
-import HostActions from "./hostActions";
 import HostCard from "./hostCard";
 import { serverConfig } from "../../constants/defaultValues.js";
 import {
@@ -13,24 +11,12 @@ import {
   Card,
   CustomInput,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   UncontrolledDropdown,
   Collapse,
   Dropdown,
   DropdownMenu,
   DropdownToggle,
-  DropdownItem,
-  ButtonDropdown,
-  Input,
-  CardBody,
-  CardSubtitle,
-  CardImg,
-  Label,
-  CardText,
-  Badge
+  DropdownItem
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 //import Select from "react-select";
@@ -123,19 +109,6 @@ class HostList extends Component {
     this.setState(
       {
         hostTypesFilterOption: this.state.hostTypes.find(x => x.lable === lable)
-      },
-      () => this.getHost(this.state.filterParams)
-    );
-  }
-  async filterByOstan(lable) {
-    let newfilter = this.state.filterParams;
-    newfilter.ostanId = lable;
-    await this.setState({
-      filterParams: newfilter
-    });
-    this.setState(
-      {
-        ostanFilterOptions: this.state.ostanList.find(x => x.lable === lable)
       },
       () => this.getHost(this.state.filterParams)
     );
@@ -276,8 +249,6 @@ class HostList extends Component {
     } else {
       this.getHost();
     }
-    this.getHostType();
-    this.getOstanList();
   }
   async getHost(filterObject) {
     var service = new hostService();
@@ -291,26 +262,6 @@ class HostList extends Component {
     });
   }
 
-  async getHostType() {
-    var typeService = new hostService();
-    let hostTypes = await typeService.getHostType();
-    let newHostType = hostTypes.map(c => {
-      return { column: c.name, lable: c.id };
-    });
-    this.setState({
-      hostTypes: newHostType
-    });
-  }
-  async getOstanList() {
-    let addrService = new addressService();
-    let ostanList = await addrService.getOstan();
-    let newOstan = ostanList.map(c => {
-      return { column: c.name, lable: c.id };
-    });
-    this.setState({
-      ostanList: newOstan
-    });
-  }
   render() {
     const startIndex =
       (this.state.currentPage - 1) * this.state.selectedPageSize;
@@ -345,30 +296,6 @@ class HostList extends Component {
                   id="displayOptions"
                 >
                   <span className="ml-3 mb-2 d-inline-block float-md-right">
-                    <a
-                      className={`mr-2 view-icon ${
-                        this.state.displayMode === "list" ? "active" : ""
-                      }`}
-                      onClick={() => this.changeDisplayMode("list")}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 19 19"
-                      >
-                        <path
-                          className="view-icon-svg"
-                          d="M17.5,3H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z"
-                        />
-                        <path
-                          className="view-icon-svg"
-                          d="M17.5,10H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z"
-                        />
-                        <path
-                          className="view-icon-svg"
-                          d="M17.5,17H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z"
-                        />
-                      </svg>
-                    </a>
                     <a
                       className={`mr-2 view-icon ${
                         this.state.displayMode === "thumblist" ? "active" : ""
@@ -436,58 +363,6 @@ class HostList extends Component {
                   </span>
 
                   <div className="d-block d-md-inline-block">
-                    <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                      <DropdownToggle caret color="outline-dark" size="xs">
-                        <IntlMessages id="layouts.filter.hosttype" />
-                        {this.state.hostTypesFilterOption &&
-                          this.state.hostTypesFilterOption.column}
-                      </DropdownToggle>
-                      <DropdownMenu down>
-                        <DropdownItem
-                          key="0"
-                          onClick={() => this.filterByHostType("")}
-                        >
-                          <IntlMessages id="layouts.filter.select" />
-                        </DropdownItem>
-                        {this.state.hostTypes.map((hostType, index) => {
-                          return (
-                            <DropdownItem
-                              key={index + 1}
-                              onClick={() =>
-                                this.filterByHostType(hostType.lable)
-                              }
-                            >
-                              {hostType.column}
-                            </DropdownItem>
-                          );
-                        })}
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
-                    <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
-                      <DropdownToggle caret color="outline-dark" size="xs">
-                        <IntlMessages id="layouts.filter.ostan" />
-                        {this.state.ostanFilterOptions &&
-                          this.state.ostanFilterOptions.column}
-                      </DropdownToggle>
-                      <DropdownMenu down>
-                        <DropdownItem
-                          key="0"
-                          onClick={() => this.filterByOstan("")}
-                        >
-                          <IntlMessages id="layouts.filter.select" />
-                        </DropdownItem>
-                        {this.state.ostanList.map((ostan, index) => {
-                          return (
-                            <DropdownItem
-                              key={index + 1}
-                              onClick={() => this.filterByOstan(ostan.lable)}
-                            >
-                              {ostan.column}
-                            </DropdownItem>
-                          );
-                        })}
-                      </DropdownMenu>
-                    </UncontrolledDropdown>
                     <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                       <input
                         type="text"

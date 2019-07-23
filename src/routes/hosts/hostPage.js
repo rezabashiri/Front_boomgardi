@@ -106,7 +106,7 @@ export default class HostPage extends Component {
       <Fragment>
         <Row>
           <Colxx xxs="12">
-            <div className="float-sm-left mb-2">
+            <div hidden className="float-sm-left mb-2">
               <HostActions
                 {...this.props}
                 hostInfo={this.state.hostInfo}
