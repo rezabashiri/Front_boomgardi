@@ -1821,7 +1821,7 @@ button {
     width: $sub-menu-width;
     border-radius: 20px;
     background: $background-color;
-
+    
     input {
       border: initial;
       background: transparent;
@@ -6659,19 +6659,29 @@ input:-webkit-autofill {
     &.host {
       margin-top: 0px;
       position: relative;
+    }
 
-      @include respond-below(xs) {
-        background-position-y: -100px;
-        height: 1340px;
-      }
+    &.search {
+      margin-top: 0px;
+      position: relative;
+      top: -180px;
+      background-color: #f2f2f2;
+      box-shadow: 0 10px 15px -7px rgba(0,0,0,.15);
+      display: flex;
+      width: 70%;
+      height: 10%;
+      align-content: center;
+      margin: auto;
+     
     }
 
     &.home {
       background: url($lpBackgroundHome);
+      background-size: cover;
       background-repeat: no-repeat;
       background-position-y: 0;
       background-color: transparent;
-      height: 800px;
+      height: 100%;
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;

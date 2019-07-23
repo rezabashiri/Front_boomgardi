@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row } from "reactstrap";
+import IntlMessages from "Util/IntlMessages";
+import { Colxx } from "Components/CustomBootstrap";
 import { NavLink } from "react-router-dom";
 import SearchHost from "./searchHost";
 import PersisServices from "./persisServices";
@@ -29,7 +31,24 @@ class Home extends Component {
       <Fragment>
         <div className="section home">
           <Container>
-            <SearchHost viewType="homeSearch" {...this.props} />
+            <Row>
+              <Colxx xxs="12" className="d-block d-md-none">
+                <img
+                  alt="mobile hero"
+                  className="mobile-hero"
+                  src="/assets/img/landing-page/home-hero-mobile.png"
+                />
+              </Colxx>
+
+              <div className="home-text">
+                <div className="display-1">
+                  <IntlMessages id="lp.hero.line-1" />
+                  <br />
+                  <br />
+                  <IntlMessages id="lp.hero.line-2" />
+                </div>
+              </div>
+            </Row>
             <Row>
               <NavLink
                 id="homeCircleButton"
@@ -42,6 +61,9 @@ class Home extends Component {
             </Row>
           </Container>
         </div>
+
+        <SearchHost viewType="homeSearch" {...this.props} />
+
         <div
           className="section"
           ref={x => {

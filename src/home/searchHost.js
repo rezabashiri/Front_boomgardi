@@ -129,10 +129,10 @@ export default class SearchHost extends React.Component {
   async getOstanList() {
     let addrService = new addressService();
     let ostanList = await addrService.getOstan();
-    let newOstan = ostanList.map(c => {
-      return { label: c.name, value: c.id };
+    let newOstan = ostanList.map(ostan => {
+      return { label: ostan.name, value: ostan.id };
     });
-    //let newOstan = [{ label: "استان را انتخاب کنید" }, ...newOstan];
+    newOstan = [{ label: "انتخاب کنید", value: "" }, ...newOstan];
     this.setState({
       ostanList: newOstan
     });
@@ -143,6 +143,7 @@ export default class SearchHost extends React.Component {
     let newShahrestan = shahrestanList.map(c => {
       return { label: c.name, value: c.id };
     });
+    newShahrestan = [{ label: "انتخاب کنید", value: "" }, ...newShahrestan];
     this.setState({
       shahrList: newShahrestan
     });
@@ -163,27 +164,9 @@ export default class SearchHost extends React.Component {
     switch (this.props.viewType) {
       case "homeSearch":
         return (
-          <Fragment>
-            <Row className="home-row">
-              <Colxx xxs="12" className="d-block d-md-none">
-                <img
-                  alt="mobile hero"
-                  className="mobile-hero"
-                  src="/assets/img/landing-page/home-hero-mobile.png"
-                />
-              </Colxx>
-
-              <div className="home-text">
-                <div className="display-1">
-                  <IntlMessages id="lp.hero.line-1" />
-                  <br />
-                  <br />
-                  <IntlMessages id="lp.hero.line-2" />
-                </div>
-              </div>
-            </Row>
-            <Row className="align-center">
-              <Colxx sm={2}>
+          <Card className="section search">
+            <div className="row">
+              <Colxx sm={3} className="mr-4 md-4">
                 <Label>
                   <IntlMessages id="forms.state" />
                 </Label>
@@ -194,7 +177,7 @@ export default class SearchHost extends React.Component {
                   placeholder="انتخاب کنید"
                 />
               </Colxx>
-              <Colxx sm={2}>
+              <Colxx sm={3}>
                 <Label>
                   <IntlMessages id="forms.city" />
                 </Label>
@@ -205,16 +188,16 @@ export default class SearchHost extends React.Component {
                   placeholder="انتخاب کنید"
                 />
               </Colxx>
-              <Colxx sm={2}>
+              <Colxx sm={3}>
                 <Label for="hostName">
                   <IntlMessages id="forms.host-name" />
                 </Label>
                 <Input onChange={this.handleHostNameChange} />
               </Colxx>
-              <Colxx sm={2}>
+              <Colxx sm={1}>
                 <Label for="searchButton" />
                 <Button
-                  className="btn btn-outline-semi-light btn-xl"
+                  className="btn btn-xl"
                   onClick={() => {
                     let searchQueryString =
                       "?" + Query.stringify(this.state.filterParams);
@@ -227,8 +210,8 @@ export default class SearchHost extends React.Component {
                   <IntlMessages id="lp.hero.register" />
                 </Button>
               </Colxx>
-            </Row>
-          </Fragment>
+            </div>
+          </Card>
         );
         break;
       case "sideBarFilter":

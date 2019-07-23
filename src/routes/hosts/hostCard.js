@@ -71,10 +71,12 @@ class HostCard extends Component {
                   <Row>
                     <Colxx xxs="10" className="mb-3">
                       <p className="list-item-heading mb-1">
-                        <IntlMessages id="forms.host-name" />:
-                        {this.props.host.name}
-                        <Rating total={5} rating={4} interactive={false} />
+                        <NavLink to={"/hostpage/" + this.props.host.guid}>
+                          <IntlMessages id="forms.host-name" />:
+                          {this.props.host.name}
+                        </NavLink>
                       </p>
+                      <Rating total={5} rating={4} interactive={false} />
 
                       <Separator className="mb-1" />
                       <CardText className="text-muted text-small mb-0 font-weight-light">
@@ -115,8 +117,8 @@ class HostCard extends Component {
                   <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                     <Colxx xxs="4" className="mb-3">
                       <p className="list-item-heading mb-1">
-                        <IntlMessages id="forms.host-name" />:
                         <NavLink to={"/hostpage/" + this.props.host.guid}>
+                          <IntlMessages id="forms.host-name" />:
                           {this.props.host.name}
                         </NavLink>
                       </p>
