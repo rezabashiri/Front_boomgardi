@@ -8,10 +8,8 @@ import {
   Row,
   Input,
   Label,
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
+  InputGroup,
+  InputGroupAddon,
   Collapse
 } from "reactstrap";
 import Button from "reactstrap-button-loader";
@@ -164,54 +162,77 @@ export default class SearchHost extends React.Component {
     switch (this.props.viewType) {
       case "homeSearch":
         return (
-          <Card className="section search">
-            <div className="row">
-              <Colxx sm={3} className="mr-4 md-4">
-                <Label>
-                  <IntlMessages id="forms.state" />
-                </Label>
-                <Select
-                  onChange={this.handleOstanChange}
-                  options={this.state.ostanList}
-                  value={this.state.selectedOstan}
-                  placeholder="انتخاب کنید"
-                />
-              </Colxx>
-              <Colxx sm={3}>
-                <Label>
+          <Row>
+            <Colxx md={3} sm={12} className="mr-4 md-4">
+              <div class="theme-search-area-section first theme-search-area-section-curved theme-search-area-section-bg-white theme-search-area-section-no-border theme-search-area-section-mr">
+                <div class="theme-search-area-section-inner">
+                  <i class="theme-search-area-section-icon lin lin-location-pin" />
+
+                  {/* <Label>
+                    <IntlMessages id="forms.state" />
+                  </Label> */}
+                  {/*     <input
+                    class="theme-search-area-section-input typeahead"
+                    type="text"
+                    placeholder="Hotel Location"
+                    data-provide="typeahead"
+                  />*/}
+                  <Select
+                    //className="theme-search-area-section-input typeahead"
+                    onChange={this.handleOstanChange}
+                    options={this.state.ostanList}
+                    value={this.state.selectedOstan}
+                    placeholder="انتخاب کنید"
+                  />
+                </div>
+              </div>
+            </Colxx>
+            <Colxx md={3} sm={12}>
+              <div class="theme-search-area-section first theme-search-area-section-curved theme-search-area-section-bg-white theme-search-area-section-no-border theme-search-area-section-mr">
+                <div class="theme-search-area-section-inner" />
+                {/* <Label>
                   <IntlMessages id="forms.city" />
-                </Label>
+                </Label> */}
                 <Select
                   onChange={this.handleShahrChange}
                   options={this.state.shahrList}
                   value={this.state.selectedShahr}
                   placeholder="انتخاب کنید"
                 />
-              </Colxx>
-              <Colxx sm={3}>
-                <Label for="hostName">
-                  <IntlMessages id="forms.host-name" />
-                </Label>
-                <Input onChange={this.handleHostNameChange} />
-              </Colxx>
-              <Colxx sm={1}>
-                <Label for="searchButton" />
-                <Button
-                  className="btn btn-xl"
-                  onClick={() => {
-                    let searchQueryString =
-                      "?" + Query.stringify(this.state.filterParams);
-                    this.props.history.push({
-                      pathname: "/hosts",
-                      search: searchQueryString
-                    });
-                  }}
-                >
-                  <IntlMessages id="lp.hero.register" />
-                </Button>
-              </Colxx>
-            </div>
-          </Card>
+              </div>
+            </Colxx>
+            <Colxx md={3} sm={12}>
+              <div class="theme-search-area-section first theme-search-area-section-curved theme-search-area-section-bg-white theme-search-area-section-no-border theme-search-area-section-mr">
+                <div class="theme-search-area-section-inner">
+                  <i class="theme-search-area-section-icon lin lin-location-pin" />
+                  {/* <Label for="hostName">
+                    <IntlMessages id="forms.host-name" />
+                  </Label> */}
+                  <Input
+                    placeholder="نام اقامتگاه"
+                    onChange={this.handleHostNameChange}
+                    className="theme-search-area-section-input typeahead"
+                  />
+                </div>
+              </div>
+            </Colxx>
+            <Colxx md={2} sm={12}>
+              {/* <Label for="searchButton" /> */}
+              <Button
+                className="theme-search-area-submit _mt-0 theme-search-area-submit-no-border theme-search-area-submit-curved"
+                onClick={() => {
+                  let searchQueryString =
+                    "?" + Query.stringify(this.state.filterParams);
+                  this.props.history.push({
+                    pathname: "/hosts",
+                    search: searchQueryString
+                  });
+                }}
+              >
+                <IntlMessages id="lp.hero.register" />
+              </Button>
+            </Colxx>
+          </Row>
         );
         break;
       case "sideBarFilter":

@@ -11,7 +11,7 @@ import Footer from "./footer";
 import Headroom from "react-headroom";
 import scrollToComponent from "react-scroll-to-component";
 import { injectIntl } from "react-intl";
-
+import "../assets/css/landingstyles.css";
 import { connect } from "react-redux";
 import {
   landingPageMobileMenuToggle,

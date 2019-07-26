@@ -29,40 +29,62 @@ class Home extends Component {
   render() {
     return (
       <Fragment>
-        <div className="section home">
-          <Container>
-            <Row>
-              <Colxx xxs="12" className="d-block d-md-none">
-                <img
-                  alt="mobile hero"
-                  className="mobile-hero"
-                  src="/assets/img/landing-page/home-hero-mobile.png"
-                />
-              </Colxx>
-
-              <div className="home-text">
-                <div className="display-1">
-                  <IntlMessages id="lp.hero.line-1" />
-                  <br />
-                  <br />
-                  <IntlMessages id="lp.hero.line-2" />
+        <div className="section home theme-hero-area theme-hero-area-primary">
+          <div class="theme-hero-area-bg-wrap">
+            <div
+              class="theme-hero-area-bg ws-action"
+              style={{
+                backgroundImage: `url("/assets/img/o14abktz5iy_1500x800.jpg")`
+              }}
+              data-parallax="true"
+            />
+            {/* <div class="theme-hero-area-mask theme-hero-area-mask-half" /> */}
+            <div class="theme-hero-area-inner-shadow theme-hero-area-inner-shadow-light" />
+          </div>
+          <div class="theme-hero-area-bg-wrap">
+            <div class="_pt-250 _pb-200 _pv-mob-50">
+              <Container>
+                <div class="theme-search-area-tabs">
+                  <div class="theme-search-area-tabs-header _c-w _ta-mob-c">
+                    <div className="home-text" />
+                    <h1 class="theme-search-area-tabs-title">
+                      <IntlMessages id="lp.hero.line-1" />
+                    </h1>
+                    <p class="theme-search-area-tabs-subtitle">
+                      <IntlMessages id="lp.hero.line-2" />
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Row>
-            <Row>
-              <NavLink
-                id="homeCircleButton"
-                className="btn btn-circle btn-outline-semi-light hero-circle-button"
-                to="#"
-                onClick={event => this.onMenuClick("features", event)}
-              >
-                <i className="simple-icon-arrow-down" />
-              </NavLink>
-            </Row>
-          </Container>
+                <div className="_pt-20">
+                  <div class="theme-search-area theme-search-area-stacked">
+                    <div class="theme-search-area-form">
+                      <SearchHost viewType="homeSearch" {...this.props} />
+                    </div>
+                  </div>
+                </div>
+                <Row>
+                  <Colxx xxs="12" className="d-block d-md-none">
+                    <img
+                      alt="mobile hero"
+                      className="mobile-hero"
+                      src="/assets/img/landing-page/home-hero-mobile.png"
+                    />
+                  </Colxx>
+                </Row>
+                <Row>
+                  <NavLink
+                    id="homeCircleButton"
+                    className="btn btn-circle btn-outline-semi-light hero-circle-button"
+                    to="#"
+                    onClick={event => this.onMenuClick("features", event)}
+                  >
+                    <i className="simple-icon-arrow-down" />
+                  </NavLink>
+                </Row>
+              </Container>
+            </div>
+          </div>
         </div>
-
-        <SearchHost viewType="homeSearch" {...this.props} />
 
         <div
           className="section"

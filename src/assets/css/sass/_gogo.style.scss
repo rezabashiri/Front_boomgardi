@@ -41,8 +41,8 @@ Table of Contents
 36.Context Menu
 */
 
-/* 00.Variables and Imports */
-@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700");
+/* 00.Variables and Imports 
+@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700");*/
 //@import './fontsgoogleapi.css';
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
@@ -932,7 +932,7 @@ button {
 
   &:hover {
     color: $foreground-color;
-    background-color: $theme-color-1;
+    background-color: initial;
     border-color: $theme-color-1;
   }
 }
@@ -6354,11 +6354,11 @@ input:-webkit-autofill {
   .content-container {
     transition: transform 0.5s;
   }
-
+ 
   p {
-    font-size: 1rem;
+    font-size: 1.3rem;
     line-height: 1.6rem;
-    color: $secondary-color;
+   // color: $secondary-color;
 
     @include respond-below(sm) {
       font-size: 0.9rem;
@@ -6368,7 +6368,7 @@ input:-webkit-autofill {
 
   h1 {
     font-size: 3rem;
-    color: $theme-color-1;
+    color: $landing-color-h1;
     margin-bottom: 2rem;
 
     @include respond-below(sm) {
@@ -6421,7 +6421,7 @@ input:-webkit-autofill {
     top: 0;
     position: fixed;
     width: 100%;
-    background: $theme-color-1;
+    background: #fff;
     box-shadow: initial;
     transition: transform 0.5s;
 
@@ -6459,7 +6459,7 @@ input:-webkit-autofill {
         display: inline-block;
         width: 120px;
         height: 40px;
-        background: url($lpLogoPath);
+        background: url($logoPath);
         background-repeat: no-repeat;
       }
 
@@ -6520,8 +6520,8 @@ input:-webkit-autofill {
 
       .nav-item > a,
       .nav-item > .dropdown > .dropdown-toggle {
-        color: $button-text-color;
-        font-family: Nunito, sans-serif;
+        color: $theme-color-1;
+        font-family: iransans;
         font-size: 1rem;
         display: inline-block;
         transform: translateY(-50%);
@@ -6648,7 +6648,7 @@ input:-webkit-autofill {
 
   .section {
     margin-bottom: 150px;
-    padding-top: 100px;
+    padding-top: 65px;
     padding-bottom: 100px;
 
     @include respond-below(md) {
@@ -6664,26 +6664,31 @@ input:-webkit-autofill {
     &.search {
       margin-top: 0px;
       position: relative;
-      top: -180px;
+      top: -200px;
       background-color: #f2f2f2;
       box-shadow: 0 10px 15px -7px rgba(0,0,0,.15);
       display: flex;
-      width: 70%;
-      height: 10%;
+      width: 100% !important	;
+      height: 200px;
       align-content: center;
       margin: auto;
-     
-    }
 
+    }
+   
+    &.search .row{
+      position: absolute;
+      top:20%;
+      width:100%;
+    }
     &.home {
-      background: url($lpBackgroundHome);
+      // background: url($lpBackgroundHome);
       background-size: cover;
       background-repeat: no-repeat;
       background-position-y: 0;
       background-color: transparent;
-      height: 100%;
       margin-bottom: 0;
-      padding-top: 0;
+      height: 800px;
+      padding-top: 35px;
       padding-bottom: 0;
       position: relative;
 
@@ -6810,6 +6815,7 @@ input:-webkit-autofill {
 
   .home-text {
     margin-top: 40px;
+    align-self: center !important;
 
     p {
       color: $button-text-color;
@@ -6823,6 +6829,7 @@ input:-webkit-autofill {
 
     .display-1 {
       font-size: 3rem;
+      text-align: center;
       line-height: 3.2rem;
       margin-bottom: 1.1em;
       color: $button-text-color;
